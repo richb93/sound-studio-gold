@@ -661,7 +661,7 @@ def preferences(app, **kw):
     show_timer()
     d.combo(1412, ['None', 'Piano Roll', 'Event', 'Score', 'Drum'], pr.get('dbl_midi', 'Piano Roll'))
     d.combo(1413, ['None', 'Audio Window'], pr.get('dbl_audio', 'Audio Window'))
-    bgs = sorted(resources.string(864 + i) for i in range(25))
+    bgs = ['None'] + sorted(resources.string(864 + i) for i in range(25))     # None: plain, fastest
     d.combo(1415, bgs, pr.get('bg_track', 'Vellum'))
     d.combo(1414, bgs, pr.get('bg_program', 'Evolution Purple'))
     d.set_text(1411, str(pr.get('kbd_velocity', 100)))

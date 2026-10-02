@@ -24,6 +24,10 @@ as the original's is for a disabled port. Choose MIDI ports in **Options › Dev
 Settings (devices, column choices, preferences, window and dialog defaults) are kept in
 `~/.ssgold_settings.json`.
 
+On macOS the textured backgrounds are very slow to repaint (Tk copies every pixel each time the
+window is redrawn), so there the program starts with plain colours; **Options › Preferences ›
+Backgrounds** can switch the textures back on (choose **None** for plain colours on any system).
+
 If the program feels slow, **Options › Preferences › Screen Updates** (the original's Timer
 Resolution) sets how often the play position, cursors and meters are redrawn while playing: High,
 Medium or Low. Playback timing is not affected. To find out where the time goes, run

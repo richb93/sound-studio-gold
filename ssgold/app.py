@@ -77,6 +77,12 @@ def load_settings():
                 s[k] = v
     except (OSError, ValueError):
         pass
+    pr = s['prefs']
+    if sys.platform == 'darwin' and not pr.get('bg_mac_plain'):
+        # macOS repaints textures very slowly (a whole CPU core while playing): start with plain
+        # colours, once; textures can be chosen again in Preferences
+        pr['bg_track'] = pr['bg_program'] = 'None'
+        pr['bg_mac_plain'] = True
     return s
 
 
@@ -236,9 +242,32 @@ class App(tk.Tk):
     BACKGROUNDS = {n: 'BD%02d' % (i + 1) for i, n in
                    enumerate(sorted(resources.string(864 + i) for i in range(25)))}
 
+    NO_BACKGROUND = 'None'      # plain colour: textures are slow to repaint on macOS
+
+    def plain_colour(self, texture):
+        """The average colour of a background texture, for the plain 'None' background."""
+        cache = self.__dict__.setdefault('_plain', {})
+        if texture not in cache:
+            img = self.images.get(self.BACKGROUNDS[texture])
+            w, h = img.width(), img.height()
+            tot, n = [0, 0, 0], 0
+            for y in range(0, h, max(1, h // 16)):
+                for x in range(0, w, max(1, w // 16)):
+                    px = img.get(x, y)
+                    for i in range(3):
+                        tot[i] += px[i]
+                    n += 1
+            cache[texture] = '#%02x%02x%02x' % tuple(v // max(1, n) for v in tot)
+        return cache[texture]
+
     def set_backgrounds(self):
         bg = self.settings['prefs'].get('bg_program')
-        self.client.set_background(self.images.get(self.BACKGROUNDS[bg]) if bg in self.BACKGROUNDS else None)
+        if bg in self.BACKGROUNDS:
+            self.client.configure(bg=ui.DESKTOP)
+            self.client.set_background(self.images.get(self.BACKGROUNDS[bg]))
+        else:
+            self.client.set_background(None)
+            self.client.configure(bg=self.plain_colour('Evolution Purple'))
         for w in self.client.children_:
             if hasattr(w, 'set_background'):
                 w.set_background()
