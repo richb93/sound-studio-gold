@@ -114,14 +114,20 @@ The GUI test needs a display (use `xvfb-run` on a headless Linux machine).
 
 ## Building a stand-alone program
 
-With [PyInstaller](https://pyinstaller.org):
-
 ```sh
-pip install pyinstaller
-pyinstaller --name "SoundStudioGold" --windowed --add-data "ssgold/assets:ssgold/assets" run.py
+python build.py              # dist/SoundStudioGold/  (SoundStudioGold.app on macOS)
+python build.py --onefile    # one executable in dist/
+python build.py --test       # run the tests first
 ```
 
-(on Windows use `;` instead of `:` in `--add-data`).
+`build.py` installs PyInstaller, mido and python-rtmidi if they are missing (use a virtual
+environment if your system Python is managed by the OS). Builds are made for the platform you run
+it on.
+
+Every push also builds Windows, macOS and Linux versions on GitHub Actions
+(`.github/workflows/build.yml`): open the run under the repository's **Actions** tab and download
+the `SoundStudioGold-Windows` / `-macOS` / `-Linux` artifacts. The macOS build is unsigned, so
+the first time right-click the app and choose **Open**.
 
 ## Credits
 

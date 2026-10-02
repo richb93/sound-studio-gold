@@ -40,7 +40,7 @@ class PatchList:
         if prog is None or prog < 0:
             return ''
         if bank >= len(self.banks):
-            return '-'
+            bank = 0                       # unknown bank: the original falls back to bank 0
         names = self.banks[bank][1]
         name = names[prog] if prog < len(names) else '-'
         if name in ('-', '') and bank > 0:
