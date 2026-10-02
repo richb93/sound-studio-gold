@@ -243,8 +243,8 @@ class App(tk.Tk):
                    enumerate(sorted(resources.string(864 + i) for i in range(25)))}
 
 
-    PLAIN_PROGRAM = '#808080'   # the 'None' backgrounds: Windows' dark and light greys
-    PLAIN_TRACK = '#c0c0c0'
+    PLAIN_PROGRAM = '#848284'   # the 'None' backgrounds: dark and light grey
+    PLAIN_TRACK = '#c6c3c6'
 
     def set_backgrounds(self):
         bg = self.settings['prefs'].get('bg_program')
@@ -910,7 +910,7 @@ class App(tk.Tk):
                 self.transport.redraw_buttons()
             self.transport.values['playing'] = self.seq.playing
         finally:
-            self.after(20, self._poll)
+            self.after(8, self._poll)          # often enough for 60 fps Screen Updates
 
     def update_ms(self):
         """Preferences' Screen Updates: the interval the play position is redrawn at (milliseconds)."""

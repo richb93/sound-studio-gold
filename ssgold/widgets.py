@@ -205,6 +205,7 @@ class Combo(tk.Canvas):
         y = self.winfo_rooty() + self.winfo_height()
         top.geometry('%dx%d+%d+%d' % (s(w), lb.winfo_reqheight() + 2 * ui.S, x, y))
         self.popup = top
+        self._prev_grab = self.grab_current()      # a modal dialog's grab, given back on close
 
         def pick(_e=None):
             sel = lb.curselection()
@@ -222,8 +223,22 @@ class Combo(tk.Canvas):
         lb.bind('<Motion>', motion)
         lb.bind('<Escape>', lambda e: self.close())
         top.bind('<FocusOut>', lambda e: self.after(100, self._maybe_close))
-        top.after(10, lambda: (top.grab_set(), lb.focus_set()))
-        top.bind('<Button-1>', lambda e: self.close() if e.widget is top else None)
+
+        def outside(e):
+            # while the list holds the grab, every click comes here: one outside it closes it
+            x0, y0 = top.winfo_rootx(), top.winfo_rooty()
+            if not (x0 <= e.x_root < x0 + top.winfo_width() and y0 <= e.y_root < y0 + top.winfo_height()):
+                self.close()
+                return 'break'
+        top.bind('<ButtonPress>', outside)
+
+        def grab():
+            try:
+                top.grab_set()
+                lb.focus_set()
+            except tk.TclError:
+                pass
+        top.after(10, grab)
 
     def _maybe_close(self):
         if self.popup and self.focus_get() is None:
@@ -237,6 +252,14 @@ class Combo(tk.Canvas):
             except tk.TclError:
                 pass
             self.popup = None
+            prev = getattr(self, '_prev_grab', None)
+            self._prev_grab = None
+            if prev is not None:
+                try:
+                    if prev.winfo_exists():
+                        prev.grab_set()
+                except tk.TclError:
+                    pass
 
 
 class InfoLine(tk.Canvas):

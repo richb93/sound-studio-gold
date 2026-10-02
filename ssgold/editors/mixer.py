@@ -712,10 +712,11 @@ class MixerWindow(MDIChild):
             port, data = log.popleft()
             if data[0] & 0xF0 == 0x90 or song_data:
                 changed = self._apply(port, data) or changed
+        fall = 8 * self.app.update_ms() / 50.0       # the same speed at any Screen Updates rate
         for c in self.state_.values():
             if c.meter > 0:
-                c.meter = max(0.0, c.meter - 8)
+                c.meter = max(0.0, c.meter - fall)
                 changed = True
         if changed:
             self.app._timed('MixerWindow: meters and faders', self.update_strips)
-        self.after(int(max(33, self.app.update_ms())), self._tick)
+        self.after(int(self.app.update_ms()), self._tick)

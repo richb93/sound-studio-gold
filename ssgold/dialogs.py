@@ -669,15 +669,9 @@ def preferences(app, **kw):
     d.combo(1412, ['None', 'Piano Roll', 'Event', 'Score', 'Drum'], pr.get('dbl_midi', 'Piano Roll'))
     d.combo(1413, ['None', 'Audio Window'], pr.get('dbl_audio', 'Audio Window'))
     bgs = ['None'] + sorted(resources.string(864 + i) for i in range(25))     # None: plain, fastest
-    warned = {}
-
-    def texture_warning(name):
-        if name != 'None' and not warned:
-            warned['done'] = True
-            msg(d, 'Textured backgrounds can slow the program down, especially while a song plays '
-                   '(most of all on macOS). Choose None for the fastest display.', 'info')
-    d.combo(1415, bgs, pr.get('bg_track', 'None'), cmd=texture_warning)
-    d.combo(1414, bgs, pr.get('bg_program', 'None'), cmd=texture_warning)
+    d.combo(1415, bgs, pr.get('bg_track', 'None'))
+    d.combo(1414, bgs, pr.get('bg_program', 'None'))
+    before = (pr.get('bg_track', 'None'), pr.get('bg_program', 'None'))
     d.set_text(1411, str(pr.get('kbd_velocity', 100)))
 
     def ok():
@@ -688,6 +682,11 @@ def preferences(app, **kw):
         pr['dbl_audio'] = d.combo(1413)
         pr['bg_track'] = d.combo(1415)
         pr['bg_program'] = d.combo(1414)
+        new = [b for b in (pr['bg_track'], pr['bg_program']) if b != 'None' and b not in before]
+        if new:     # told once the dialog has closed, where nothing can hide the message
+            app.after_idle(lambda: msg(app, 'Textured backgrounds can slow the program down, above all '
+                                            'while a song plays (most of all on macOS). Choose None '
+                                            'for the fastest display.', 'info'))
         pr['kbd_velocity'] = _int(d.text(1411), 100, 1, 127)
         app.set_backgrounds()
         app.song_changed()

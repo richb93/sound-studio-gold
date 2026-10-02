@@ -775,16 +775,13 @@ class TrackWindow(MDIChild):
         total = sum(w + 1 for _c, w in widths) + self.divider
         c.configure(width=s(total))
         H = c.winfo_height() // ui.S
-        # header
         x = 0
         self.col_x = []
         for cid, w in widths:
-            ui.text(c, x + w // 2, HEADER_H // 2 + 1, self.heading(cid), 'small', anchor='center')
             self.col_x.append((cid, x, w))
             x += w
             ui.line(c, x, 0, x, H)
             x += 1
-        ui.line(c, 0, HEADER_H, total, HEADER_H)
         # rows
         y = HEADER_H + 1 - self.top_row
         any_rec_multi = self.app.seq.opts.multitrack
@@ -812,6 +809,12 @@ class TrackWindow(MDIChild):
                 tx = x0 + 2 if anchor == 'w' else x0 + w - 1
                 ui.text(c, tx, y + h // 2, ui.clip_text(txt, w - 2), 'system', fill=fg, anchor=anchor)
             y += h
+        # the headings go on top, so rows scrolled part way under them are covered
+        c.create_rectangle(0, 0, s(total), s(HEADER_H), fill=ui.FACE, outline='', tags='hdr')
+        for cid, x0, w in self.col_x:
+            ui.text(c, x0 + w // 2, HEADER_H // 2 + 1, self.heading(cid), 'small', anchor='center', tags='hdr')
+            ui.line(c, x0 + w, 0, x0 + w, HEADER_H, tags='hdr')
+        ui.line(c, 0, HEADER_H, total, HEADER_H, tags='hdr')
         self.draw_monitor()
         self._update_vbar()
 
@@ -834,6 +837,7 @@ class TrackWindow(MDIChild):
             y += h
             if y > H:
                 break
+        c.tag_raise('hdr')
 
     def _draw_button_cell(self, c, t, key, x0, y, w, h):
         if t.kind == CHORD and key == 'rec':
