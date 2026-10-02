@@ -595,6 +595,45 @@ class Song:
         self.modified = False
 
 
+# ----------------------------------------------------------------------------- pattern files
+PAT_HEADER = 0x20
+
+
+def save_pattern(pattern, path):
+    """Write a .PAT file: 'patt', be16 version, zero padding to 0x20, the pattern record, event data."""
+    src = pattern.source
+    raw = bytearray(pattern.raw)
+    blob = encode_events(src.events) if pattern.track is None or pattern.track.kind == MIDI else (src.blob or b'')
+    struct.pack_into('<h', raw, 0x15, -1)
+    struct.pack_into('<h', raw, 0x2F, 0x100)
+    struct.pack_into('<I', raw, 0x3D, len(blob))
+    struct.pack_into('<I', raw, 0x35, 0)
+    struct.pack_into('<I', raw, 0x39, pattern.end - pattern.start)
+    raw[0x4B] = 0
+    head = bytearray(PAT_HEADER)
+    head[:4] = b'patt'
+    struct.pack_into('>H', head, 4, 0x0200)
+    with open(path, 'wb') as f:
+        f.write(bytes(head) + bytes(raw) + blob)
+
+
+def load_pattern(path):
+    """Read a .PAT file; returns a Pattern starting at tick 0 (events decoded)."""
+    with open(path, 'rb') as f:
+        d = f.read()
+    if d[:4] != b'patt' or len(d) < PAT_HEADER + PATTERN_SIZE:
+        raise SongError('not an Evolution Pattern File')
+    p = Pattern(d[PAT_HEADER:PAT_HEADER + PATTERN_SIZE])
+    ln = struct.unpack_from('<I', p.raw, 0x3D)[0]
+    blob = d[PAT_HEADER + PATTERN_SIZE:PAT_HEADER + PATTERN_SIZE + ln]
+    length = max(0, p.end - p.start)
+    p._set(0x15, -1)
+    p.start, p.end = 0, length
+    p.events = decode_events(blob)
+    p.blob = blob
+    return p
+
+
 def new_song(ports=None):
     """The song created by File > New: 4 audio tracks, 9 piano tracks, a drum track, then empties."""
     s = Song()

@@ -11,7 +11,7 @@ from .midi_io import MidiIO
 from .patches import PatchManager, DrumKit
 from .resources import Images
 from .sequencer import Sequencer
-from .song import Song, SongError, new_song, MIDI, AUDIO, CHORD
+from .song import Song, SongError, new_song, MIDI, AUDIO, CHORD, save_pattern, load_pattern
 from .timing import TimeMap, smpte
 from . import smf
 
@@ -520,6 +520,9 @@ class App(tk.Tk):
                 self.patches.add(path)
                 self.song_changed()
                 return
+            elif ext == '.pat':
+                self.insert_pattern_file(path)
+                return
             else:
                 song = Song.load(path)
                 self.set_song(song)
@@ -527,6 +530,27 @@ class App(tk.Tk):
             messagebox.showerror('Sound Studio Gold', str(e), parent=self)
             return
         self.settings['recent_dir'] = os.path.dirname(path)
+
+    def insert_pattern_file(self, path):
+        """Open a .PAT: the pattern goes on the current track at the bar of the play position."""
+        p = load_pattern(path)
+        tw = self.windows.get('track')
+        t = tw.current_track() if tw is not None else None
+        if t is None or t.kind != MIDI:
+            t = next((x for x in self.song.tracks if x.kind == MIDI), None)
+        if t is None:
+            return
+        self.checkpoint()
+        start = self.tmap.bar_tick(self.seq.position)
+        length = p.end
+        p.start, p.end = start, start + length
+        p.track = t
+        for q in self.song.all_patterns():
+            q.selected = False
+        p.selected = True
+        t.patterns.append(p)
+        t.patterns.sort(key=lambda q: q.start)
+        self.song_changed('patterns')
 
     def open_dialog(self, kind='open'):
         from .dialogs import open_file_dialog
@@ -554,6 +578,13 @@ class App(tk.Tk):
                 smf.write_smf(self.song, path, self)
             elif kind == '.DRM':
                 self.drumkit.save(path)
+            elif kind == '.PAT':
+                pats = [q for q in self.song.all_patterns() if q.selected and q.track.kind == MIDI]
+                if not pats:
+                    messagebox.showinfo('Sound Studio Gold', resources.string(16), parent=self)
+                    return False
+                save_pattern(pats[0], path)
+                return True
             else:
                 self.song.save(path)
         except OSError:

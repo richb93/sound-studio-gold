@@ -96,6 +96,28 @@ class SongFiles(unittest.TestCase):
                 self.assertEqual(out[:8] + out[10:0x400], data[:8] + data[10:0x400])
 
 
+class PatternFiles(unittest.TestCase):
+    def test_pat_round_trip(self):
+        from ssgold.song import save_pattern, load_pattern
+        _s, _t, p = song_with_notes()
+        with tempfile.TemporaryDirectory() as d:
+            path = os.path.join(d, 'riff.pat')
+            save_pattern(p, path)
+            q = load_pattern(path)
+        self.assertEqual(q.name, 'Riff')
+        self.assertEqual((q.start, q.end), (0, p.end - p.start))
+        self.assertEqual([(e.tick, e.status, e.d1, e.d2, e.length) for e in q.events],
+                         [(e.tick, e.status, e.d1, e.d2, e.length) for e in p.events])
+
+    def test_original_pat(self):
+        path = os.environ.get('SSGOLD_PAT')
+        if not path:
+            self.skipTest('SSGOLD_PAT not set')
+        from ssgold.song import load_pattern
+        q = load_pattern(path)
+        self.assertTrue(q.events)
+
+
 class MidiFiles(unittest.TestCase):
     def test_smf_write_read(self):
         s, _t, _p = song_with_notes()

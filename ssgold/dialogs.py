@@ -99,9 +99,6 @@ def _file_dialog(app, title, save):
     for rid, ext in FILE_TYPES.items():
         if ext in ('.PLS', '.WAV', '.DEF', '.WND'):
             d.enable(rid, False)
-    if save:
-        for rid in (412,):
-            d.enable(rid, False)
     d.set_radio(411)
     files, dirs = d.ctrls[403], d.ctrls[404]
 
@@ -120,7 +117,7 @@ def _file_dialog(app, title, save):
             entries = []
         for f in entries:
             if os.path.isfile(os.path.join(p, f)) and os.path.splitext(f)[1].upper() == state['ext']:
-                files.insert('end', f.lower())
+                files.insert('end', f)
         dirs.insert('end', '[..]')
         for f in entries:
             if os.path.isdir(os.path.join(p, f)) and not f.startswith('.'):
