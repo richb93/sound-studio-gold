@@ -1,0 +1,8971 @@
+{
+ "menu": [
+  [
+   "&File",
+   [
+    [
+     "&New",
+     1,
+     0
+    ],
+    [
+     "",
+     0,
+     0
+    ],
+    [
+     "&Open...\tCtrl+O",
+     2,
+     0
+    ],
+    [
+     "&Save Song\tCtrl+S",
+     3,
+     0
+    ],
+    [
+     "Save &As...",
+     5,
+     0
+    ],
+    [
+     "",
+     0,
+     0
+    ],
+    [
+     "&Merge Song...",
+     6,
+     0
+    ],
+    [
+     "M&erge Midi File...",
+     7,
+     0
+    ],
+    [
+     "",
+     0,
+     0
+    ],
+    [
+     "&Delete...",
+     8,
+     0
+    ],
+    [
+     "",
+     0,
+     0
+    ],
+    [
+     "&Print...",
+     18,
+     1
+    ],
+    [
+     "P&rinter Setup...",
+     19,
+     0
+    ],
+    [
+     "",
+     0,
+     0
+    ],
+    [
+     "&Quit\tAlt+F4",
+     9,
+     128
+    ]
+   ],
+   16
+  ],
+  [
+   "&Edit",
+   [
+    [
+     "&Undo\tCtrl+Z",
+     10,
+     1
+    ],
+    [
+     "&Redo\tCtrl+A",
+     11,
+     1
+    ],
+    [
+     "",
+     0,
+     0
+    ],
+    [
+     "&Copy\tCtrl+C",
+     12,
+     0
+    ],
+    [
+     "Cu&t\tCtrl+X",
+     13,
+     0
+    ],
+    [
+     "&Paste\tCtrl+V",
+     14,
+     0
+    ],
+    [
+     "C&lear\tDel",
+     15,
+     0
+    ],
+    [
+     "",
+     0,
+     0
+    ],
+    [
+     "Select &All",
+     16,
+     0
+    ],
+    [
+     "&Describe Clipboard...",
+     17,
+     128
+    ]
+   ],
+   16
+  ],
+  [
+   "&View",
+   [
+    [
+     "&Track\tF2",
+     80,
+     0
+    ],
+    [
+     "",
+     0,
+     0
+    ],
+    [
+     "&Piano Roll\tF3",
+     81,
+     0
+    ],
+    [
+     "&Event\tF4",
+     82,
+     0
+    ],
+    [
+     "&Score\tF5",
+     83,
+     0
+    ],
+    [
+     "&Drum\tF6",
+     84,
+     0
+    ],
+    [
+     "",
+     0,
+     0
+    ],
+    [
+     "&Conductor\tF7",
+     85,
+     0
+    ],
+    [
+     "&Notepad\tF8",
+     86,
+     0
+    ],
+    [
+     "&Mixer\tF9",
+     87,
+     0
+    ],
+    [
+     "&Keyboard\tF11",
+     88,
+     0
+    ],
+    [
+     "&Lyrics\tF12",
+     89,
+     0
+    ],
+    [
+     "&Instant Chord Track\tShift+F7",
+     90,
+     0
+    ],
+    [
+     "&Audio\tShift+F8",
+     91,
+     0
+    ],
+    [
+     "",
+     0,
+     0
+    ],
+    [
+     "Track Settin&gs\tShift+F9",
+     92,
+     0
+    ],
+    [
+     "Patte&rn Settings\tShift+F10",
+     93,
+     128
+    ]
+   ],
+   16
+  ],
+  [
+   "&Procedures",
+   [
+    [
+     "&Transpose...\tCtrl+T",
+     20,
+     0
+    ],
+    [
+     "Change &Velocity...\tCtrl+H",
+     21,
+     0
+    ],
+    [
+     "Change &Lengths...\tCtrl+L",
+     22,
+     0
+    ],
+    [
+     "",
+     0,
+     0
+    ],
+    [
+     "&Quantize...\tCtrl+U",
+     23,
+     0
+    ],
+    [
+     "&Move Events...\tCtrl+J",
+     24,
+     0
+    ],
+    [
+     "&Change Timing...\tCtrl+I",
+     25,
+     0
+    ],
+    [
+     "",
+     0,
+     0
+    ],
+    [
+     "&Delete Events...\tCtrl+D",
+     26,
+     0
+    ],
+    [
+     "Thin &Out Continuous Events...\tCtrl+N",
+     27,
+     0
+    ],
+    [
+     "",
+     0,
+     0
+    ],
+    [
+     "&Delete Identical Events\tCtrl+Y",
+     30,
+     0
+    ],
+    [
+     "&Reverse Notes\tCtrl+R",
+     31,
+     128
+    ]
+   ],
+   16
+  ],
+  [
+   "&Audio",
+   [
+    [
+     "&Audio System Settings...",
+     43,
+     0
+    ],
+    [
+     "Audio &Preferences...",
+     100,
+     0
+    ],
+    [
+     "Audio &Input Monitor...",
+     101,
+     0
+    ],
+    [
+     "&Wave Files in use...",
+     44,
+     0
+    ],
+    [
+     "",
+     0,
+     0
+    ],
+    [
+     "&Bounce Audio Tracks",
+     [
+      [
+       "Whole &Song",
+       102,
+       0
+      ],
+      [
+       "Between &Locators",
+       103,
+       128
+      ]
+     ],
+     16
+    ],
+    [
+     "",
+     0,
+     0
+    ],
+    [
+     "Delete &Outside Markers",
+     104,
+     1
+    ],
+    [
+     "D&elete Between Markers",
+     105,
+     1
+    ],
+    [
+     "&Distortion",
+     106,
+     1
+    ],
+    [
+     "&Swap Left and Right",
+     107,
+     1
+    ],
+    [
+     "&Normalize",
+     108,
+     129
+    ]
+   ],
+   16
+  ],
+  [
+   "Vi&deo",
+   [
+    [
+     "&Load Video...",
+     110,
+     0
+    ],
+    [
+     "&Show Video...",
+     111,
+     1
+    ],
+    [
+     "&Unload Video",
+     112,
+     129
+    ]
+   ],
+   16
+  ],
+  [
+   "&Options",
+   [
+    [
+     "&Preferences...",
+     36,
+     0
+    ],
+    [
+     "",
+     0,
+     0
+    ],
+    [
+     "&MIDI Settings...",
+     37,
+     0
+    ],
+    [
+     "&Synchronization Settings...",
+     38,
+     0
+    ],
+    [
+     "M&etronome Settings...",
+     39,
+     0
+    ],
+    [
+     "M&ixer Settings...",
+     40,
+     0
+    ],
+    [
+     "&Devices...",
+     41,
+     0
+    ],
+    [
+     "Patch &Lists...",
+     42,
+     0
+    ],
+    [
+     "",
+     0,
+     0
+    ],
+    [
+     "S&core Settings...",
+     45,
+     0
+    ],
+    [
+     "Lyric &Font...",
+     46,
+     0
+    ],
+    [
+     "",
+     0,
+     0
+    ],
+    [
+     "&Track Columns...",
+     47,
+     0
+    ],
+    [
+     "&Drum Columns...",
+     48,
+     128
+    ]
+   ],
+   16
+  ],
+  [
+   "&Window",
+   [
+    [
+     "&Cascade Windows\tShift+F5",
+     49,
+     0
+    ],
+    [
+     "&Tile Windows\tShift+F4",
+     50,
+     0
+    ],
+    [
+     "Arrange &Icons",
+     51,
+     0
+    ],
+    [
+     "Close &All",
+     52,
+     0
+    ],
+    [
+     "Configure &Fast Menu...",
+     53,
+     0
+    ],
+    [
+     "",
+     0,
+     0
+    ],
+    [
+     "&Hide Transport\tCtrl+F7",
+     54,
+     0
+    ],
+    [
+     "Hide &Editors\tCtrl+F8",
+     55,
+     0
+    ],
+    [
+     "Hi&de Fast Menu\tCtrl+F9",
+     56,
+     0
+    ],
+    [
+     "T&oggle Transport Caption",
+     57,
+     0
+    ],
+    [
+     "To&ggle Editors Caption",
+     58,
+     0
+    ],
+    [
+     "Toggle &Fast Menu Caption",
+     59,
+     0
+    ],
+    [
+     "",
+     0,
+     0
+    ],
+    [
+     "&Large Time Display",
+     67,
+     128
+    ]
+   ],
+   16
+  ],
+  [
+   "&Help",
+   [
+    [
+     "&Contents\tF1",
+     60,
+     0
+    ],
+    [
+     "",
+     0,
+     0
+    ],
+    [
+     "&Menus",
+     61,
+     0
+    ],
+    [
+     "&Windows",
+     62,
+     0
+    ],
+    [
+     "&Keyboard Shortcuts",
+     63,
+     0
+    ],
+    [
+     "&How to Use Help",
+     64,
+     0
+    ],
+    [
+     "",
+     0,
+     0
+    ],
+    [
+     "&About Sound Studio Gold...",
+     65,
+     128
+    ]
+   ],
+   16528
+  ]
+ ],
+ "accelerators": [
+  [
+   9,
+   79,
+   2
+  ],
+  [
+   9,
+   83,
+   3
+  ],
+  [
+   5,
+   46,
+   13
+  ],
+  [
+   9,
+   88,
+   13
+  ],
+  [
+   9,
+   45,
+   12
+  ],
+  [
+   9,
+   67,
+   12
+  ],
+  [
+   5,
+   45,
+   14
+  ],
+  [
+   9,
+   86,
+   14
+  ],
+  [
+   17,
+   8,
+   10
+  ],
+  [
+   9,
+   90,
+   10
+  ],
+  [
+   21,
+   8,
+   11
+  ],
+  [
+   9,
+   65,
+   11
+  ],
+  [
+   9,
+   84,
+   20
+  ],
+  [
+   9,
+   72,
+   21
+  ],
+  [
+   9,
+   76,
+   22
+  ],
+  [
+   9,
+   85,
+   23
+  ],
+  [
+   9,
+   74,
+   24
+  ],
+  [
+   9,
+   73,
+   25
+  ],
+  [
+   9,
+   68,
+   26
+  ],
+  [
+   9,
+   78,
+   27
+  ],
+  [
+   9,
+   89,
+   30
+  ],
+  [
+   9,
+   82,
+   31
+  ],
+  [
+   5,
+   116,
+   49
+  ],
+  [
+   5,
+   115,
+   50
+  ],
+  [
+   9,
+   118,
+   54
+  ],
+  [
+   9,
+   119,
+   55
+  ],
+  [
+   9,
+   120,
+   56
+  ],
+  [
+   1,
+   112,
+   60
+  ],
+  [
+   5,
+   118,
+   90
+  ],
+  [
+   5,
+   119,
+   91
+  ],
+  [
+   5,
+   120,
+   92
+  ],
+  [
+   133,
+   121,
+   93
+  ]
+ ],
+ "dialogs": {
+  "ABOUT_DLG": {
+   "style": 2428764162,
+   "x": 7,
+   "y": 16,
+   "cx": 170,
+   "cy": 164,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Sound Studio Gold",
+   "font": null,
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 164,
+     "cy": 132,
+     "id": 10,
+     "style": 1342177281,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 8,
+     "cx": 16,
+     "cy": 16,
+     "id": 65535,
+     "style": 1342177283,
+     "class": "STATIC",
+     "text": "IC_ABOUT"
+    },
+    {
+     "x": 28,
+     "y": 12,
+     "cx": 136,
+     "cy": 8,
+     "id": 103,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": ""
+    },
+    {
+     "x": 28,
+     "y": 24,
+     "cx": 136,
+     "cy": 8,
+     "id": 104,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": ""
+    },
+    {
+     "x": 28,
+     "y": 36,
+     "cx": 128,
+     "cy": 16,
+     "id": 65535,
+     "style": 1342308364,
+     "class": "STATIC",
+     "text": "Copyright \u00a9 1995-1997\nEvolution Electronics Ltd"
+    },
+    {
+     "x": 28,
+     "y": 56,
+     "cx": 128,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308364,
+     "class": "STATIC",
+     "text": "Programming by Stephen J. Mellin"
+    },
+    {
+     "x": 28,
+     "y": 68,
+     "cx": 128,
+     "cy": 16,
+     "id": 65535,
+     "style": 1342308492,
+     "class": "STATIC",
+     "text": "Audio Playback & Record code\nlicenced from SEK'D"
+    },
+    {
+     "x": 28,
+     "y": 88,
+     "cx": 128,
+     "cy": 26,
+     "id": 65535,
+     "style": 1342308492,
+     "class": "STATIC",
+     "text": "Product details from\nhttp://www.evolution.co.uk\ninfo@evolution.co.uk"
+    },
+    {
+     "x": 4,
+     "y": 116,
+     "cx": 164,
+     "cy": 2,
+     "id": 65535,
+     "style": 1342177282,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 28,
+     "y": 122,
+     "cx": 46,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308492,
+     "class": "STATIC",
+     "text": "Memory Free:"
+    },
+    {
+     "x": 76,
+     "y": 122,
+     "cx": 68,
+     "cy": 8,
+     "id": 105,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": ""
+    },
+    {
+     "x": 66,
+     "y": 140,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "AUDIOPAT_INFO_DLG": {
+   "style": 2160591040,
+   "x": 31,
+   "y": 22,
+   "cx": 170,
+   "cy": 130,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Audio Pattern Settings",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 162,
+     "cy": 90,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 10,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "&Name"
+    },
+    {
+     "x": 48,
+     "y": 8,
+     "cx": 114,
+     "cy": 12,
+     "id": 451,
+     "style": 1350631552,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 24,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "Vo&lume"
+    },
+    {
+     "x": 48,
+     "y": 22,
+     "cx": 24,
+     "cy": 12,
+     "id": 456,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 38,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "P&an"
+    },
+    {
+     "x": 48,
+     "y": 36,
+     "cx": 24,
+     "cy": 12,
+     "id": 457,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 52,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "FX &Delay"
+    },
+    {
+     "x": 48,
+     "y": 50,
+     "cx": 24,
+     "cy": 12,
+     "id": 458,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 66,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "FX D&epth"
+    },
+    {
+     "x": 48,
+     "y": 64,
+     "cx": 24,
+     "cy": 12,
+     "id": 459,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 80,
+     "cx": 18,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "Ti&me"
+    },
+    {
+     "x": 48,
+     "y": 78,
+     "cx": 24,
+     "cy": 12,
+     "id": 462,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 22,
+     "y": 100,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 110,
+     "y": 100,
+     "cx": 38,
+     "cy": 14,
+     "id": 2,
+     "style": 1342242816,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "AUDIOTRACK_INFO_DLG": {
+   "style": 2160591040,
+   "x": 31,
+   "y": 22,
+   "cx": 170,
+   "cy": 144,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Audio Track Settings",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 162,
+     "cy": 104,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 10,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "&Name"
+    },
+    {
+     "x": 48,
+     "y": 8,
+     "cx": 114,
+     "cy": 12,
+     "id": 451,
+     "style": 1350631552,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 24,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "Vo&lume"
+    },
+    {
+     "x": 48,
+     "y": 22,
+     "cx": 24,
+     "cy": 12,
+     "id": 456,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 38,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "P&an"
+    },
+    {
+     "x": 48,
+     "y": 36,
+     "cx": 24,
+     "cy": 12,
+     "id": 457,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 52,
+     "cx": 38,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "FX &Delay"
+    },
+    {
+     "x": 48,
+     "y": 50,
+     "cx": 24,
+     "cy": 12,
+     "id": 458,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 66,
+     "cx": 40,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "FX D&epth"
+    },
+    {
+     "x": 48,
+     "y": 64,
+     "cx": 24,
+     "cy": 12,
+     "id": 459,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 80,
+     "cx": 38,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "FX &Type"
+    },
+    {
+     "x": 48,
+     "y": 78,
+     "cx": 24,
+     "cy": 12,
+     "id": 460,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 94,
+     "cx": 18,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "Ti&me"
+    },
+    {
+     "x": 48,
+     "y": 92,
+     "cx": 24,
+     "cy": 12,
+     "id": 462,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 22,
+     "y": 114,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 110,
+     "y": 114,
+     "cx": 38,
+     "cy": 14,
+     "id": 2,
+     "style": 1342242816,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "AUDIO_PREFS_DLG": {
+   "style": 2160591040,
+   "x": 52,
+   "y": 19,
+   "cx": 154,
+   "cy": 128,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Audio Preferences",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 148,
+     "cy": 88,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 6,
+     "cx": 102,
+     "cy": 12,
+     "id": 2003,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": "Show &Names in Patterns"
+    },
+    {
+     "x": 8,
+     "y": 18,
+     "cx": 102,
+     "cy": 12,
+     "id": 2004,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "Draw &Waves in Patterns"
+    },
+    {
+     "x": 8,
+     "y": 30,
+     "cx": 140,
+     "cy": 12,
+     "id": 2017,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "S&how Audio Input Monitor automatically"
+    },
+    {
+     "x": 8,
+     "y": 42,
+     "cx": 126,
+     "cy": 12,
+     "id": 2018,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "&Play Audio Tracks while Recording"
+    },
+    {
+     "x": 8,
+     "y": 54,
+     "cx": 128,
+     "cy": 12,
+     "id": 2020,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "Use &Undo Files when editing WAVs"
+    },
+    {
+     "x": 8,
+     "y": 66,
+     "cx": 128,
+     "cy": 12,
+     "id": 2021,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "&Warn Before Glueing Audio Patterns"
+    },
+    {
+     "x": 8,
+     "y": 78,
+     "cx": 120,
+     "cy": 12,
+     "id": 2023,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "Display Audio &Meters on Mixer"
+    },
+    {
+     "x": 12,
+     "y": 98,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 104,
+     "y": 98,
+     "cx": 38,
+     "cy": 14,
+     "id": 2,
+     "style": 1342242816,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "AUDIO_SYS_DLG": {
+   "style": 2160591040,
+   "x": 52,
+   "y": 19,
+   "cx": 154,
+   "cy": 124,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Audio System Settings",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 146,
+     "cy": 36,
+     "id": 65535,
+     "style": 1342217377,
+     "class": "BorShade",
+     "text": "Recording and Playback Quality"
+    },
+    {
+     "x": 6,
+     "y": 16,
+     "cx": 44,
+     "cy": 12,
+     "id": 2006,
+     "style": 1342373897,
+     "class": "BorRadio",
+     "text": "&11025 Hz"
+    },
+    {
+     "x": 54,
+     "y": 16,
+     "cx": 44,
+     "cy": 12,
+     "id": 2007,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": "&22050 Hz"
+    },
+    {
+     "x": 104,
+     "y": 16,
+     "cx": 44,
+     "cy": 12,
+     "id": 2008,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": "&44100 Hz"
+    },
+    {
+     "x": 16,
+     "y": 28,
+     "cx": 20,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "(Low)"
+    },
+    {
+     "x": 64,
+     "y": 28,
+     "cx": 32,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "(Medium)"
+    },
+    {
+     "x": 114,
+     "y": 28,
+     "cx": 22,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "(High)"
+    },
+    {
+     "x": 4,
+     "y": 44,
+     "cx": 146,
+     "cy": 20,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 48,
+     "cx": 54,
+     "cy": 12,
+     "id": 2024,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": "&Anti Clipping"
+    },
+    {
+     "x": 4,
+     "y": 68,
+     "cx": 146,
+     "cy": 20,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 74,
+     "cx": 38,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "&Buffer Size"
+    },
+    {
+     "x": 54,
+     "y": 72,
+     "cx": 34,
+     "cy": 78,
+     "id": 2016,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 12,
+     "y": 94,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 104,
+     "y": 94,
+     "cx": 38,
+     "cy": 14,
+     "id": 2,
+     "style": 1342242816,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "CONFIGURE_DLG": {
+   "style": 2160591040,
+   "x": 9,
+   "y": 50,
+   "cx": 250,
+   "cy": 140,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Configure Fast Menu",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 102,
+     "cy": 98,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "&Functions"
+    },
+    {
+     "x": 8,
+     "y": 18,
+     "cx": 94,
+     "cy": 80,
+     "id": 252,
+     "style": 1352728577,
+     "class": "LISTBOX",
+     "text": ""
+    },
+    {
+     "x": 110,
+     "y": 4,
+     "cx": 92,
+     "cy": 98,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "&Selections"
+    },
+    {
+     "x": 114,
+     "y": 18,
+     "cx": 84,
+     "cy": 80,
+     "id": 253,
+     "style": 1352728577,
+     "class": "LISTBOX",
+     "text": ""
+    },
+    {
+     "x": 34,
+     "y": 112,
+     "cx": 38,
+     "cy": 14,
+     "id": 254,
+     "style": 1342242816,
+     "class": "BUTTON",
+     "text": "&Add"
+    },
+    {
+     "x": 114,
+     "y": 106,
+     "cx": 38,
+     "cy": 14,
+     "id": 255,
+     "style": 1342242816,
+     "class": "BUTTON",
+     "text": "Dele&te"
+    },
+    {
+     "x": 160,
+     "y": 106,
+     "cx": 38,
+     "cy": 14,
+     "id": 257,
+     "style": 1342242816,
+     "class": "BUTTON",
+     "text": "&Up"
+    },
+    {
+     "x": 114,
+     "y": 122,
+     "cx": 38,
+     "cy": 14,
+     "id": 256,
+     "style": 1342242816,
+     "class": "BUTTON",
+     "text": "&Empty"
+    },
+    {
+     "x": 160,
+     "y": 122,
+     "cx": 38,
+     "cy": 14,
+     "id": 258,
+     "style": 1342242816,
+     "class": "BUTTON",
+     "text": "&Down"
+    },
+    {
+     "x": 208,
+     "y": 24,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 208,
+     "y": 66,
+     "cx": 38,
+     "cy": 14,
+     "id": 2,
+     "style": 1342242816,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "CONFLICT_DLG": {
+   "style": 2160591040,
+   "x": 46,
+   "y": 42,
+   "cx": 196,
+   "cy": 144,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Chord Track Conflict Warning",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 188,
+     "cy": 76,
+     "id": 65535,
+     "style": 1342177281,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 8,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "There are"
+    },
+    {
+     "x": 42,
+     "y": 8,
+     "cx": 8,
+     "cy": 8,
+     "id": 2101,
+     "style": 1342308354,
+     "class": "STATIC",
+     "text": "00"
+    },
+    {
+     "x": 52,
+     "y": 8,
+     "cx": 132,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "tracks using the same Port and Channel"
+    },
+    {
+     "x": 8,
+     "y": 18,
+     "cx": 176,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "as the Chord Track. This can be solved by one of the"
+    },
+    {
+     "x": 8,
+     "y": 28,
+     "cx": 32,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "following:"
+    },
+    {
+     "x": 8,
+     "y": 38,
+     "cx": 156,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "1. Delete the Chord Track if you do not need it."
+    },
+    {
+     "x": 8,
+     "y": 48,
+     "cx": 168,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "2. Change the Channel of any MIDI Track which is"
+    },
+    {
+     "x": 16,
+     "y": 58,
+     "cx": 174,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "using the same Port as the Chord Track, and is using"
+    },
+    {
+     "x": 16,
+     "y": 68,
+     "cx": 122,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "a Channel between 10 and 15."
+    },
+    {
+     "x": 4,
+     "y": 84,
+     "cx": 188,
+     "cy": 24,
+     "id": 65535,
+     "style": 1342177281,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 86,
+     "cx": 176,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "The Preferences Dialog contains a switch which will"
+    },
+    {
+     "x": 8,
+     "y": 96,
+     "cx": 176,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "prevent this message from being displayed if required."
+    },
+    {
+     "x": 79,
+     "y": 114,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "DEFINITION_DLG": {
+   "style": 2160591040,
+   "x": 24,
+   "y": 24,
+   "cx": 214,
+   "cy": 222,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "MIDI Settings",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 102,
+     "cy": 100,
+     "id": 65535,
+     "style": 1342341121,
+     "class": "BorShade",
+     "text": "T&imebase"
+    },
+    {
+     "x": 12,
+     "y": 18,
+     "cx": 28,
+     "cy": 12,
+     "id": 1001,
+     "style": 1342373897,
+     "class": "BorRadio",
+     "text": "48"
+    },
+    {
+     "x": 12,
+     "y": 32,
+     "cx": 28,
+     "cy": 12,
+     "id": 1002,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": "72"
+    },
+    {
+     "x": 12,
+     "y": 46,
+     "cx": 28,
+     "cy": 12,
+     "id": 1003,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": "96"
+    },
+    {
+     "x": 12,
+     "y": 60,
+     "cx": 28,
+     "cy": 12,
+     "id": 1004,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": "120"
+    },
+    {
+     "x": 12,
+     "y": 74,
+     "cx": 28,
+     "cy": 12,
+     "id": 1005,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": "144"
+    },
+    {
+     "x": 12,
+     "y": 88,
+     "cx": 28,
+     "cy": 12,
+     "id": 1006,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": "168"
+    },
+    {
+     "x": 56,
+     "y": 18,
+     "cx": 28,
+     "cy": 12,
+     "id": 1007,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": "192"
+    },
+    {
+     "x": 56,
+     "y": 32,
+     "cx": 28,
+     "cy": 12,
+     "id": 1008,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": "224"
+    },
+    {
+     "x": 56,
+     "y": 46,
+     "cx": 28,
+     "cy": 12,
+     "id": 1009,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": "240"
+    },
+    {
+     "x": 56,
+     "y": 60,
+     "cx": 28,
+     "cy": 12,
+     "id": 1010,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": "384"
+    },
+    {
+     "x": 56,
+     "y": 74,
+     "cx": 28,
+     "cy": 12,
+     "id": 1011,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": "480"
+    },
+    {
+     "x": 56,
+     "y": 88,
+     "cx": 28,
+     "cy": 12,
+     "id": 1012,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": "720"
+    },
+    {
+     "x": 4,
+     "y": 108,
+     "cx": 102,
+     "cy": 78,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 112,
+     "cx": 90,
+     "cy": 12,
+     "id": 1013,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": "&Thru Channel Messages"
+    },
+    {
+     "x": 8,
+     "y": 124,
+     "cx": 96,
+     "cy": 12,
+     "id": 1014,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "Thru &Real Time Messages"
+    },
+    {
+     "x": 8,
+     "y": 136,
+     "cx": 95,
+     "cy": 12,
+     "id": 1015,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "Reset Controllers on &Stop"
+    },
+    {
+     "x": 8,
+     "y": 148,
+     "cx": 73,
+     "cy": 12,
+     "id": 1016,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "&Kill Notes on Cycle"
+    },
+    {
+     "x": 8,
+     "y": 160,
+     "cx": 73,
+     "cy": 12,
+     "id": 1042,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "Chase E&vents"
+    },
+    {
+     "x": 8,
+     "y": 172,
+     "cx": 92,
+     "cy": 12,
+     "id": 1043,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "Send &GM/GS/XG Reset"
+    },
+    {
+     "x": 110,
+     "y": 4,
+     "cx": 100,
+     "cy": 100,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "Message &Filters"
+    },
+    {
+     "x": 114,
+     "y": 18,
+     "cx": 32,
+     "cy": 12,
+     "id": 1017,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": "&Notes"
+    },
+    {
+     "x": 114,
+     "y": 30,
+     "cx": 46,
+     "cy": 12,
+     "id": 1018,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "&Aftertouch"
+    },
+    {
+     "x": 114,
+     "y": 42,
+     "cx": 47,
+     "cy": 12,
+     "id": 1019,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "Contro&llers"
+    },
+    {
+     "x": 114,
+     "y": 54,
+     "cx": 66,
+     "cy": 12,
+     "id": 1020,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "&Program Change"
+    },
+    {
+     "x": 114,
+     "y": 66,
+     "cx": 70,
+     "cy": 12,
+     "id": 1021,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "C&hannel Pressure"
+    },
+    {
+     "x": 114,
+     "y": 78,
+     "cx": 48,
+     "cy": 12,
+     "id": 1022,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "Pitch &Bend"
+    },
+    {
+     "x": 114,
+     "y": 90,
+     "cx": 68,
+     "cy": 12,
+     "id": 1023,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "System &Exclusive"
+    },
+    {
+     "x": 110,
+     "y": 108,
+     "cx": 100,
+     "cy": 78,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "Channel &Filters"
+    },
+    {
+     "x": 114,
+     "y": 122,
+     "cx": 18,
+     "cy": 12,
+     "id": 1024,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": "1"
+    },
+    {
+     "x": 138,
+     "y": 122,
+     "cx": 18,
+     "cy": 12,
+     "id": 1028,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "5"
+    },
+    {
+     "x": 162,
+     "y": 122,
+     "cx": 18,
+     "cy": 12,
+     "id": 1032,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "9"
+    },
+    {
+     "x": 186,
+     "y": 122,
+     "cx": 22,
+     "cy": 12,
+     "id": 1036,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "13"
+    },
+    {
+     "x": 114,
+     "y": 138,
+     "cx": 18,
+     "cy": 12,
+     "id": 1025,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "2"
+    },
+    {
+     "x": 138,
+     "y": 138,
+     "cx": 18,
+     "cy": 12,
+     "id": 1029,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "6"
+    },
+    {
+     "x": 162,
+     "y": 138,
+     "cx": 22,
+     "cy": 12,
+     "id": 1033,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "10"
+    },
+    {
+     "x": 186,
+     "y": 138,
+     "cx": 22,
+     "cy": 12,
+     "id": 1037,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "14"
+    },
+    {
+     "x": 114,
+     "y": 154,
+     "cx": 18,
+     "cy": 12,
+     "id": 1026,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "3"
+    },
+    {
+     "x": 138,
+     "y": 154,
+     "cx": 18,
+     "cy": 12,
+     "id": 1030,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "7"
+    },
+    {
+     "x": 162,
+     "y": 154,
+     "cx": 22,
+     "cy": 12,
+     "id": 1034,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "11"
+    },
+    {
+     "x": 186,
+     "y": 154,
+     "cx": 22,
+     "cy": 12,
+     "id": 1038,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "15"
+    },
+    {
+     "x": 114,
+     "y": 170,
+     "cx": 18,
+     "cy": 12,
+     "id": 1027,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "4"
+    },
+    {
+     "x": 138,
+     "y": 170,
+     "cx": 18,
+     "cy": 12,
+     "id": 1031,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "8"
+    },
+    {
+     "x": 162,
+     "y": 170,
+     "cx": 22,
+     "cy": 12,
+     "id": 1035,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "12"
+    },
+    {
+     "x": 186,
+     "y": 170,
+     "cx": 22,
+     "cy": 12,
+     "id": 1039,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "16"
+    },
+    {
+     "x": 38,
+     "y": 192,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 138,
+     "y": 192,
+     "cx": 38,
+     "cy": 14,
+     "id": 2,
+     "style": 1342242816,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "DELETE_DLG": {
+   "style": 2160591040,
+   "x": 112,
+   "y": 13,
+   "cx": 112,
+   "cy": 232,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Delete Events",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 104,
+     "cy": 98,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "Events to Delete"
+    },
+    {
+     "x": 8,
+     "y": 16,
+     "cx": 40,
+     "cy": 12,
+     "id": 1101,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": "&Notes"
+    },
+    {
+     "x": 8,
+     "y": 28,
+     "cx": 92,
+     "cy": 12,
+     "id": 1102,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "Polyphonic &Key Pressure"
+    },
+    {
+     "x": 8,
+     "y": 40,
+     "cx": 64,
+     "cy": 12,
+     "id": 1103,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "Contro&llers"
+    },
+    {
+     "x": 8,
+     "y": 52,
+     "cx": 80,
+     "cy": 12,
+     "id": 1104,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "&Program Changes"
+    },
+    {
+     "x": 8,
+     "y": 64,
+     "cx": 84,
+     "cy": 12,
+     "id": 1105,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "C&hannel Pressure"
+    },
+    {
+     "x": 8,
+     "y": 76,
+     "cx": 60,
+     "cy": 12,
+     "id": 1106,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "Pitch &Bend"
+    },
+    {
+     "x": 8,
+     "y": 88,
+     "cx": 84,
+     "cy": 12,
+     "id": 1107,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "System &Exclusive"
+    },
+    {
+     "x": 4,
+     "y": 106,
+     "cx": 104,
+     "cy": 44,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "Controller Scope"
+    },
+    {
+     "x": 10,
+     "y": 120,
+     "cx": 92,
+     "cy": 60,
+     "id": 1114,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 14,
+     "y": 136,
+     "cx": 42,
+     "cy": 12,
+     "id": 1115,
+     "style": 1342373897,
+     "class": "BorRadio",
+     "text": "All T&ypes"
+    },
+    {
+     "x": 64,
+     "y": 136,
+     "cx": 38,
+     "cy": 12,
+     "id": 1116,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": "&Specific"
+    },
+    {
+     "x": 4,
+     "y": 154,
+     "cx": 104,
+     "cy": 42,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "Scope (Notes/Key Pressure)"
+    },
+    {
+     "x": 10,
+     "y": 170,
+     "cx": 18,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "&From"
+    },
+    {
+     "x": 30,
+     "y": 168,
+     "cx": 22,
+     "cy": 12,
+     "id": 1108,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 64,
+     "y": 170,
+     "cx": 12,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "&To"
+    },
+    {
+     "x": 78,
+     "y": 168,
+     "cx": 22,
+     "cy": 12,
+     "id": 1109,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 14,
+     "y": 182,
+     "cx": 38,
+     "cy": 12,
+     "id": 1112,
+     "style": 1342373897,
+     "class": "BorRadio",
+     "text": "&All"
+    },
+    {
+     "x": 64,
+     "y": 182,
+     "cx": 40,
+     "cy": 12,
+     "id": 1113,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": "&Range"
+    },
+    {
+     "x": 10,
+     "y": 202,
+     "cx": 37,
+     "cy": 24,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 66,
+     "y": 202,
+     "cx": 36,
+     "cy": 24,
+     "id": 2,
+     "style": 1342242816,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "DEVICES_DLG": {
+   "style": 2160591040,
+   "x": 15,
+   "y": 26,
+   "cx": 270,
+   "cy": 186,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Select Devices",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 108,
+     "cy": 146,
+     "id": 65535,
+     "style": 1342341121,
+     "class": "BorShade",
+     "text": "&Inputs"
+    },
+    {
+     "x": 8,
+     "y": 18,
+     "cx": 100,
+     "cy": 128,
+     "id": 1652,
+     "style": 1350631432,
+     "class": "LISTBOX",
+     "text": ""
+    },
+    {
+     "x": 116,
+     "y": 4,
+     "cx": 108,
+     "cy": 146,
+     "id": 65535,
+     "style": 1342341121,
+     "class": "BorShade",
+     "text": "&Outputs"
+    },
+    {
+     "x": 120,
+     "y": 18,
+     "cx": 100,
+     "cy": 128,
+     "id": 1653,
+     "style": 1350631432,
+     "class": "LISTBOX",
+     "text": ""
+    },
+    {
+     "x": 46,
+     "y": 156,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 186,
+     "y": 156,
+     "cx": 38,
+     "cy": 14,
+     "id": 2,
+     "style": 1342242816,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 226,
+     "y": 4,
+     "cx": 40,
+     "cy": 146,
+     "id": 65535,
+     "style": 1342341121,
+     "class": "BorShade",
+     "text": "GM GS XG"
+    },
+    {
+     "x": 230,
+     "y": 18,
+     "cx": 8,
+     "cy": 8,
+     "id": 1654,
+     "style": 1342373897,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 242,
+     "y": 18,
+     "cx": 8,
+     "cy": 8,
+     "id": 1655,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 254,
+     "y": 18,
+     "cx": 8,
+     "cy": 8,
+     "id": 1656,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 230,
+     "y": 26,
+     "cx": 8,
+     "cy": 8,
+     "id": 1657,
+     "style": 1342373897,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 242,
+     "y": 26,
+     "cx": 8,
+     "cy": 8,
+     "id": 1658,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 254,
+     "y": 26,
+     "cx": 8,
+     "cy": 8,
+     "id": 1659,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 230,
+     "y": 34,
+     "cx": 8,
+     "cy": 8,
+     "id": 1660,
+     "style": 1342373897,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 242,
+     "y": 34,
+     "cx": 8,
+     "cy": 8,
+     "id": 1661,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 254,
+     "y": 34,
+     "cx": 8,
+     "cy": 8,
+     "id": 1662,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 230,
+     "y": 42,
+     "cx": 8,
+     "cy": 8,
+     "id": 1663,
+     "style": 1342373897,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 242,
+     "y": 42,
+     "cx": 8,
+     "cy": 8,
+     "id": 1664,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 254,
+     "y": 42,
+     "cx": 8,
+     "cy": 8,
+     "id": 1665,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 230,
+     "y": 50,
+     "cx": 8,
+     "cy": 8,
+     "id": 1666,
+     "style": 1342373897,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 242,
+     "y": 50,
+     "cx": 8,
+     "cy": 8,
+     "id": 1667,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 254,
+     "y": 50,
+     "cx": 8,
+     "cy": 8,
+     "id": 1668,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 230,
+     "y": 58,
+     "cx": 8,
+     "cy": 8,
+     "id": 1669,
+     "style": 1342373897,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 242,
+     "y": 58,
+     "cx": 8,
+     "cy": 8,
+     "id": 1670,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 254,
+     "y": 58,
+     "cx": 8,
+     "cy": 8,
+     "id": 1671,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 230,
+     "y": 66,
+     "cx": 8,
+     "cy": 8,
+     "id": 1672,
+     "style": 1342373897,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 242,
+     "y": 66,
+     "cx": 8,
+     "cy": 8,
+     "id": 1673,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 254,
+     "y": 66,
+     "cx": 8,
+     "cy": 8,
+     "id": 1674,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 230,
+     "y": 74,
+     "cx": 8,
+     "cy": 8,
+     "id": 1675,
+     "style": 1342373897,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 242,
+     "y": 74,
+     "cx": 8,
+     "cy": 8,
+     "id": 1676,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 254,
+     "y": 74,
+     "cx": 8,
+     "cy": 8,
+     "id": 1677,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 230,
+     "y": 82,
+     "cx": 8,
+     "cy": 8,
+     "id": 1678,
+     "style": 1342373897,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 242,
+     "y": 82,
+     "cx": 8,
+     "cy": 8,
+     "id": 1679,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 254,
+     "y": 82,
+     "cx": 8,
+     "cy": 8,
+     "id": 1680,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 230,
+     "y": 90,
+     "cx": 8,
+     "cy": 8,
+     "id": 1681,
+     "style": 1342373897,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 242,
+     "y": 90,
+     "cx": 8,
+     "cy": 8,
+     "id": 1682,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 254,
+     "y": 90,
+     "cx": 8,
+     "cy": 8,
+     "id": 1683,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 230,
+     "y": 98,
+     "cx": 8,
+     "cy": 8,
+     "id": 1684,
+     "style": 1342373897,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 242,
+     "y": 98,
+     "cx": 8,
+     "cy": 8,
+     "id": 1685,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 254,
+     "y": 98,
+     "cx": 8,
+     "cy": 8,
+     "id": 1686,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 230,
+     "y": 106,
+     "cx": 8,
+     "cy": 8,
+     "id": 1687,
+     "style": 1342373897,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 242,
+     "y": 106,
+     "cx": 8,
+     "cy": 8,
+     "id": 1688,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 254,
+     "y": 106,
+     "cx": 8,
+     "cy": 8,
+     "id": 1689,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 230,
+     "y": 114,
+     "cx": 8,
+     "cy": 8,
+     "id": 1690,
+     "style": 1342373897,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 242,
+     "y": 114,
+     "cx": 8,
+     "cy": 8,
+     "id": 1691,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 254,
+     "y": 114,
+     "cx": 8,
+     "cy": 8,
+     "id": 1692,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 230,
+     "y": 122,
+     "cx": 8,
+     "cy": 8,
+     "id": 1693,
+     "style": 1342373897,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 242,
+     "y": 122,
+     "cx": 8,
+     "cy": 8,
+     "id": 1694,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 254,
+     "y": 122,
+     "cx": 8,
+     "cy": 8,
+     "id": 1695,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 230,
+     "y": 130,
+     "cx": 8,
+     "cy": 8,
+     "id": 1696,
+     "style": 1342373897,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 242,
+     "y": 130,
+     "cx": 8,
+     "cy": 8,
+     "id": 1697,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 254,
+     "y": 130,
+     "cx": 8,
+     "cy": 8,
+     "id": 1698,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 230,
+     "y": 138,
+     "cx": 8,
+     "cy": 8,
+     "id": 1699,
+     "style": 1342373897,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 242,
+     "y": 138,
+     "cx": 8,
+     "cy": 8,
+     "id": 1700,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    },
+    {
+     "x": 254,
+     "y": 138,
+     "cx": 8,
+     "cy": 8,
+     "id": 1701,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ""
+    }
+   ]
+  },
+  "DIM_PAT_DLG": {
+   "style": 2160591040,
+   "x": 26,
+   "y": 30,
+   "cx": 148,
+   "cy": 88,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Change Pattern Dimensions",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 140,
+     "cy": 48,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 10,
+     "cx": 18,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "&Start"
+    },
+    {
+     "x": 28,
+     "y": 8,
+     "cx": 46,
+     "cy": 12,
+     "id": 1301,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": "0000:00:000"
+    },
+    {
+     "x": 78,
+     "y": 10,
+     "cx": 14,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "&End"
+    },
+    {
+     "x": 94,
+     "y": 8,
+     "cx": 46,
+     "cy": 12,
+     "id": 1302,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": "0000:00:000"
+    },
+    {
+     "x": 8,
+     "y": 26,
+     "cx": 18,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "&Add"
+    },
+    {
+     "x": 28,
+     "y": 24,
+     "cx": 22,
+     "cy": 12,
+     "id": 1303,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 54,
+     "y": 26,
+     "cx": 64,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "blank bars to start"
+    },
+    {
+     "x": 8,
+     "y": 38,
+     "cx": 66,
+     "cy": 12,
+     "id": 1304,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": "&Keep Same Size"
+    },
+    {
+     "x": 20,
+     "y": 58,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 90,
+     "y": 58,
+     "cx": 38,
+     "cy": 14,
+     "id": 2,
+     "style": 1342242816,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "DRUM_COLUMN_DLG": {
+   "style": 2160591040,
+   "x": 30,
+   "y": 36,
+   "cx": 138,
+   "cy": 95,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Select Drum Columns",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 130,
+     "cy": 52,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 6,
+     "cx": 56,
+     "cy": 12,
+     "id": 651,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "Drum &Name"
+    },
+    {
+     "x": 8,
+     "y": 18,
+     "cx": 56,
+     "cy": 12,
+     "id": 652,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "C&hannel"
+    },
+    {
+     "x": 8,
+     "y": 30,
+     "cx": 56,
+     "cy": 12,
+     "id": 653,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "&Key"
+    },
+    {
+     "x": 8,
+     "y": 42,
+     "cx": 56,
+     "cy": 12,
+     "id": 654,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "&Velocity"
+    },
+    {
+     "x": 74,
+     "y": 6,
+     "cx": 56,
+     "cy": 12,
+     "id": 655,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "&Length"
+    },
+    {
+     "x": 74,
+     "y": 18,
+     "cx": 56,
+     "cy": 12,
+     "id": 656,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "M&ute"
+    },
+    {
+     "x": 74,
+     "y": 30,
+     "cx": 56,
+     "cy": 12,
+     "id": 657,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "&Solo"
+    },
+    {
+     "x": 74,
+     "y": 42,
+     "cx": 56,
+     "cy": 12,
+     "id": 658,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "In&fo"
+    },
+    {
+     "x": 16,
+     "y": 62,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 82,
+     "y": 62,
+     "cx": 38,
+     "cy": 14,
+     "id": 2,
+     "style": 1342177936,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "DRUM_INFO_DLG": {
+   "style": 2160591040,
+   "x": 30,
+   "y": 36,
+   "cx": 176,
+   "cy": 132,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Drum Settings",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 168,
+     "cy": 90,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 10,
+     "cx": 38,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "&Kit Name"
+    },
+    {
+     "x": 54,
+     "y": 8,
+     "cx": 114,
+     "cy": 12,
+     "id": 701,
+     "style": 1350631552,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 24,
+     "cx": 38,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "Drum &Name"
+    },
+    {
+     "x": 54,
+     "y": 22,
+     "cx": 114,
+     "cy": 12,
+     "id": 702,
+     "style": 1350631552,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 38,
+     "cx": 28,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "C&hannel"
+    },
+    {
+     "x": 54,
+     "y": 36,
+     "cx": 24,
+     "cy": 12,
+     "id": 703,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 52,
+     "cx": 14,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "K&ey"
+    },
+    {
+     "x": 54,
+     "y": 50,
+     "cx": 24,
+     "cy": 12,
+     "id": 704,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 66,
+     "cx": 28,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "&Velocity"
+    },
+    {
+     "x": 54,
+     "y": 64,
+     "cx": 24,
+     "cy": 12,
+     "id": 705,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 80,
+     "cx": 24,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "&Length"
+    },
+    {
+     "x": 54,
+     "y": 78,
+     "cx": 24,
+     "cy": 12,
+     "id": 706,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 28,
+     "y": 100,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 110,
+     "y": 100,
+     "cx": 38,
+     "cy": 14,
+     "id": 2,
+     "style": 1342242816,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "LENGTH_DLG": {
+   "style": 2160591040,
+   "x": 13,
+   "y": 21,
+   "cx": 110,
+   "cy": 172,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Change Lengths",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 102,
+     "cy": 84,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "Type of Change"
+    },
+    {
+     "x": 8,
+     "y": 18,
+     "cx": 46,
+     "cy": 12,
+     "id": 1201,
+     "style": 1342308361,
+     "class": "BorRadio",
+     "text": "&By Amount"
+    },
+    {
+     "x": 8,
+     "y": 44,
+     "cx": 54,
+     "cy": 12,
+     "id": 1202,
+     "style": 1342177289,
+     "class": "BorRadio",
+     "text": "&Make Legato"
+    },
+    {
+     "x": 8,
+     "y": 58,
+     "cx": 70,
+     "cy": 12,
+     "id": 1203,
+     "style": 1342177289,
+     "class": "BorRadio",
+     "text": "Remove O&verlaps"
+    },
+    {
+     "x": 8,
+     "y": 72,
+     "cx": 54,
+     "cy": 12,
+     "id": 1204,
+     "style": 1342177289,
+     "class": "BorRadio",
+     "text": "F&ixed Length"
+    },
+    {
+     "x": 80,
+     "y": 18,
+     "cx": 22,
+     "cy": 12,
+     "id": 1205,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 24,
+     "y": 32,
+     "cx": 34,
+     "cy": 12,
+     "id": 1206,
+     "style": 1342308361,
+     "class": "BorRadio",
+     "text": "&Longer"
+    },
+    {
+     "x": 68,
+     "y": 32,
+     "cx": 36,
+     "cy": 12,
+     "id": 1207,
+     "style": 1342177289,
+     "class": "BorRadio",
+     "text": "&Shorter"
+    },
+    {
+     "x": 70,
+     "y": 72,
+     "cx": 32,
+     "cy": 60,
+     "id": 1214,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 4,
+     "y": 92,
+     "cx": 102,
+     "cy": 44,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "Scope"
+    },
+    {
+     "x": 10,
+     "y": 108,
+     "cx": 18,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "&From"
+    },
+    {
+     "x": 31,
+     "y": 106,
+     "cx": 22,
+     "cy": 12,
+     "id": 1208,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 64,
+     "y": 108,
+     "cx": 10,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "&To"
+    },
+    {
+     "x": 80,
+     "y": 106,
+     "cx": 22,
+     "cy": 12,
+     "id": 1209,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 14,
+     "y": 122,
+     "cx": 20,
+     "cy": 12,
+     "id": 1210,
+     "style": 1342308361,
+     "class": "BorRadio",
+     "text": "&All"
+    },
+    {
+     "x": 64,
+     "y": 122,
+     "cx": 34,
+     "cy": 12,
+     "id": 1211,
+     "style": 1342177289,
+     "class": "BorRadio",
+     "text": "&Range"
+    },
+    {
+     "x": 8,
+     "y": 142,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 64,
+     "y": 142,
+     "cx": 38,
+     "cy": 14,
+     "id": 2,
+     "style": 1342242816,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "MESSAGE_DLG": {
+   "style": 2160591040,
+   "x": 46,
+   "y": 42,
+   "cx": 190,
+   "cy": 118,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Warning",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 182,
+     "cy": 50,
+     "id": 65535,
+     "style": 1342177281,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 8,
+     "cx": 176,
+     "cy": 42,
+     "id": 2151,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": ""
+    },
+    {
+     "x": 4,
+     "y": 58,
+     "cx": 182,
+     "cy": 24,
+     "id": 65535,
+     "style": 1342177281,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 60,
+     "cx": 176,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "The Preferences Dialog contains a switch which will"
+    },
+    {
+     "x": 8,
+     "y": 70,
+     "cx": 176,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "prevent this message from being displayed if required."
+    },
+    {
+     "x": 76,
+     "y": 88,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "METRONOME_DLG": {
+   "style": 2160591040,
+   "x": 56,
+   "y": 43,
+   "cx": 150,
+   "cy": 184,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Metronome Settings",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 142,
+     "cy": 26,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "Output"
+    },
+    {
+     "x": 8,
+     "y": 16,
+     "cx": 28,
+     "cy": 12,
+     "id": 1602,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": "&MIDI"
+    },
+    {
+     "x": 86,
+     "y": 16,
+     "cx": 39,
+     "cy": 12,
+     "id": 1601,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "&Speaker"
+    },
+    {
+     "x": 4,
+     "y": 34,
+     "cx": 142,
+     "cy": 88,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "MIDI Output"
+    },
+    {
+     "x": 8,
+     "y": 50,
+     "cx": 22,
+     "cy": 10,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "&Port"
+    },
+    {
+     "x": 38,
+     "y": 48,
+     "cx": 104,
+     "cy": 44,
+     "id": 1603,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 66,
+     "cx": 26,
+     "cy": 10,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "C&hannel"
+    },
+    {
+     "x": 38,
+     "y": 64,
+     "cx": 14,
+     "cy": 12,
+     "id": 1604,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 42,
+     "y": 82,
+     "cx": 48,
+     "cy": 10,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "Bar        Beat"
+    },
+    {
+     "x": 8,
+     "y": 92,
+     "cx": 18,
+     "cy": 10,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "P&itch"
+    },
+    {
+     "x": 38,
+     "y": 92,
+     "cx": 24,
+     "cy": 12,
+     "id": 1605,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 68,
+     "y": 92,
+     "cx": 24,
+     "cy": 12,
+     "id": 1606,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 108,
+     "cx": 26,
+     "cy": 10,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "&Velocity"
+    },
+    {
+     "x": 38,
+     "y": 106,
+     "cx": 24,
+     "cy": 12,
+     "id": 1607,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 68,
+     "y": 106,
+     "cx": 24,
+     "cy": 12,
+     "id": 1608,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 4,
+     "y": 126,
+     "cx": 58,
+     "cy": 20,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 130,
+     "cx": 52,
+     "cy": 12,
+     "id": 1612,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": "&Record Only"
+    },
+    {
+     "x": 66,
+     "y": 126,
+     "cx": 80,
+     "cy": 20,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 70,
+     "y": 132,
+     "cx": 62,
+     "cy": 10,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "Count in &Bars (0-4)"
+    },
+    {
+     "x": 134,
+     "y": 130,
+     "cx": 8,
+     "cy": 12,
+     "id": 1609,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 20,
+     "y": 152,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 92,
+     "y": 152,
+     "cx": 38,
+     "cy": 14,
+     "id": 2,
+     "style": 1342242816,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "MIXDEF_DLG": {
+   "style": 2160591040,
+   "x": 60,
+   "y": 42,
+   "cx": 174,
+   "cy": 170,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Mixer Settings",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 166,
+     "cy": 44,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "Control             Type             Default  Min   Max"
+    },
+    {
+     "x": 8,
+     "y": 20,
+     "cx": 24,
+     "cy": 10,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "User &1"
+    },
+    {
+     "x": 34,
+     "y": 18,
+     "cx": 70,
+     "cy": 66,
+     "id": 1356,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 108,
+     "y": 18,
+     "cx": 18,
+     "cy": 12,
+     "id": 1357,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 128,
+     "y": 18,
+     "cx": 18,
+     "cy": 12,
+     "id": 1358,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 148,
+     "y": 18,
+     "cx": 18,
+     "cy": 12,
+     "id": 1359,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 34,
+     "cx": 24,
+     "cy": 10,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "User &2"
+    },
+    {
+     "x": 34,
+     "y": 32,
+     "cx": 70,
+     "cy": 66,
+     "id": 1351,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 108,
+     "y": 32,
+     "cx": 18,
+     "cy": 12,
+     "id": 1352,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 128,
+     "y": 32,
+     "cx": 18,
+     "cy": 12,
+     "id": 1353,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 148,
+     "y": 32,
+     "cx": 18,
+     "cy": 12,
+     "id": 1354,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 4,
+     "y": 52,
+     "cx": 166,
+     "cy": 26,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "Text &Under Faders"
+    },
+    {
+     "x": 8,
+     "y": 64,
+     "cx": 40,
+     "cy": 12,
+     "id": 1368,
+     "style": 1342308361,
+     "class": "BorRadio",
+     "text": "'&Volume'"
+    },
+    {
+     "x": 52,
+     "y": 64,
+     "cx": 56,
+     "cy": 12,
+     "id": 1369,
+     "style": 1342177289,
+     "class": "BorRadio",
+     "text": "&Track Names"
+    },
+    {
+     "x": 112,
+     "y": 64,
+     "cx": 56,
+     "cy": 12,
+     "id": 1370,
+     "style": 1342177289,
+     "class": "BorRadio",
+     "text": "&Patch Names"
+    },
+    {
+     "x": 4,
+     "y": 82,
+     "cx": 166,
+     "cy": 52,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 84,
+     "cx": 74,
+     "cy": 12,
+     "id": 1365,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "&MIDI Input to mixer"
+    },
+    {
+     "x": 8,
+     "y": 96,
+     "cx": 74,
+     "cy": 12,
+     "id": 1366,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "&Song data to mixer"
+    },
+    {
+     "x": 8,
+     "y": 108,
+     "cx": 94,
+     "cy": 12,
+     "id": 1367,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "&Record mixer movements"
+    },
+    {
+     "x": 8,
+     "y": 120,
+     "cx": 58,
+     "cy": 12,
+     "id": 1371,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "Volumes &Only"
+    },
+    {
+     "x": 22,
+     "y": 140,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 114,
+     "y": 140,
+     "cx": 38,
+     "cy": 14,
+     "id": 2,
+     "style": 1342242816,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "MOVE_DLG": {
+   "style": 2160591040,
+   "x": 110,
+   "y": 42,
+   "cx": 88,
+   "cy": 82,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Move Events",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 80,
+     "cy": 44,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "Move by"
+    },
+    {
+     "x": 8,
+     "y": 20,
+     "cx": 44,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "&Amount"
+    },
+    {
+     "x": 58,
+     "y": 18,
+     "cx": 22,
+     "cy": 12,
+     "id": 1251,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 32,
+     "cx": 38,
+     "cy": 12,
+     "id": 1252,
+     "style": 1342308361,
+     "class": "BorRadio",
+     "text": "&Earlier"
+    },
+    {
+     "x": 52,
+     "y": 32,
+     "cx": 30,
+     "cy": 12,
+     "id": 1253,
+     "style": 1342177289,
+     "class": "BorRadio",
+     "text": "&Later"
+    },
+    {
+     "x": 4,
+     "y": 52,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 48,
+     "y": 52,
+     "cx": 38,
+     "cy": 14,
+     "id": 2,
+     "style": 1342242816,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "OPENFILE_DLG": {
+   "style": 2160591040,
+   "x": 15,
+   "y": 33,
+   "cx": 248,
+   "cy": 174,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Open File",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 136,
+     "cy": 32,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 6,
+     "y": 10,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "File&name:"
+    },
+    {
+     "x": 40,
+     "y": 8,
+     "cx": 88,
+     "cy": 12,
+     "id": 401,
+     "style": 1350631552,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 6,
+     "y": 24,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "Directory:"
+    },
+    {
+     "x": 40,
+     "y": 24,
+     "cx": 90,
+     "cy": 8,
+     "id": 402,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": ""
+    },
+    {
+     "x": 4,
+     "y": 40,
+     "cx": 66,
+     "cy": 98,
+     "id": 65535,
+     "style": 1342341121,
+     "class": "BorShade",
+     "text": "&Files"
+    },
+    {
+     "x": 8,
+     "y": 54,
+     "cx": 58,
+     "cy": 80,
+     "id": 403,
+     "style": 1352728579,
+     "class": "LISTBOX",
+     "text": ""
+    },
+    {
+     "x": 74,
+     "y": 40,
+     "cx": 66,
+     "cy": 98,
+     "id": 65535,
+     "style": 1342341121,
+     "class": "BorShade",
+     "text": "&Directories"
+    },
+    {
+     "x": 78,
+     "y": 54,
+     "cx": 58,
+     "cy": 80,
+     "id": 404,
+     "style": 1352728579,
+     "class": "LISTBOX",
+     "text": ""
+    },
+    {
+     "x": 144,
+     "y": 4,
+     "cx": 100,
+     "cy": 134,
+     "id": 65535,
+     "style": 1342341121,
+     "class": "BorShade",
+     "text": "File &Type"
+    },
+    {
+     "x": 150,
+     "y": 22,
+     "cx": 60,
+     "cy": 12,
+     "id": 411,
+     "style": 1342373897,
+     "class": "BorRadio",
+     "text": ".&SNG (Song)"
+    },
+    {
+     "x": 150,
+     "y": 36,
+     "cx": 66,
+     "cy": 12,
+     "id": 412,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ".&PAT (Pattern)"
+    },
+    {
+     "x": 150,
+     "y": 50,
+     "cx": 66,
+     "cy": 12,
+     "id": 413,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ".&DRM (Drum Kit)"
+    },
+    {
+     "x": 150,
+     "y": 64,
+     "cx": 68,
+     "cy": 12,
+     "id": 414,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ".P&LS (Patch List)"
+    },
+    {
+     "x": 150,
+     "y": 78,
+     "cx": 64,
+     "cy": 12,
+     "id": 415,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ".&MID (MIDI File)"
+    },
+    {
+     "x": 150,
+     "y": 92,
+     "cx": 70,
+     "cy": 12,
+     "id": 416,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ".D&EF (Definitions)"
+    },
+    {
+     "x": 150,
+     "y": 106,
+     "cx": 90,
+     "cy": 12,
+     "id": 417,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ".&WND (Window Layout)"
+    },
+    {
+     "x": 150,
+     "y": 120,
+     "cx": 56,
+     "cy": 12,
+     "id": 418,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": ".&WAV (Wave)"
+    },
+    {
+     "x": 48,
+     "y": 144,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 162,
+     "y": 144,
+     "cx": 38,
+     "cy": 14,
+     "id": 2,
+     "style": 1342242816,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "PATCH_DLG": {
+   "style": 2160591040,
+   "x": 6,
+   "y": 23,
+   "cx": 332,
+   "cy": 273,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Patch Lists",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 282,
+     "cy": 52,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 10,
+     "cx": 62,
+     "cy": 10,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "C&urrent Instrument"
+    },
+    {
+     "x": 72,
+     "y": 8,
+     "cx": 118,
+     "cy": 60,
+     "id": 1801,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 26,
+     "cx": 58,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "&Instrument Name"
+    },
+    {
+     "x": 72,
+     "y": 26,
+     "cx": 118,
+     "cy": 10,
+     "id": 1802,
+     "style": 1350565900,
+     "class": "STATIC",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 42,
+     "cx": 22,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "Pr&efix"
+    },
+    {
+     "x": 72,
+     "y": 42,
+     "cx": 118,
+     "cy": 10,
+     "id": 1803,
+     "style": 1350565900,
+     "class": "STATIC",
+     "text": ""
+    },
+    {
+     "x": 210,
+     "y": 8,
+     "cx": 34,
+     "cy": 14,
+     "id": 1811,
+     "style": 1342242816,
+     "class": "BUTTON",
+     "text": "&Add"
+    },
+    {
+     "x": 248,
+     "y": 8,
+     "cx": 34,
+     "cy": 14,
+     "id": 1813,
+     "style": 1342242816,
+     "class": "BUTTON",
+     "text": "Re&move"
+    },
+    {
+     "x": 4,
+     "y": 60,
+     "cx": 282,
+     "cy": 162,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 66,
+     "cx": 42,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "&Patch Name"
+    },
+    {
+     "x": 72,
+     "y": 66,
+     "cx": 118,
+     "cy": 10,
+     "id": 1804,
+     "style": 1350565900,
+     "class": "STATIC",
+     "text": ""
+    },
+    {
+     "x": 210,
+     "y": 66,
+     "cx": 28,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "&Number"
+    },
+    {
+     "x": 264,
+     "y": 64,
+     "cx": 18,
+     "cy": 12,
+     "id": 1805,
+     "style": 1350631552,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 80,
+     "cx": 274,
+     "cy": 138,
+     "id": 1806,
+     "style": 1351680769,
+     "class": "LISTBOX",
+     "text": ""
+    },
+    {
+     "x": 4,
+     "y": 226,
+     "cx": 172,
+     "cy": 22,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 232,
+     "cx": 20,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "&Bank"
+    },
+    {
+     "x": 28,
+     "y": 230,
+     "cx": 18,
+     "cy": 12,
+     "id": 1816,
+     "style": 1350631552,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 58,
+     "y": 232,
+     "cx": 38,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "Bank &Type:"
+    },
+    {
+     "x": 98,
+     "y": 232,
+     "cx": 22,
+     "cy": 10,
+     "id": 1817,
+     "style": 1342373897,
+     "class": "BorRadio",
+     "text": "G&M"
+    },
+    {
+     "x": 124,
+     "y": 232,
+     "cx": 24,
+     "cy": 10,
+     "id": 1818,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": "&GS"
+    },
+    {
+     "x": 150,
+     "y": 232,
+     "cx": 22,
+     "cy": 10,
+     "id": 1819,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": "&XG"
+    },
+    {
+     "x": 176,
+     "y": 226,
+     "cx": 110,
+     "cy": 22,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 182,
+     "y": 230,
+     "cx": 44,
+     "cy": 14,
+     "id": 1808,
+     "style": 1342373888,
+     "class": "BUTTON",
+     "text": "&Set to OFF"
+    },
+    {
+     "x": 236,
+     "y": 230,
+     "cx": 44,
+     "cy": 14,
+     "id": 1809,
+     "style": 1342242816,
+     "class": "BUTTON",
+     "text": "&Routings..."
+    },
+    {
+     "x": 4,
+     "y": 248,
+     "cx": 282,
+     "cy": 22,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 255,
+     "cx": 46,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "GS &Variations"
+    },
+    {
+     "x": 56,
+     "y": 252,
+     "cx": 52,
+     "cy": 14,
+     "id": 1820,
+     "style": 1342373888,
+     "class": "BUTTON",
+     "text": "&Capital"
+    },
+    {
+     "x": 113,
+     "y": 252,
+     "cx": 52,
+     "cy": 14,
+     "id": 1821,
+     "style": 1342242816,
+     "class": "BUTTON",
+     "text": "Sub Capital &1"
+    },
+    {
+     "x": 171,
+     "y": 252,
+     "cx": 52,
+     "cy": 14,
+     "id": 1822,
+     "style": 1342242816,
+     "class": "BUTTON",
+     "text": "Sub Capital &2"
+    },
+    {
+     "x": 229,
+     "y": 252,
+     "cx": 52,
+     "cy": 14,
+     "id": 1823,
+     "style": 1342242816,
+     "class": "BUTTON",
+     "text": "Sub Capital &3"
+    },
+    {
+     "x": 290,
+     "y": 80,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 290,
+     "y": 192,
+     "cx": 38,
+     "cy": 14,
+     "id": 2,
+     "style": 1342242816,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 286,
+     "y": 226,
+     "cx": 42,
+     "cy": 44,
+     "id": 1829,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 288,
+     "y": 228,
+     "cx": 34,
+     "cy": 8,
+     "id": 1824,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": "N&ormal"
+    },
+    {
+     "x": 288,
+     "y": 236,
+     "cx": 34,
+     "cy": 8,
+     "id": 1825,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": "U&ser"
+    },
+    {
+     "x": 288,
+     "y": 244,
+     "cx": 34,
+     "cy": 8,
+     "id": 1826,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": "S&FX"
+    },
+    {
+     "x": 288,
+     "y": 252,
+     "cx": 36,
+     "cy": 8,
+     "id": 1827,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": "SFX &Kit"
+    },
+    {
+     "x": 288,
+     "y": 260,
+     "cx": 38,
+     "cy": 8,
+     "id": 1828,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": "&Drum Kit"
+    },
+    {
+     "x": 46,
+     "y": 230,
+     "cx": 8,
+     "cy": 12,
+     "id": 1829,
+     "style": 1342177281,
+     "class": "SCROLLBAR",
+     "text": ""
+    }
+   ]
+  },
+  "PATTERN_INFO_DLG": {
+   "style": 2160591040,
+   "x": 30,
+   "y": 36,
+   "cx": 168,
+   "cy": 200,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Pattern Settings",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 160,
+     "cy": 160,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 6,
+     "y": 10,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "&Name"
+    },
+    {
+     "x": 46,
+     "y": 8,
+     "cx": 114,
+     "cy": 12,
+     "id": 1701,
+     "style": 1350631552,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 6,
+     "y": 24,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "Pro&gram"
+    },
+    {
+     "x": 46,
+     "y": 22,
+     "cx": 24,
+     "cy": 12,
+     "id": 1702,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 74,
+     "y": 22,
+     "cx": 86,
+     "cy": 12,
+     "id": 1714,
+     "style": 1342242816,
+     "class": "BUTTON",
+     "text": ""
+    },
+    {
+     "x": 6,
+     "y": 38,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "&Bank"
+    },
+    {
+     "x": 46,
+     "y": 36,
+     "cx": 24,
+     "cy": 12,
+     "id": 1703,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 6,
+     "y": 52,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "C&hannel"
+    },
+    {
+     "x": 46,
+     "y": 50,
+     "cx": 24,
+     "cy": 12,
+     "id": 1704,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 6,
+     "y": 66,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "Vo&lume"
+    },
+    {
+     "x": 46,
+     "y": 64,
+     "cx": 24,
+     "cy": 12,
+     "id": 1705,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 6,
+     "y": 80,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "P&an"
+    },
+    {
+     "x": 46,
+     "y": 78,
+     "cx": 24,
+     "cy": 12,
+     "id": 1706,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 6,
+     "y": 94,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "R&everb"
+    },
+    {
+     "x": 46,
+     "y": 92,
+     "cx": 24,
+     "cy": 12,
+     "id": 1707,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 6,
+     "y": 108,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "&Chorus"
+    },
+    {
+     "x": 46,
+     "y": 106,
+     "cx": 24,
+     "cy": 12,
+     "id": 1708,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 6,
+     "y": 122,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "&Velocity"
+    },
+    {
+     "x": 46,
+     "y": 120,
+     "cx": 24,
+     "cy": 12,
+     "id": 1709,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 6,
+     "y": 136,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "&Transpose"
+    },
+    {
+     "x": 46,
+     "y": 134,
+     "cx": 24,
+     "cy": 12,
+     "id": 1710,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 6,
+     "y": 150,
+     "cx": 18,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "Ti&me"
+    },
+    {
+     "x": 46,
+     "y": 148,
+     "cx": 24,
+     "cy": 12,
+     "id": 1711,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 26,
+     "y": 170,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 104,
+     "y": 170,
+     "cx": 38,
+     "cy": 14,
+     "id": 2,
+     "style": 1342242816,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "PREFERENCES_DLG": {
+   "style": 2160591040,
+   "x": 8,
+   "y": 44,
+   "cx": 280,
+   "cy": 172,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Preferences",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 130,
+     "cy": 88,
+     "id": 65535,
+     "style": 1342177281,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 6,
+     "cx": 94,
+     "cy": 12,
+     "id": 1401,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": "&Copy Patterns as Parents"
+    },
+    {
+     "x": 8,
+     "y": 18,
+     "cx": 106,
+     "cy": 12,
+     "id": 1402,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": "C&hord Track conflict warning"
+    },
+    {
+     "x": 8,
+     "y": 30,
+     "cx": 120,
+     "cy": 12,
+     "id": 1408,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": "C&onductor warning (Audio Timing)"
+    },
+    {
+     "x": 8,
+     "y": 42,
+     "cx": 122,
+     "cy": 12,
+     "id": 1409,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": "&Ask before extract type 0 midi file"
+    },
+    {
+     "x": 8,
+     "y": 54,
+     "cx": 122,
+     "cy": 12,
+     "id": 1416,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": "&Leave midi file data unchanged"
+    },
+    {
+     "x": 8,
+     "y": 66,
+     "cx": 122,
+     "cy": 12,
+     "id": 1417,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": "&Number Program Changes from 1"
+    },
+    {
+     "x": 8,
+     "y": 78,
+     "cx": 122,
+     "cy": 12,
+     "id": 1410,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": "&Single Edit Window"
+    },
+    {
+     "x": 4,
+     "y": 96,
+     "cx": 130,
+     "cy": 42,
+     "id": 65535,
+     "style": 1342177281,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 98,
+     "cx": 56,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "&Timer Resolution"
+    },
+    {
+     "x": 66,
+     "y": 98,
+     "cx": 8,
+     "cy": 8,
+     "id": 1403,
+     "style": 1342177282,
+     "class": "STATIC",
+     "text": "00"
+    },
+    {
+     "x": 74,
+     "y": 98,
+     "cx": 10,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "ms"
+    },
+    {
+     "x": 8,
+     "y": 108,
+     "cx": 122,
+     "cy": 12,
+     "id": 1404,
+     "style": 1342242816,
+     "class": "SCROLLBAR",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 122,
+     "cx": 36,
+     "cy": 14,
+     "id": 1405,
+     "style": 1342373888,
+     "class": "BUTTON",
+     "text": "&Pentium"
+    },
+    {
+     "x": 52,
+     "y": 122,
+     "cx": 34,
+     "cy": 14,
+     "id": 1406,
+     "style": 1342242816,
+     "class": "BUTTON",
+     "text": "&486"
+    },
+    {
+     "x": 96,
+     "y": 122,
+     "cx": 34,
+     "cy": 14,
+     "id": 1407,
+     "style": 1342242816,
+     "class": "BUTTON",
+     "text": "&386"
+    },
+    {
+     "x": 138,
+     "y": 4,
+     "cx": 138,
+     "cy": 30,
+     "id": 65535,
+     "style": 1342341121,
+     "class": "BorShade",
+     "text": "&Double Click on MIDI Pattern Opens"
+    },
+    {
+     "x": 142,
+     "y": 18,
+     "cx": 130,
+     "cy": 72,
+     "id": 1412,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 138,
+     "y": 38,
+     "cx": 138,
+     "cy": 30,
+     "id": 65535,
+     "style": 1342341121,
+     "class": "BorShade",
+     "text": "Do&uble Click on Audio Pattern Opens"
+    },
+    {
+     "x": 142,
+     "y": 52,
+     "cx": 130,
+     "cy": 44,
+     "id": 1413,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 138,
+     "y": 72,
+     "cx": 138,
+     "cy": 46,
+     "id": 65535,
+     "style": 1342341121,
+     "class": "BorShade",
+     "text": "Backgrounds"
+    },
+    {
+     "x": 142,
+     "y": 88,
+     "cx": 50,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "Track &Window"
+    },
+    {
+     "x": 200,
+     "y": 86,
+     "cx": 72,
+     "cy": 64,
+     "id": 1415,
+     "style": 1344340227,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 142,
+     "y": 104,
+     "cx": 56,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "P&rogram Window"
+    },
+    {
+     "x": 200,
+     "y": 102,
+     "cx": 72,
+     "cy": 64,
+     "id": 1414,
+     "style": 1344340227,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 138,
+     "y": 122,
+     "cx": 138,
+     "cy": 16,
+     "id": 65535,
+     "style": 1342177281,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 142,
+     "y": 126,
+     "cx": 104,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "Screen &Keyboard MIDI Velocity"
+    },
+    {
+     "x": 252,
+     "y": 124,
+     "cx": 18,
+     "cy": 12,
+     "id": 1411,
+     "style": 1350762498,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 48,
+     "y": 142,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 194,
+     "y": 142,
+     "cx": 38,
+     "cy": 14,
+     "id": 2,
+     "style": 1342242816,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "PRINT_DLG": {
+   "style": 2429026496,
+   "x": 46,
+   "y": 40,
+   "cx": 98,
+   "cy": 64,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Evolution Audio Pro",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 90,
+     "cy": 24,
+     "id": 65535,
+     "style": 1342177281,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 27,
+     "y": 6,
+     "cx": 44,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308353,
+     "class": "STATIC",
+     "text": "Now Printing"
+    },
+    {
+     "x": 7,
+     "y": 16,
+     "cx": 84,
+     "cy": 8,
+     "id": 1901,
+     "style": 1342308353,
+     "class": "STATIC",
+     "text": ""
+    },
+    {
+     "x": 30,
+     "y": 34,
+     "cx": 38,
+     "cy": 14,
+     "id": 3,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "QUANTIZE_DLG": {
+   "style": 2160591040,
+   "x": 110,
+   "y": 42,
+   "cx": 110,
+   "cy": 126,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Quantize",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 102,
+     "cy": 36,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 10,
+     "cx": 60,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "&Quantize Setting"
+    },
+    {
+     "x": 70,
+     "y": 8,
+     "cx": 32,
+     "cy": 60,
+     "id": 354,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": "Values"
+    },
+    {
+     "x": 8,
+     "y": 26,
+     "cx": 66,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "&Percentage Change"
+    },
+    {
+     "x": 84,
+     "y": 24,
+     "cx": 18,
+     "cy": 12,
+     "id": 351,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 4,
+     "y": 44,
+     "cx": 102,
+     "cy": 44,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "Scope"
+    },
+    {
+     "x": 8,
+     "y": 60,
+     "cx": 18,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "&From"
+    },
+    {
+     "x": 28,
+     "y": 58,
+     "cx": 22,
+     "cy": 12,
+     "id": 352,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 66,
+     "y": 60,
+     "cx": 12,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "&To"
+    },
+    {
+     "x": 80,
+     "y": 58,
+     "cx": 22,
+     "cy": 12,
+     "id": 353,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 16,
+     "y": 74,
+     "cx": 22,
+     "cy": 12,
+     "id": 357,
+     "style": 1342373897,
+     "class": "BorRadio",
+     "text": "&All"
+    },
+    {
+     "x": 62,
+     "y": 74,
+     "cx": 34,
+     "cy": 12,
+     "id": 358,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": "&Range"
+    },
+    {
+     "x": 8,
+     "y": 94,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 66,
+     "y": 94,
+     "cx": 38,
+     "cy": 14,
+     "id": 2,
+     "style": 1342242816,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "ROUTING_DLG": {
+   "style": 2160591040,
+   "x": 6,
+   "y": 18,
+   "cx": 292,
+   "cy": 216,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Device Routings",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 284,
+     "cy": 20,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 82,
+     "y": 10,
+     "cx": 16,
+     "cy": 10,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "&Port"
+    },
+    {
+     "x": 106,
+     "y": 8,
+     "cx": 104,
+     "cy": 44,
+     "id": 1851,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 4,
+     "y": 28,
+     "cx": 284,
+     "cy": 152,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 32,
+     "cx": 10,
+     "cy": 10,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "Ch"
+    },
+    {
+     "x": 58,
+     "y": 32,
+     "cx": 36,
+     "cy": 10,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "Instrument"
+    },
+    {
+     "x": 122,
+     "y": 32,
+     "cx": 18,
+     "cy": 10,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "Drum"
+    },
+    {
+     "x": 152,
+     "y": 32,
+     "cx": 10,
+     "cy": 10,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "Ch"
+    },
+    {
+     "x": 202,
+     "y": 32,
+     "cx": 36,
+     "cy": 10,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "Instrument"
+    },
+    {
+     "x": 266,
+     "y": 32,
+     "cx": 18,
+     "cy": 10,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "Drum"
+    },
+    {
+     "x": 12,
+     "y": 44,
+     "cx": 6,
+     "cy": 9,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "1"
+    },
+    {
+     "x": 24,
+     "y": 42,
+     "cx": 104,
+     "cy": 44,
+     "id": 1852,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 132,
+     "y": 42,
+     "cx": 8,
+     "cy": 12,
+     "id": 1870,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": ""
+    },
+    {
+     "x": 12,
+     "y": 58,
+     "cx": 8,
+     "cy": 9,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "2"
+    },
+    {
+     "x": 24,
+     "y": 56,
+     "cx": 104,
+     "cy": 44,
+     "id": 1853,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 132,
+     "y": 56,
+     "cx": 8,
+     "cy": 12,
+     "id": 1871,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": ""
+    },
+    {
+     "x": 12,
+     "y": 72,
+     "cx": 8,
+     "cy": 9,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "3"
+    },
+    {
+     "x": 24,
+     "y": 70,
+     "cx": 104,
+     "cy": 44,
+     "id": 1854,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 132,
+     "y": 70,
+     "cx": 8,
+     "cy": 12,
+     "id": 1872,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": ""
+    },
+    {
+     "x": 12,
+     "y": 86,
+     "cx": 8,
+     "cy": 9,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "4"
+    },
+    {
+     "x": 24,
+     "y": 84,
+     "cx": 104,
+     "cy": 44,
+     "id": 1855,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 132,
+     "y": 84,
+     "cx": 8,
+     "cy": 12,
+     "id": 1873,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": ""
+    },
+    {
+     "x": 12,
+     "y": 100,
+     "cx": 8,
+     "cy": 9,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "5"
+    },
+    {
+     "x": 24,
+     "y": 98,
+     "cx": 104,
+     "cy": 44,
+     "id": 1856,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 132,
+     "y": 98,
+     "cx": 8,
+     "cy": 12,
+     "id": 1874,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": ""
+    },
+    {
+     "x": 12,
+     "y": 114,
+     "cx": 8,
+     "cy": 9,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "6"
+    },
+    {
+     "x": 24,
+     "y": 112,
+     "cx": 104,
+     "cy": 44,
+     "id": 1857,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 132,
+     "y": 112,
+     "cx": 8,
+     "cy": 12,
+     "id": 1875,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": ""
+    },
+    {
+     "x": 12,
+     "y": 128,
+     "cx": 8,
+     "cy": 9,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "7"
+    },
+    {
+     "x": 24,
+     "y": 126,
+     "cx": 104,
+     "cy": 44,
+     "id": 1858,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 132,
+     "y": 126,
+     "cx": 8,
+     "cy": 12,
+     "id": 1876,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": ""
+    },
+    {
+     "x": 12,
+     "y": 142,
+     "cx": 8,
+     "cy": 9,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "8"
+    },
+    {
+     "x": 24,
+     "y": 140,
+     "cx": 104,
+     "cy": 44,
+     "id": 1859,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 132,
+     "y": 140,
+     "cx": 8,
+     "cy": 12,
+     "id": 1877,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": ""
+    },
+    {
+     "x": 156,
+     "y": 44,
+     "cx": 6,
+     "cy": 9,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "9"
+    },
+    {
+     "x": 168,
+     "y": 42,
+     "cx": 104,
+     "cy": 44,
+     "id": 1860,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 276,
+     "y": 42,
+     "cx": 8,
+     "cy": 12,
+     "id": 1878,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": ""
+    },
+    {
+     "x": 152,
+     "y": 58,
+     "cx": 8,
+     "cy": 9,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "10"
+    },
+    {
+     "x": 168,
+     "y": 56,
+     "cx": 104,
+     "cy": 44,
+     "id": 1861,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 276,
+     "y": 56,
+     "cx": 8,
+     "cy": 12,
+     "id": 1879,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": ""
+    },
+    {
+     "x": 152,
+     "y": 72,
+     "cx": 8,
+     "cy": 9,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "11"
+    },
+    {
+     "x": 168,
+     "y": 70,
+     "cx": 104,
+     "cy": 44,
+     "id": 1862,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 276,
+     "y": 70,
+     "cx": 8,
+     "cy": 12,
+     "id": 1880,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": ""
+    },
+    {
+     "x": 152,
+     "y": 86,
+     "cx": 8,
+     "cy": 9,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "12"
+    },
+    {
+     "x": 168,
+     "y": 84,
+     "cx": 104,
+     "cy": 44,
+     "id": 1863,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 276,
+     "y": 84,
+     "cx": 8,
+     "cy": 12,
+     "id": 1881,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": ""
+    },
+    {
+     "x": 152,
+     "y": 100,
+     "cx": 8,
+     "cy": 9,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "13"
+    },
+    {
+     "x": 168,
+     "y": 98,
+     "cx": 104,
+     "cy": 44,
+     "id": 1864,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 276,
+     "y": 98,
+     "cx": 8,
+     "cy": 12,
+     "id": 1882,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": ""
+    },
+    {
+     "x": 152,
+     "y": 114,
+     "cx": 8,
+     "cy": 9,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "14"
+    },
+    {
+     "x": 168,
+     "y": 112,
+     "cx": 104,
+     "cy": 44,
+     "id": 1865,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 276,
+     "y": 112,
+     "cx": 8,
+     "cy": 12,
+     "id": 1883,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": ""
+    },
+    {
+     "x": 152,
+     "y": 128,
+     "cx": 8,
+     "cy": 9,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "15"
+    },
+    {
+     "x": 168,
+     "y": 126,
+     "cx": 104,
+     "cy": 44,
+     "id": 1866,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 276,
+     "y": 126,
+     "cx": 8,
+     "cy": 12,
+     "id": 1884,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": ""
+    },
+    {
+     "x": 152,
+     "y": 142,
+     "cx": 8,
+     "cy": 9,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "16"
+    },
+    {
+     "x": 168,
+     "y": 140,
+     "cx": 104,
+     "cy": 44,
+     "id": 1867,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 276,
+     "y": 140,
+     "cx": 8,
+     "cy": 12,
+     "id": 1885,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": ""
+    },
+    {
+     "x": 38,
+     "y": 162,
+     "cx": 90,
+     "cy": 12,
+     "id": 1868,
+     "style": 1342373888,
+     "class": "BUTTON",
+     "text": "Set All Channels To"
+    },
+    {
+     "x": 154,
+     "y": 162,
+     "cx": 104,
+     "cy": 44,
+     "id": 1869,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 122,
+     "y": 186,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "SCORE_DLG": {
+   "style": 2160591040,
+   "x": 8,
+   "y": 18,
+   "cx": 204,
+   "cy": 250,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Score Settings",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 96,
+     "cy": 74,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "Margins (points)"
+    },
+    {
+     "x": 10,
+     "y": 20,
+     "cx": 18,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "&Left"
+    },
+    {
+     "x": 70,
+     "y": 18,
+     "cx": 22,
+     "cy": 12,
+     "id": 1501,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 10,
+     "y": 34,
+     "cx": 18,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "&Right"
+    },
+    {
+     "x": 70,
+     "y": 32,
+     "cx": 22,
+     "cy": 12,
+     "id": 1502,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 10,
+     "y": 48,
+     "cx": 18,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "&Top"
+    },
+    {
+     "x": 70,
+     "y": 46,
+     "cx": 22,
+     "cy": 12,
+     "id": 1503,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 10,
+     "y": 62,
+     "cx": 24,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "&Bottom"
+    },
+    {
+     "x": 70,
+     "y": 60,
+     "cx": 22,
+     "cy": 12,
+     "id": 1504,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 4,
+     "y": 82,
+     "cx": 96,
+     "cy": 44,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "Spacing (points)"
+    },
+    {
+     "x": 10,
+     "y": 96,
+     "cx": 32,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "&Inter-note"
+    },
+    {
+     "x": 70,
+     "y": 94,
+     "cx": 22,
+     "cy": 12,
+     "id": 1505,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 10,
+     "y": 110,
+     "cx": 36,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "Inter-sta&ve"
+    },
+    {
+     "x": 70,
+     "y": 108,
+     "cx": 22,
+     "cy": 12,
+     "id": 1506,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 4,
+     "y": 130,
+     "cx": 96,
+     "cy": 44,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "Text Sizes (points)"
+    },
+    {
+     "x": 10,
+     "y": 144,
+     "cx": 18,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "T&itle"
+    },
+    {
+     "x": 70,
+     "y": 142,
+     "cx": 22,
+     "cy": 12,
+     "id": 1507,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 10,
+     "y": 158,
+     "cx": 48,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "&Names + Bars"
+    },
+    {
+     "x": 70,
+     "y": 156,
+     "cx": 22,
+     "cy": 12,
+     "id": 1508,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 104,
+     "y": 4,
+     "cx": 96,
+     "cy": 74,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "Clef"
+    },
+    {
+     "x": 108,
+     "y": 18,
+     "cx": 88,
+     "cy": 52,
+     "id": 1509,
+     "style": 1344471043,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 108,
+     "y": 34,
+     "cx": 54,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "T&&B Split Point"
+    },
+    {
+     "x": 174,
+     "y": 32,
+     "cx": 22,
+     "cy": 12,
+     "id": 1510,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 110,
+     "y": 46,
+     "cx": 80,
+     "cy": 12,
+     "id": 1511,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "Detect &Automatically"
+    },
+    {
+     "x": 124,
+     "y": 60,
+     "cx": 52,
+     "cy": 14,
+     "id": 1512,
+     "style": 1342242816,
+     "class": "BUTTON",
+     "text": "Detect &Now"
+    },
+    {
+     "x": 104,
+     "y": 82,
+     "cx": 96,
+     "cy": 44,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "Printing"
+    },
+    {
+     "x": 110,
+     "y": 94,
+     "cx": 80,
+     "cy": 12,
+     "id": 1516,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": "Print Pa&ge Numbers"
+    },
+    {
+     "x": 110,
+     "y": 110,
+     "cx": 58,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "&Maximum Staves"
+    },
+    {
+     "x": 174,
+     "y": 108,
+     "cx": 22,
+     "cy": 12,
+     "id": 1517,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 104,
+     "y": 130,
+     "cx": 96,
+     "cy": 44,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "Sloping Beams"
+    },
+    {
+     "x": 110,
+     "y": 142,
+     "cx": 36,
+     "cy": 12,
+     "id": 1518,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": "&Screen"
+    },
+    {
+     "x": 110,
+     "y": 156,
+     "cx": 36,
+     "cy": 12,
+     "id": 1519,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": "&Printer"
+    },
+    {
+     "x": 4,
+     "y": 178,
+     "cx": 196,
+     "cy": 32,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 180,
+     "cx": 80,
+     "cy": 12,
+     "id": 1520,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": "&Display Bar Numbers"
+    },
+    {
+     "x": 110,
+     "y": 180,
+     "cx": 80,
+     "cy": 12,
+     "id": 1521,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "Simpli&fy Display"
+    },
+    {
+     "x": 10,
+     "y": 196,
+     "cx": 60,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "L&yrics on Channel"
+    },
+    {
+     "x": 70,
+     "y": 194,
+     "cx": 22,
+     "cy": 12,
+     "id": 1522,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 38,
+     "y": 220,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 128,
+     "y": 220,
+     "cx": 38,
+     "cy": 14,
+     "id": 2,
+     "style": 1342242816,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "STYLE_DLG": {
+   "style": 2160591040,
+   "x": 59,
+   "y": 31,
+   "cx": 98,
+   "cy": 182,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Instant Chord Track",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 90,
+     "cy": 20,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 10,
+     "cx": 18,
+     "cy": 10,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "&Style"
+    },
+    {
+     "x": 28,
+     "y": 8,
+     "cx": 62,
+     "cy": 66,
+     "id": 2201,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 4,
+     "y": 28,
+     "cx": 90,
+     "cy": 58,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "&Duration"
+    },
+    {
+     "x": 8,
+     "y": 44,
+     "cx": 18,
+     "cy": 10,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "Time:"
+    },
+    {
+     "x": 38,
+     "y": 44,
+     "cx": 6,
+     "cy": 10,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "m"
+    },
+    {
+     "x": 8,
+     "y": 56,
+     "cx": 16,
+     "cy": 10,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "Bars:"
+    },
+    {
+     "x": 30,
+     "y": 56,
+     "cx": 12,
+     "cy": 8,
+     "id": 2205,
+     "style": 1342177282,
+     "class": "STATIC",
+     "text": "000"
+    },
+    {
+     "x": 8,
+     "y": 70,
+     "cx": 82,
+     "cy": 12,
+     "id": 2206,
+     "style": 1342242816,
+     "class": "SCROLLBAR",
+     "text": ""
+    },
+    {
+     "x": 4,
+     "y": 90,
+     "cx": 90,
+     "cy": 38,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "Options"
+    },
+    {
+     "x": 8,
+     "y": 102,
+     "cx": 84,
+     "cy": 12,
+     "id": 2207,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": "&Replace current track"
+    },
+    {
+     "x": 8,
+     "y": 114,
+     "cx": 28,
+     "cy": 12,
+     "id": 2208,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": "&Loop"
+    },
+    {
+     "x": 26,
+     "y": 44,
+     "cx": 12,
+     "cy": 8,
+     "id": 2202,
+     "style": 1342177282,
+     "class": "STATIC",
+     "text": "000"
+    },
+    {
+     "x": 46,
+     "y": 44,
+     "cx": 8,
+     "cy": 8,
+     "id": 2203,
+     "style": 1342177282,
+     "class": "STATIC",
+     "text": "00"
+    },
+    {
+     "x": 54,
+     "y": 44,
+     "cx": 6,
+     "cy": 10,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "s"
+    },
+    {
+     "x": 4,
+     "y": 132,
+     "cx": 90,
+     "cy": 14,
+     "id": 2210,
+     "style": 1342242816,
+     "class": "BUTTON",
+     "text": "&Create Chord Track"
+    },
+    {
+     "x": 4,
+     "y": 148,
+     "cx": 90,
+     "cy": 14,
+     "id": 2211,
+     "style": 1342242816,
+     "class": "BUTTON",
+     "text": "Convert to &MIDI Track"
+    },
+    {
+     "x": 4,
+     "y": 164,
+     "cx": 90,
+     "cy": 14,
+     "id": 2212,
+     "style": 1342242816,
+     "class": "BUTTON",
+     "text": "Cl&ose"
+    }
+   ]
+  },
+  "SYNC_DLG": {
+   "style": 2160591040,
+   "x": 108,
+   "y": 16,
+   "cx": 120,
+   "cy": 246,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Synchronization Settings",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 112,
+     "cy": 20,
+     "id": 65535,
+     "style": 1342177281,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 4,
+     "y": 28,
+     "cx": 112,
+     "cy": 38,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "&Frames per Second"
+    },
+    {
+     "x": 4,
+     "y": 70,
+     "cx": 112,
+     "cy": 56,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "&Receive"
+    },
+    {
+     "x": 4,
+     "y": 130,
+     "cx": 112,
+     "cy": 56,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "&Send"
+    },
+    {
+     "x": 8,
+     "y": 170,
+     "cx": 104,
+     "cy": 44,
+     "id": 911,
+     "style": 1344471043,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 10,
+     "cx": 36,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "Son&g Start"
+    },
+    {
+     "x": 68,
+     "y": 8,
+     "cx": 44,
+     "cy": 12,
+     "id": 901,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": "00:00:00:00"
+    },
+    {
+     "x": 8,
+     "y": 40,
+     "cx": 22,
+     "cy": 12,
+     "id": 902,
+     "style": 1342373897,
+     "class": "BorRadio",
+     "text": "24"
+    },
+    {
+     "x": 8,
+     "y": 52,
+     "cx": 22,
+     "cy": 12,
+     "id": 903,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": "25"
+    },
+    {
+     "x": 52,
+     "y": 40,
+     "cx": 38,
+     "cy": 12,
+     "id": 904,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": "30 Drop"
+    },
+    {
+     "x": 52,
+     "y": 52,
+     "cx": 54,
+     "cy": 12,
+     "id": 905,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": "30 Non-Drop"
+    },
+    {
+     "x": 8,
+     "y": 82,
+     "cx": 98,
+     "cy": 12,
+     "id": 906,
+     "style": 1342373897,
+     "class": "BorRadio",
+     "text": "&MIDI Clock / Chase &Lock"
+    },
+    {
+     "x": 8,
+     "y": 94,
+     "cx": 94,
+     "cy": 12,
+     "id": 907,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": "MIDI Timecode / SM&PTE"
+    },
+    {
+     "x": 8,
+     "y": 110,
+     "cx": 104,
+     "cy": 44,
+     "id": 908,
+     "style": 1344471043,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 142,
+     "cx": 48,
+     "cy": 12,
+     "id": 909,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": "&MIDI Clock"
+    },
+    {
+     "x": 8,
+     "y": 154,
+     "cx": 62,
+     "cy": 12,
+     "id": 910,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "MIDI &Timecode"
+    },
+    {
+     "x": 8,
+     "y": 196,
+     "cx": 52,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "Relocate &Delay"
+    },
+    {
+     "x": 76,
+     "y": 194,
+     "cx": 22,
+     "cy": 12,
+     "id": 912,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 102,
+     "y": 196,
+     "cx": 10,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "ms"
+    },
+    {
+     "x": 10,
+     "y": 216,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 72,
+     "y": 216,
+     "cx": 38,
+     "cy": 14,
+     "id": 2,
+     "style": 1342242816,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 4,
+     "y": 190,
+     "cx": 112,
+     "cy": 20,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": ""
+    }
+   ]
+  },
+  "SYSEX_DLG": {
+   "style": 2160591040,
+   "x": 8,
+   "y": 22,
+   "cx": 250,
+   "cy": 160,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "System Exclusive Editor",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 242,
+     "cy": 118,
+     "id": 65535,
+     "style": 1342177281,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 8,
+     "cx": 234,
+     "cy": 110,
+     "id": 1751,
+     "style": 1352728652,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 50,
+     "y": 128,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373921,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 162,
+     "y": 128,
+     "cx": 38,
+     "cy": 14,
+     "id": 2,
+     "style": 1342242848,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "THINOUT_DLG": {
+   "style": 2160591040,
+   "x": 110,
+   "y": 42,
+   "cx": 116,
+   "cy": 174,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Thin Out Continuous Events",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 108,
+     "cy": 62,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "Events to Thin Out"
+    },
+    {
+     "x": 8,
+     "y": 16,
+     "cx": 92,
+     "cy": 12,
+     "id": 1151,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "Polyphonic &Key Pressure"
+    },
+    {
+     "x": 8,
+     "y": 28,
+     "cx": 46,
+     "cy": 12,
+     "id": 1152,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "Contro&llers"
+    },
+    {
+     "x": 8,
+     "y": 40,
+     "cx": 84,
+     "cy": 12,
+     "id": 1153,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "C&hannel Pressure"
+    },
+    {
+     "x": 8,
+     "y": 52,
+     "cx": 60,
+     "cy": 12,
+     "id": 1154,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "Pitch &Bend"
+    },
+    {
+     "x": 4,
+     "y": 70,
+     "cx": 108,
+     "cy": 44,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "Controller Scope"
+    },
+    {
+     "x": 12,
+     "y": 84,
+     "cx": 92,
+     "cy": 60,
+     "id": 1158,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 14,
+     "y": 100,
+     "cx": 42,
+     "cy": 12,
+     "id": 1159,
+     "style": 1342373897,
+     "class": "BorRadio",
+     "text": "All T&ypes"
+    },
+    {
+     "x": 64,
+     "y": 100,
+     "cx": 40,
+     "cy": 12,
+     "id": 1160,
+     "style": 1342242825,
+     "class": "BorRadio",
+     "text": "&Specific"
+    },
+    {
+     "x": 4,
+     "y": 118,
+     "cx": 108,
+     "cy": 20,
+     "id": 65535,
+     "style": 1342177281,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 124,
+     "cx": 86,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "&Delete one event in every"
+    },
+    {
+     "x": 94,
+     "y": 122,
+     "cx": 14,
+     "cy": 12,
+     "id": 1155,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 144,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 70,
+     "y": 144,
+     "cx": 38,
+     "cy": 14,
+     "id": 2,
+     "style": 1342242816,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "TIMING_DLG": {
+   "style": 2160591040,
+   "x": 112,
+   "y": 40,
+   "cx": 114,
+   "cy": 62,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Change Timing",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 106,
+     "cy": 20,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 10,
+     "cx": 72,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "&Percentage of original"
+    },
+    {
+     "x": 84,
+     "y": 8,
+     "cx": 22,
+     "cy": 12,
+     "id": 1451,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 30,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 68,
+     "y": 30,
+     "cx": 38,
+     "cy": 14,
+     "id": 2,
+     "style": 1342242816,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "TRACK_COLUMN_DLG": {
+   "style": 2160591040,
+   "x": 30,
+   "y": 36,
+   "cx": 210,
+   "cy": 118,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Select Track Columns",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 202,
+     "cy": 76,
+     "id": 65535,
+     "style": 1342177281,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 6,
+     "cx": 58,
+     "cy": 12,
+     "id": 551,
+     "style": 1342373891,
+     "class": "BorCheck",
+     "text": "Track &Name"
+    },
+    {
+     "x": 8,
+     "y": 18,
+     "cx": 58,
+     "cy": 12,
+     "id": 552,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "Pro&gram"
+    },
+    {
+     "x": 8,
+     "y": 30,
+     "cx": 58,
+     "cy": 12,
+     "id": 553,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "&Patch"
+    },
+    {
+     "x": 8,
+     "y": 42,
+     "cx": 58,
+     "cy": 12,
+     "id": 554,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "&Bank"
+    },
+    {
+     "x": 8,
+     "y": 54,
+     "cx": 58,
+     "cy": 12,
+     "id": 555,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "C&hannel"
+    },
+    {
+     "x": 8,
+     "y": 66,
+     "cx": 58,
+     "cy": 12,
+     "id": 556,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "&Port"
+    },
+    {
+     "x": 72,
+     "y": 6,
+     "cx": 48,
+     "cy": 12,
+     "id": 557,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "Vo&lume"
+    },
+    {
+     "x": 72,
+     "y": 18,
+     "cx": 48,
+     "cy": 12,
+     "id": 558,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "P&an"
+    },
+    {
+     "x": 72,
+     "y": 30,
+     "cx": 62,
+     "cy": 12,
+     "id": 559,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "Audio &FX Type"
+    },
+    {
+     "x": 72,
+     "y": 42,
+     "cx": 82,
+     "cy": 12,
+     "id": 560,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "R&everb / Audio Delay"
+    },
+    {
+     "x": 72,
+     "y": 54,
+     "cx": 82,
+     "cy": 12,
+     "id": 561,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "&Chorus / Audio Depth"
+    },
+    {
+     "x": 72,
+     "y": 66,
+     "cx": 48,
+     "cy": 12,
+     "id": 562,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "&Velocity"
+    },
+    {
+     "x": 156,
+     "y": 6,
+     "cx": 48,
+     "cy": 12,
+     "id": 563,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "&Transpose"
+    },
+    {
+     "x": 156,
+     "y": 18,
+     "cx": 48,
+     "cy": 12,
+     "id": 564,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "Ti&me"
+    },
+    {
+     "x": 156,
+     "y": 30,
+     "cx": 48,
+     "cy": 12,
+     "id": 565,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "M&ute"
+    },
+    {
+     "x": 156,
+     "y": 42,
+     "cx": 48,
+     "cy": 12,
+     "id": 566,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "&Solo"
+    },
+    {
+     "x": 156,
+     "y": 54,
+     "cx": 48,
+     "cy": 12,
+     "id": 567,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "&Record"
+    },
+    {
+     "x": 156,
+     "y": 66,
+     "cx": 48,
+     "cy": 12,
+     "id": 568,
+     "style": 1342242819,
+     "class": "BorCheck",
+     "text": "M&onitor"
+    },
+    {
+     "x": 24,
+     "y": 86,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 148,
+     "y": 86,
+     "cx": 38,
+     "cy": 14,
+     "id": 2,
+     "style": 1342242816,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "TRACK_INFO_DLG": {
+   "style": 2160591040,
+   "x": 31,
+   "y": 22,
+   "cx": 170,
+   "cy": 214,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Track Settings",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 162,
+     "cy": 174,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 10,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "&Name"
+    },
+    {
+     "x": 48,
+     "y": 8,
+     "cx": 114,
+     "cy": 12,
+     "id": 451,
+     "style": 1350631552,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 24,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "Pro&gram"
+    },
+    {
+     "x": 48,
+     "y": 22,
+     "cx": 24,
+     "cy": 12,
+     "id": 452,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 76,
+     "y": 22,
+     "cx": 86,
+     "cy": 12,
+     "id": 465,
+     "style": 1342242816,
+     "class": "BUTTON",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 38,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "&Bank"
+    },
+    {
+     "x": 48,
+     "y": 36,
+     "cx": 24,
+     "cy": 12,
+     "id": 453,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 52,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "C&hannel"
+    },
+    {
+     "x": 48,
+     "y": 50,
+     "cx": 24,
+     "cy": 12,
+     "id": 454,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 66,
+     "cx": 22,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "&Port"
+    },
+    {
+     "x": 48,
+     "y": 64,
+     "cx": 114,
+     "cy": 44,
+     "id": 455,
+     "style": 1344339971,
+     "class": "COMBOBOX",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 80,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "Vo&lume"
+    },
+    {
+     "x": 48,
+     "y": 78,
+     "cx": 24,
+     "cy": 12,
+     "id": 456,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 94,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "P&an"
+    },
+    {
+     "x": 48,
+     "y": 92,
+     "cx": 24,
+     "cy": 12,
+     "id": 457,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 108,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "R&everb"
+    },
+    {
+     "x": 48,
+     "y": 106,
+     "cx": 24,
+     "cy": 12,
+     "id": 458,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 122,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "&Chorus"
+    },
+    {
+     "x": 48,
+     "y": 120,
+     "cx": 24,
+     "cy": 12,
+     "id": 459,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 136,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "&Velocity"
+    },
+    {
+     "x": 48,
+     "y": 134,
+     "cx": 24,
+     "cy": 12,
+     "id": 460,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 150,
+     "cx": 34,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "&Transpose"
+    },
+    {
+     "x": 48,
+     "y": 148,
+     "cx": 24,
+     "cy": 12,
+     "id": 461,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 164,
+     "cx": 18,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "Ti&me"
+    },
+    {
+     "x": 48,
+     "y": 162,
+     "cx": 24,
+     "cy": 12,
+     "id": 462,
+     "style": 1350631426,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 22,
+     "y": 184,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 110,
+     "y": 184,
+     "cx": 38,
+     "cy": 14,
+     "id": 2,
+     "style": 1342242816,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "TRANSPOSE_DLG": {
+   "style": 2160591040,
+   "x": 110,
+   "y": 42,
+   "cx": 100,
+   "cy": 132,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Transpose",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 92,
+     "cy": 44,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "Interval"
+    },
+    {
+     "x": 10,
+     "y": 20,
+     "cx": 44,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "&Semitones"
+    },
+    {
+     "x": 70,
+     "y": 18,
+     "cx": 22,
+     "cy": 12,
+     "id": 206,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 14,
+     "y": 32,
+     "cx": 30,
+     "cy": 12,
+     "id": 203,
+     "style": 1342308361,
+     "class": "BorRadio",
+     "text": "&Up"
+    },
+    {
+     "x": 56,
+     "y": 32,
+     "cx": 30,
+     "cy": 12,
+     "id": 204,
+     "style": 1342177289,
+     "class": "BorRadio",
+     "text": "&Down"
+    },
+    {
+     "x": 4,
+     "y": 52,
+     "cx": 92,
+     "cy": 44,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "Scope"
+    },
+    {
+     "x": 10,
+     "y": 68,
+     "cx": 18,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "&From"
+    },
+    {
+     "x": 30,
+     "y": 66,
+     "cx": 22,
+     "cy": 12,
+     "id": 207,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 58,
+     "y": 68,
+     "cx": 12,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "&To"
+    },
+    {
+     "x": 70,
+     "y": 66,
+     "cx": 22,
+     "cy": 12,
+     "id": 208,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 14,
+     "y": 82,
+     "cx": 32,
+     "cy": 12,
+     "id": 209,
+     "style": 1342308361,
+     "class": "BorRadio",
+     "text": "&All"
+    },
+    {
+     "x": 56,
+     "y": 82,
+     "cx": 34,
+     "cy": 12,
+     "id": 210,
+     "style": 1342177289,
+     "class": "BorRadio",
+     "text": "&Range"
+    },
+    {
+     "x": 8,
+     "y": 102,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 56,
+     "y": 102,
+     "cx": 38,
+     "cy": 14,
+     "id": 2,
+     "style": 1342242816,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "VELOCITY_DLG": {
+   "style": 2160591040,
+   "x": 110,
+   "y": 42,
+   "cx": 104,
+   "cy": 166,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Change Velocity",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 96,
+     "cy": 42,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "Change by"
+    },
+    {
+     "x": 10,
+     "y": 20,
+     "cx": 44,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "A&mount"
+    },
+    {
+     "x": 70,
+     "y": 18,
+     "cx": 22,
+     "cy": 12,
+     "id": 751,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 32,
+     "cx": 24,
+     "cy": 12,
+     "id": 754,
+     "style": 1342308361,
+     "class": "BorRadio",
+     "text": "&Up"
+    },
+    {
+     "x": 34,
+     "y": 32,
+     "cx": 30,
+     "cy": 12,
+     "id": 755,
+     "style": 1342177289,
+     "class": "BorRadio",
+     "text": "&Down"
+    },
+    {
+     "x": 68,
+     "y": 32,
+     "cx": 30,
+     "cy": 12,
+     "id": 756,
+     "style": 1342177289,
+     "class": "BorRadio",
+     "text": "F&ixed"
+    },
+    {
+     "x": 4,
+     "y": 50,
+     "cx": 96,
+     "cy": 32,
+     "id": 65535,
+     "style": 1342177281,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 10,
+     "y": 54,
+     "cx": 28,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "Mi&nimum"
+    },
+    {
+     "x": 70,
+     "y": 52,
+     "cx": 22,
+     "cy": 12,
+     "id": 761,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 10,
+     "y": 68,
+     "cx": 30,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "Ma&ximum"
+    },
+    {
+     "x": 70,
+     "y": 66,
+     "cx": 22,
+     "cy": 12,
+     "id": 762,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 4,
+     "y": 86,
+     "cx": 96,
+     "cy": 44,
+     "id": 65535,
+     "style": 1342210049,
+     "class": "BorShade",
+     "text": "Scope"
+    },
+    {
+     "x": 10,
+     "y": 102,
+     "cx": 18,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342308352,
+     "class": "STATIC",
+     "text": "&From"
+    },
+    {
+     "x": 31,
+     "y": 100,
+     "cx": 22,
+     "cy": 12,
+     "id": 752,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 58,
+     "y": 102,
+     "cx": 12,
+     "cy": 8,
+     "id": 65535,
+     "style": 1342177280,
+     "class": "STATIC",
+     "text": "&To"
+    },
+    {
+     "x": 70,
+     "y": 100,
+     "cx": 22,
+     "cy": 12,
+     "id": 753,
+     "style": 1350631424,
+     "class": "EDIT",
+     "text": ""
+    },
+    {
+     "x": 14,
+     "y": 116,
+     "cx": 32,
+     "cy": 12,
+     "id": 759,
+     "style": 1342308361,
+     "class": "BorRadio",
+     "text": "&All"
+    },
+    {
+     "x": 58,
+     "y": 116,
+     "cx": 34,
+     "cy": 12,
+     "id": 760,
+     "style": 1342177289,
+     "class": "BorRadio",
+     "text": "&Range"
+    },
+    {
+     "x": 8,
+     "y": 136,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    },
+    {
+     "x": 58,
+     "y": 136,
+     "cx": 38,
+     "cy": 14,
+     "id": 2,
+     "style": 1342242816,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  },
+  "WAVELIST_DLG": {
+   "style": 2160591040,
+   "x": 15,
+   "y": 25,
+   "cx": 226,
+   "cy": 176,
+   "menu": "",
+   "class": "BorDlg",
+   "caption": "Wave Files in use",
+   "font": [
+    "Helv",
+    8
+   ],
+   "items": [
+    {
+     "x": 4,
+     "y": 4,
+     "cx": 218,
+     "cy": 136,
+     "id": 65535,
+     "style": 1342308353,
+     "class": "BorShade",
+     "text": ""
+    },
+    {
+     "x": 8,
+     "y": 8,
+     "cx": 210,
+     "cy": 128,
+     "id": 2051,
+     "style": 1352663042,
+     "class": "LISTBOX",
+     "text": ""
+    },
+    {
+     "x": 94,
+     "y": 146,
+     "cx": 38,
+     "cy": 14,
+     "id": 1,
+     "style": 1342373889,
+     "class": "BorBtn",
+     "text": ""
+    }
+   ]
+  }
+ },
+ "strings": {
+  "0": "The Clipboard is Empty",
+  "1": "The Clipboard Contains ",
+  "2": "The Clipboard does not contain Pattern data",
+  "3": "The Clipboard does not contain Event data",
+  "4": "Add one or more Tracks before Pasting",
+  "5": "There is nothing on the Clipboard",
+  "6": "Not enough space to complete the operation",
+  "7": "That cannot be done as it would make the pattern too large to edit",
+  "8": "Too much data to handle",
+  "9": "No Track Set to Record",
+  "10": "The Pattern is too large to edit",
+  "11": "Please Select a Pattern or Track",
+  "12": "Please Select a Track",
+  "13": "Please Select a Pattern",
+  "14": "Please Select One Pattern",
+  "15": "Please Select One or More Patterns",
+  "16": "Please Select One Event",
+  "17": "No more Patterns available",
+  "18": "Not enough Patterns available",
+  "19": "No more Tracks available",
+  "20": "Unable to allocate memory for %s",
+  "21": "There are not enough free Tracks available to load %s",
+  "22": "There are not enough free Patterns available to load %s",
+  "23": "Cannot delete file %s",
+  "24": "Cannot open file %s",
+  "25": "Cannot create file %s",
+  "26": "Cannot Write file %s to disk",
+  "27": "%s is not an Evolution Song File",
+  "28": "%s is not an Evolution Definition File",
+  "29": "%s is not an Evolution Window Layout File",
+  "30": "%s is not an Evolution Pattern File",
+  "31": "No Pattern entries left on this Track",
+  "32": "A System Exclusive message must begin with F0",
+  "33": "A System Exclusive message must end with F7",
+  "34": "A number must be one or two hexadecimal digits followed by a comma",
+  "35": "End of Pattern must be later than Start",
+  "36": "You may not change a pattern's dimensions while it is being edited",
+  "37": "Select a note",
+  "38": "Record Buffer Full",
+  "39": "This file contains bad data. Loading has been aborted.",
+  "40": "Warning - This File Contains Bad Data",
+  "41": "This output device is not currently available",
+  "42": "This input device is not currently available",
+  "43": "Retaining Track Window",
+  "44": "No Output Ports are Available",
+  "45": "%s is not an Evolution Patch List File",
+  "46": "Patch List %s is already in use",
+  "47": "An attempt to open the %s has failed because it is already in use, possibly by the MIDI Mapper",
+  "48": "Please open at least one Input and one Output Device",
+  "49": "You have changed Timebase. Do you wish the song to change accordingly? If you choose No, the song will play at the wrong tempo.",
+  "50": "Delete Current Song?",
+  "51": "Do you wish to convert this Child to a Parent?",
+  "52": "That cannot be done as it would move one or more events out of the pattern. Reduce the strength of the change and try again.",
+  "53": "You may not Delete a Track while one of its Patterns is being edited.",
+  "54": "This track contains %d unterminated notes. They have been given a length of zero, and will be coloured yellow in the Event editor.",
+  "55": "The insertion of a new Tempo Point at this position will affect relative timing between the MIDI and Audio Patterns which follow it.",
+  "56": "There are not enough tracks available to do this. Deleting unused tracks will make more tracks available",
+  "64": "No channel specified - cannot connect a Patch List",
+  "65": "All entries are in use. Remove an entry first",
+  "66": "The Clipboard does not contain Conductor data",
+  "67": "No more Drums available",
+  "68": "No Drum Selected",
+  "69": "Could not print",
+  "70": "The same Key and Channel are already being used by %s",
+  "71": "You must leave one Patch List installed",
+  "72": "Now save this Patch List with a new name",
+  "73": "Now change the names to match your MIDI instrument, then click on Update Files to save it",
+  "74": "%s is not an Evolution Drum File",
+  "75": "There is already an entry at the same position",
+  "76": "Increase the window size for a clearer display",
+  "77": "The new note does not match any drum",
+  "78": "Unable to display the page. Try reducing the size of the Window",
+  "79": "Please select a Drum Pattern",
+  "80": "Treble",
+  "81": "Treble + 8",
+  "82": "Treble - 8",
+  "83": "Treble and Bass",
+  "84": "Bass",
+  "85": "Bass + 8",
+  "86": "Bass - 8",
+  "96": "No more editors are available",
+  "128": "Sequential",
+  "129": "IDP",
+  "130": "Octave-Plateau",
+  "131": "Moog",
+  "132": "Passport Des.",
+  "133": "Lexicon",
+  "134": "Kurzweil",
+  "135": "Fender",
+  "136": "Gulbransen",
+  "137": "AKG Acoustics",
+  "138": "Voyce Music",
+  "139": "Waveframe Corp",
+  "140": "ADA",
+  "141": "Garfield Elec",
+  "142": "Ensoniq",
+  "143": "Oberheim",
+  "144": "Apple Computer",
+  "145": "Grey Matter",
+  "146": "Palm Tree Inst",
+  "147": "JL Cooper",
+  "148": "Lowrey",
+  "149": "Adams-Smith",
+  "150": "Emu Systems",
+  "151": "Harmony Systems",
+  "152": "ART",
+  "153": "Baldwin",
+  "154": "Eventide",
+  "155": "Inventronics",
+  "156": "Clarity",
+  "157": "Passac",
+  "158": "SIEL",
+  "159": "Synthaxe",
+  "160": "Hohner",
+  "161": "Twister",
+  "162": "Solton",
+  "163": "Jellinghaus MS",
+  "164": "Southworth",
+  "165": "PPG",
+  "166": "JEN",
+  "167": "SSL Limited",
+  "168": "Audio Vertrieb",
+  "169": "Elka/GeneralMusic",
+  "170": "Dynacord",
+  "171": "Clavia Dig Inst",
+  "172": "Soundcraft",
+  "173": "AVAB Electronik",
+  "174": "Waldorf",
+  "175": "Kawai",
+  "176": "Roland",
+  "177": "Korg",
+  "178": "Yamaha",
+  "179": "Casio",
+  "180": "Kamiya Studio",
+  "181": "Akai",
+  "182": "Japan Victor",
+  "183": "Meisosha",
+  "184": "Hoshino Gakki",
+  "185": "Fujitsu Elect",
+  "186": "Sony",
+  "187": "Nisshin Onpa",
+  "188": "TEAC Corp.",
+  "189": "System Product",
+  "190": "Matsushita",
+  "191": "Fostex",
+  "256": "Digital Music",
+  "257": "Iota Systems",
+  "258": "Artisyn",
+  "259": "IVL",
+  "260": "Southern Music",
+  "261": "Lake Butler",
+  "262": "Alesis",
+  "263": "DOD",
+  "264": "Perfect Fretworks",
+  "265": "KAT",
+  "266": "Opcode",
+  "267": "Rane",
+  "268": "Spatial Sound",
+  "269": "KMX",
+  "270": "Allen + Heath",
+  "271": "Peavey",
+  "272": "360 Systems",
+  "273": "Axxes",
+  "274": "Orban",
+  "275": "Breakaway Tech.",
+  "276": "CAE",
+  "277": "Cannon",
+  "278": "Voce",
+  "279": "NSI",
+  "280": "Musonix",
+  "384": "CUR_PENCIL",
+  "385": "CUR_ERASER",
+  "386": "CUR_MUTE",
+  "387": "CUR_KNIFE",
+  "388": "CUR_GLUE",
+  "389": "CUR_MODIFY",
+  "390": "CUR_DRUM1",
+  "391": "CUR_DRUM2",
+  "392": "CUR_DRUMPLUS",
+  "393": "CUR_DRUMMINUS",
+  "394": "CUR_NOTE",
+  "395": "CUR_SHARP",
+  "396": "CUR_FLAT",
+  "397": "CUR_PEN",
+  "398": "CUR_PENNOTE",
+  "399": "CUR_SNAPLEFT",
+  "400": "CUR_SNAPRIGHT",
+  "416": "MUTE_BUT",
+  "417": "MUTE_PRESSED",
+  "418": "REC_BUT",
+  "419": "REC_PRESSED",
+  "420": "FADER_GREY",
+  "421": "KNOB_BLUE",
+  "422": "KNOB_RED",
+  "423": "SYNC_ON",
+  "424": "SYNC_OFF",
+  "425": "METRO_ON",
+  "426": "METRO_OFF",
+  "427": "CYCLE_ON",
+  "428": "CYCLE_OFF",
+  "429": "FOLLOW_ON",
+  "430": "FOLLOW_OFF",
+  "431": "FLAT_BUT",
+  "432": "FLAT_PRESSED",
+  "433": "PUNCH_ON",
+  "434": "PUNCH_OFF",
+  "435": "CONDUCTOR_OFF",
+  "436": "CONDUCTOR_ON",
+  "437": "EDSOLO_OFF",
+  "438": "EDSOLO_ON",
+  "439": "EVMIDI_OFF",
+  "440": "EVMIDI_ON",
+  "441": "MIDIEDIT_OFF",
+  "442": "MIDIEDIT_ON",
+  "443": "STEP_OFF",
+  "444": "STEP_ON",
+  "445": "CUR_ARROW_BM",
+  "446": "CUR_PENCIL_BM",
+  "447": "CUR_ERASER_BM",
+  "448": "CUR_MUTE_BM",
+  "449": "CUR_KNIFE_BM",
+  "450": "CUR_GLUE_BM",
+  "451": "CUR_MODIFY_BM",
+  "452": "SLIDER_BM",
+  "453": "TB_REW",
+  "454": "TB_FWD",
+  "455": "TB_STOP",
+  "456": "TB_PLAY",
+  "457": "TB_REC",
+  "458": "TB_REW_PR",
+  "459": "TB_FWD_PR",
+  "460": "TB_STOP_PR",
+  "461": "TB_PLAY_PR",
+  "462": "TB_REC_PR",
+  "463": "WB_TRACK",
+  "464": "WB_PROLL",
+  "465": "WB_EVENT",
+  "466": "WB_SCORE",
+  "467": "WB_DRUM",
+  "468": "WB_COND",
+  "469": "WB_NOTE",
+  "470": "WB_MIXER",
+  "471": "WB_KEY",
+  "472": "WBP_TRACK",
+  "473": "WBP_PROLL",
+  "474": "WBP_EVENT",
+  "475": "WBP_SCORE",
+  "476": "WBP_DRUM",
+  "477": "WBP_COND",
+  "478": "WBP_NOTE",
+  "479": "WBP_MIXER",
+  "480": "WBP_KEY",
+  "481": "CONDPOINT",
+  "482": "CONDPOINT_SEL",
+  "483": "KNOB_PUR",
+  "484": "LED_RED",
+  "485": "LED_BLUE",
+  "486": "LED_GREEN",
+  "487": "LED_GREY",
+  "488": "KNOB_GREY",
+  "489": "CHORD_BUT",
+  "490": "CHORD_BUT_PR",
+  "491": "CUR_DRUM1_BM",
+  "492": "CUR_DRUM2_BM",
+  "493": "CUR_DRUMPLUS_BM",
+  "494": "CUR_DRUMMINUS_BM",
+  "495": "CUR_NOTE_BM",
+  "496": "CUR_SHARP_BM",
+  "497": "CUR_FLAT_BM",
+  "498": "LOC_L",
+  "499": "LOC_R",
+  "500": "WB_LYRIC",
+  "501": "WBP_LYRIC",
+  "502": "CUR_PEN_BM",
+  "503": "CUR_PENNOTE_BM",
+  "504": "WB_ICT",
+  "505": "WBP_ICT",
+  "506": "WB_AUDIO",
+  "507": "WBP_AUDIO",
+  "508": "CUR_SNAPLEFT_BM",
+  "509": "CUR_SNAPRIGHT_BM",
+  "512": "N1",
+  "513": "N2U",
+  "514": "N4U",
+  "515": "N8U",
+  "516": "N16U",
+  "517": "N32U",
+  "518": "N64U",
+  "519": "N2D",
+  "520": "N4D",
+  "521": "N8D",
+  "522": "N16D",
+  "523": "N32D",
+  "524": "N64D",
+  "525": "N2UC",
+  "526": "N4UC",
+  "527": "N8UC",
+  "528": "N16UC",
+  "529": "N32UC",
+  "530": "N64UC",
+  "531": "N2DC",
+  "532": "N4DC",
+  "533": "REST1",
+  "534": "REST4",
+  "535": "REST8",
+  "536": "REST16",
+  "537": "REST32",
+  "538": "REST64",
+  "539": "SHARP",
+  "540": "FLAT",
+  "541": "DBLSHARP",
+  "542": "NATURAL",
+  "543": "TRCLEF",
+  "544": "BASSCLEF",
+  "545": "TS1",
+  "546": "TS2",
+  "547": "TS3",
+  "548": "TS4",
+  "549": "TS5",
+  "550": "TS6",
+  "551": "TS7",
+  "552": "TS8",
+  "553": "TS9",
+  "554": "TS0",
+  "555": "TRIPLET",
+  "556": "BN1",
+  "557": "BN2U",
+  "558": "BN4U",
+  "559": "BN8U",
+  "560": "BN16U",
+  "561": "BN32U",
+  "562": "BN64U",
+  "563": "BN2D",
+  "564": "BN4D",
+  "565": "BN8D",
+  "566": "BN16D",
+  "567": "BN32D",
+  "568": "BN64D",
+  "569": "BN2UC",
+  "570": "BN4UC",
+  "571": "BN8UC",
+  "572": "BN16UC",
+  "573": "BN32UC",
+  "574": "BN64UC",
+  "575": "BN2DC",
+  "576": "BN4DC",
+  "577": "BREST1",
+  "578": "BREST4",
+  "579": "BREST8",
+  "580": "BREST16",
+  "581": "BREST32",
+  "582": "BREST64",
+  "583": "BSHARP",
+  "584": "BFLAT",
+  "585": "BDBLSHARP",
+  "586": "BNATURAL",
+  "587": "BTRCLEF",
+  "588": "BBASSCLEF",
+  "589": "BTS1",
+  "590": "BTS2",
+  "591": "BTS3",
+  "592": "BTS4",
+  "593": "BTS5",
+  "594": "BTS6",
+  "595": "BTS7",
+  "596": "BTS8",
+  "597": "BTS9",
+  "598": "BTS0",
+  "599": "BTRIPLET",
+  "768": "&Copy Track",
+  "769": "&Delete Track",
+  "770": "De&lete All Tracks",
+  "771": "Delete &Unused Tracks",
+  "772": "&Pattern Dimensions...",
+  "773": "&Insert Between Locators",
+  "774": "Delete &Between Locators",
+  "775": "&Slice at Locators",
+  "776": "Chords to &MIDI Track",
+  "777": "&Merge Patterns",
+  "778": "&Extract Pattern",
+  "779": "Add MIDI &Track",
+  "780": "Add C&hord Track",
+  "781": "Add A&udio Track",
+  "782": "&Add Drum",
+  "783": "&Delete Drum",
+  "784": "D&elete All Drums",
+  "785": "&Settings...",
+  "786": "&Print...",
+  "787": "P&rint Setup...",
+  "788": "&Delete Lyrics",
+  "800": "&Move",
+  "801": "&Hide",
+  "802": "&Toggle Caption",
+  "803": "H&ide Transport\tCtrl+F7",
+  "804": "&Show Transport\tCtrl+F7",
+  "805": "Hide &Editors\tCtrl+F8",
+  "806": "Show &Editors\tCtrl+F8",
+  "807": "Hi&de Fast Menu\tCtrl+F9",
+  "808": "Show &Fast Menu\tCtrl+F9",
+  "816": "Do you want to extract to multiple tracks?",
+  "817": "Are you sure you want to delete %s?",
+  "818": "%s has changed. Do you want to save it?",
+  "819": "Replace existing %s",
+  "820": "Multiple Patterns",
+  "821": "If you wish to insert notes here, Close the Score Window and use the Pencil to draw a new pattern or extend an existing pattern",
+  "822": "Do you want the Patch Lists to be assigned to match your GM/GS/XG selections?",
+  "832": "Your song does not contain an Audio Track",
+  "833": "Resize Pattern to match Wave length?",
+  "834": "The waveform device can't play this format",
+  "835": "Failed to open waveform output device",
+  "836": "Failed to allocate memory for Samples",
+  "837": "Failed to allocate memory for wave format",
+  "838": "Failed to lock memory for wave format",
+  "839": "Not enough memory for headers",
+  "840": "Not enough memory for Buffer",
+  "841": "Failed to allocate memory for Prepared Samples",
+  "842": "Failed to open file",
+  "843": "This is not a WAVE file",
+  "844": "The .WAV file is corrupted",
+  "845": "The format chunk is too large",
+  "846": "Failed to read the format chunk",
+  "847": "The file is not a PCM file",
+  "848": "The .WAV file has no data chunk",
+  "849": "The data chunk has no data",
+  "850": "This will create a new WAV file. Do you want to continue",
+  "851": "Do you want to save the changes to the WAV file",
+  "852": "Please Select an Audio Pattern",
+  "853": "This File Name cannot be used for recording because it is already being used for playing. Please choose a different File Name",
+  "864": "1968",
+  "865": "Molten Metal",
+  "866": "Frost",
+  "867": "Blue Coral Night",
+  "868": "Red Coral Sunset",
+  "869": "Evolution Gold",
+  "870": "Copper",
+  "871": "Cold Steel Rail",
+  "872": "Green Velvet",
+  "873": "Green Silk",
+  "874": "Purple Silk",
+  "875": "Evolution Blue",
+  "876": "Evolution Purple",
+  "877": "Blue Velvet",
+  "878": "Hot Coals",
+  "879": "Under Ice",
+  "880": "Lava Flow",
+  "881": "Halloween",
+  "882": "Red Velvet",
+  "883": "Ice Floes",
+  "884": "Marble",
+  "885": "Paper",
+  "886": "Vellum",
+  "887": "Green Baize",
+  "888": "Old Gold"
+ },
+ "cursors": {
+  "CUR_DRUM1": [
+   1,
+   1
+  ],
+  "CUR_DRUM2": [
+   1,
+   1
+  ],
+  "CUR_DRUMMINUS": [
+   3,
+   17
+  ],
+  "CUR_DRUMPLUS": [
+   3,
+   0
+  ],
+  "CUR_ERASER": [
+   0,
+   0
+  ],
+  "CUR_FLAT": [
+   1,
+   1
+  ],
+  "CUR_GLUE": [
+   31,
+   0
+  ],
+  "CUR_KNIFE": [
+   0,
+   0
+  ],
+  "CUR_MODIFY": [
+   13,
+   13
+  ],
+  "CUR_MUTE": [
+   13,
+   6
+  ],
+  "CUR_NOTE": [
+   3,
+   21
+  ],
+  "CUR_PEN": [
+   1,
+   1
+  ],
+  "CUR_PENCIL": [
+   0,
+   0
+  ],
+  "CUR_PENNOTE": [
+   4,
+   3
+  ],
+  "CUR_SHARP": [
+   1,
+   1
+  ],
+  "CUR_SNAPLEFT": [
+   1,
+   3
+  ],
+  "CUR_SNAPRIGHT": [
+   16,
+   3
+  ]
+ }
+}

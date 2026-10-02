@@ -1,0 +1,131 @@
+patc
+Roland JV1080 
+1080_A
+64voicePiano 
+Bright Piano 
+Classique    
+Nice Piano   
+Piano Thang  
+Power Grand  
+House Piano  
+E.Grand      
+MlDIed Grand 
+Piano Blend  
+West Coast   
+PianoStrings 
+Bs/Pno+Brs   
+Waterhodes   
+S.A.E.P.     
+SA Rhodes 1  
+SA Rhodes 2  
+Stiky Rhodes 
+Dig Rhodes   
+Nylon Epiano 
+Nylon Rhodes 
+Rhodes Mix   
+PsychoRhodes 
+Tremo Rhodes 
+MK-80 Rhodes 
+Mk-80 Phaser 
+Delicate EP  
+Octa Rhodes1 
+Octa Rhodes2 
+JV Rhodes+   
+EP+Mod Pad   
+Mr.Mellow    
+Comp Clav    
+Klavinet     
+Winger Clav  
+Phaze Clav 1 
+Phaze Clav 2 
+Phuzz Clav   
+Chorus Clav  
+Claviduck    
+Velo-Rez Clv 
+Clavicembalo 
+Analog Clav1 
+Analog Clav2 
+Metal Clav   
+Full Stops   
+Ballad B     
+Mellow Bars  
+AugerMentive 
+Perky B      
+The Big Spin 
+Gospel Spin  
+Roller Spin  
+RockerSpin   
+Tone Wh.Solo 
+Purple Spin  
+60's LeadORG 
+Assalt Organ 
+D-50 Organ   
+Cathedral    
+Church Pipes 
+Poly Key     
+Poly Saws    
+Poly Pulse   
+Dual Profs   
+Saw Mass
+Poly Split
+Poly Brass
+Stackoid
+Poly Rock
+D-50 Stack
+Fantasia JV
+Jimmee Dee
+Heavenals
+Mallet Pad
+Huff N Stuff
+Puff 1080
+BellVox 1080
+Fantasy Vox
+Square Keys
+Childlike
+Music Box
+Toy Box
+Wave Bells
+Tria Bells
+Beauty Bells
+Music Bells
+Pretty Bells
+Pulse Kev
+Wide Tubular
+AmbienceVibe
+Warm Vibes
+Dyna Marimba
+Bass Marimba
+Nomad Perc
+Ethno Metals
+Islands Mlt
+Steelin Keys
+Steel Drums
+Voicey Pizz
+Sitar
+Drone Split
+Ethnopluck
+Jamisen 
+Dulcimer
+East Melody
+MandolinTrem
+Nylon Gtr
+Gtr Strings
+Steel Away
+Heavenly Gtr
+12str Gtr 1
+12str Gtr 2
+Jz Gtr Hall
+LetterFrmPat
+Jazz Scat
+Lounge Gig
+JC Strat
+Twin Strats
+JV Strat
+Syn Strat
+Rotary Gtr
+Muted Gtr
+SwitchOnMute
+Power Trip
+Crunch Split
+Rezodrive
+RockYurSocks
