@@ -27,7 +27,15 @@ jobs:
         run: python -X faulthandler -m unittest discover tests -v
       - name: GUI test repeated (macOS Tk crashes were intermittent)
         if: runner.os == 'macOS'
-        run: for i in 1 2 3 4 5; do python -X faulthandler -m unittest tests.test_gui || exit 1; done
+        run: |
+          for i in 1 2 3 4 5; do
+            lldb --batch -o run -k 'thread backtrace all' -k 'quit 1' -- "$(which python)" -X faulthandler -m unittest tests.test_gui > lldb.log 2>&1
+            st=$?
+            if grep -q "stop reason" lldb.log || ! grep -q "^OK" lldb.log; then
+              cat lldb.log
+              exit 1
+            fi
+          done
       - name: macOS crash reports
         if: failure() && runner.os == 'macOS'
         run: |
