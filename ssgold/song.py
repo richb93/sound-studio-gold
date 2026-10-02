@@ -585,5 +585,8 @@ def new_song(ports=None):
         t.channel = (i - 1) % 16 + 1
         if i <= 10:
             t.prog = 0
+        if i == 1:
+            t.rec = 1
+            t.selected = True
         s.tracks.append(t)
     return s
