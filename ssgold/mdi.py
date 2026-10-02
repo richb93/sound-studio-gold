@@ -46,13 +46,10 @@ class MDIClient(tk.Canvas):
 
     def _tile(self):
         self.delete('bg')
-        if not self.bg_image:
+        if not self.bg_image or ui.diag('nobg'):
             return
-        w, h = self.winfo_width(), self.winfo_height()
-        iw, ih = self.bg_image.width(), self.bg_image.height()
-        for y in range(0, h, ih):
-            for x in range(0, w, iw):
-                self.create_image(x, y, image=self.bg_image, anchor='nw', tags='bg')
+        self.create_image(0, 0, image=ui.tiled(self.bg_image, self.winfo_width(), self.winfo_height()),
+                          anchor='nw', tags='bg')
         self.tag_lower('bg')
 
     def _on_resize(self, _e):

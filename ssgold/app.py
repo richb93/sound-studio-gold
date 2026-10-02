@@ -883,10 +883,14 @@ class App(tk.Tk):
             if pos != self._last_pos and now - getattr(self, '_last_draw', 0) >= self.update_ms() / 1000.0:
                 self._last_draw = now
                 self._last_pos = pos
-                self._timed('Transport boxes', self.transport.update_values)
-                self._timed('Big time display',
-                            lambda: self.bigtime.set(smpte(self.tmap.to_ms(pos), self.fps(), self.song.smpte_start)))
-                self._follow()
+                if not ui.diag('noupdate'):
+                    if not ui.diag('notransport'):
+                        self._timed('Transport boxes', self.transport.update_values)
+                        self._timed('Big time display',
+                                    lambda: self.bigtime.set(smpte(self.tmap.to_ms(pos), self.fps(),
+                                                                   self.song.smpte_start)))
+                    if not ui.diag('nofollow'):
+                        self._follow()
             if not self.seq.playing and self.transport.values.get('playing'):
                 self.transport.redraw_buttons()
             self.transport.values['playing'] = self.seq.playing

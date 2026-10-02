@@ -28,7 +28,10 @@ If the program feels slow, **Options › Preferences › Screen Updates** (the o
 Resolution) sets how often the play position, cursors and meters are redrawn while playing: High,
 Medium or Low. Playback timing is not affected. To find out where the time goes, run
 `python run.py --profile` (or the built app's executable with `--profile`); a report is written to
-`~/ssgold-profile.txt` when you quit.
+`~/ssgold-profile.txt` when you quit. To see which part of the display costs the time, start it with
+`SSGOLD_DIAG` set to any of `nobg` (no background textures), `noupdate` (nothing redrawn while
+playing), `notransport` (Transport and big time display not updated) or `nofollow` (play position
+markers not moved), e.g. `SSGOLD_DIAG=nobg,nofollow ./SoundStudioGold`.
 
 ## What is there
 

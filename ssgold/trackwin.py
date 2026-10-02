@@ -1079,11 +1079,8 @@ class TrackWindow(MDIChild):
         c = self.pat
         c.delete('all')
         W, H = c.winfo_width() // ui.S, c.winfo_height() // ui.S
-        if self.bg_img is not None:
-            iw, ih = self.bg_img.width(), self.bg_img.height()
-            for y in range(0, s(H), ih):
-                for x in range(0, s(W), iw):
-                    c.create_image(x, y, image=self.bg_img, anchor='nw')
+        if self.bg_img is not None and not ui.diag('nobg'):
+            c.create_image(0, 0, image=ui.tiled(self.bg_img, s(W), s(H)), anchor='nw')
         tm = self.app.tmap
         song = self.app.song
         # left/right locator lines

@@ -1,4 +1,5 @@
 """Shared look: colours, fonts, the UI scale, and Windows 3.x/95 style drawing helpers."""
+import os
 import sys
 import tkinter as tk
 import tkinter.font as tkfont
@@ -224,3 +225,27 @@ class CanvasMixin:
     @staticmethod
     def make(parent, w, h, bg=FACE):
         return tk.Canvas(parent, width=s(w), height=s(h), bg=bg, highlightthickness=0, bd=0)
+
+
+# ----------------------------------------------------------------------------- tiled backgrounds
+_TILED = {}
+
+
+def tiled(tile, w, h):
+    """One image of w x h pixels filled with copies of tile.  A single canvas item repaints much
+    faster than a hundred tiles (macOS repaints a window often while a song plays)."""
+    w, h = max(1, int(w)), max(1, int(h))
+    key = (str(tile), w, h)
+    img = _TILED.get(key)
+    if img is None:
+        for k in [k for k in _TILED if k[0] == key[0]]:      # keep one size per tile
+            del _TILED[k]
+        img = tk.PhotoImage(width=w, height=h)
+        img.tk.call(img, 'copy', tile, '-to', 0, 0, w, h)       # Tk repeats the source to fill
+        _TILED[key] = img
+    return img
+
+
+def diag(flag):
+    """Diagnostics: SSGOLD_DIAG=nobg,noupdate,... turns parts of the display off (see README)."""
+    return flag in os.environ.get('SSGOLD_DIAG', '').lower().split(',')
