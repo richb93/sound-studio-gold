@@ -272,7 +272,7 @@ class MDIChild(tk.Frame):
             ui.raised(c, x0, 2, x1, 16)
             cx, cy = (x0 + x1) // 2, 9
             if kind == 'close':
-                pixels(c, cx - 4, cy - 3, CLOSE_GLYPH)
+                pixels(c, cx - 4, cy - 4, CLOSE_GLYPH)     # centred on the face above the shadow
             elif kind == 'max':
                 if self.state == 'max':
                     ui.rect(c, cx - 2, cy - 5, cx + 5, cy + 1)

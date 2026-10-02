@@ -24,13 +24,12 @@ as the original's is for a disabled port. Choose MIDI ports in **Options › Dev
 Settings (devices, column choices, preferences, window and dialog defaults) are kept in
 `~/.ssgold_settings.json`.
 
-On macOS the textured backgrounds are very slow to repaint (Tk copies every pixel each time the
-window is redrawn), so there the program starts with plain colours; **Options › Preferences ›
-Backgrounds** can switch the textures back on (choose **None** for plain colours on any system).
+The backgrounds are plain grey by default: the original's textures (**Options › Preferences ›
+Backgrounds**) can be chosen, but they are slow to repaint, above all on macOS.
 
 If the program feels slow, **Options › Preferences › Screen Updates** (the original's Timer
-Resolution) sets how often the play position, cursors and meters are redrawn while playing: High,
-Medium or Low. Playback timing is not affected. To find out where the time goes, run
+Resolution) sets the frame rate the play position, cursors and meters are redrawn at while playing
+(5-60 fps, with 60 / 30 / 15 fps buttons). Playback timing is not affected. To find out where the time goes, run
 `python run.py --profile` (or the built app's executable with `--profile`); a report is written to
 `~/ssgold-profile.txt` when you quit. To see which part of the display costs the time, start it with
 `SSGOLD_DIAG` set to any of `nobg` (no background textures), `noupdate` (nothing redrawn while

@@ -133,10 +133,10 @@ class TrackWindow(MDIChild):
         self.set_background()
 
     def set_background(self):
-        bg = self.app.settings['prefs'].get('bg_track', 'Vellum')
+        bg = self.app.settings['prefs'].get('bg_track', 'None')
         name = self.app.BACKGROUNDS.get(bg)
         self.bg_img = self.app.images.get(name) if name else None
-        self.pat.configure(bg=ui.WINDOW if name else self.app.plain_colour('Vellum'))
+        self.pat.configure(bg=ui.WINDOW if name else self.app.PLAIN_TRACK)
         self.redraw()
 
     # ------------------------------------------------------------------ song binding

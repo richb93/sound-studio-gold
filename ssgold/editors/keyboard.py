@@ -90,6 +90,7 @@ class KeyboardWindow(MDIChild):
     def _make_check(self, master):
         c = tk.Canvas(master, width=s(13), height=s(13), bg=ui.FACE, highlightthickness=0, bd=0)
         c.bind('<Button-1>', lambda e: self.set_pc(not self.pc_on))
+        c.bind('<Configure>', lambda e: self._draw_check())
         self._check = c
         self._draw_check()
         return c
@@ -97,9 +98,10 @@ class KeyboardWindow(MDIChild):
     def _draw_check(self):
         c = self._check
         c.delete('all')
-        ui.sunken(c, 0, 0, 13, 13, fill=ui.FACE)
+        y = max(0, (c.winfo_height() // ui.S - 13) // 2)       # centred on the label beside it
+        ui.sunken(c, 0, y, 13, y + 13, fill=ui.FACE)
         if self.pc_on:
-            ui.text(c, 6, 6, '✓', 'smallbold', anchor='center')
+            ui.text(c, 6, y + 6, '✓', 'smallbold', anchor='center')
 
     def set_pc(self, on):
         self.pc_on = on

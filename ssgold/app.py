@@ -52,7 +52,7 @@ DEFAULT_SETTINGS = {
     'prefs': {'copy_as_parents': False, 'chord_conflict': True, 'conductor_warning': True,
               'ask_type0': False, 'leave_midi': False, 'number_from_1': False, 'single_edit': False,
               'timer_ms': 1, 'dbl_midi': 'Piano Roll', 'dbl_audio': 'Audio Window',
-              'bg_track': 'Vellum', 'bg_program': 'Evolution Purple', 'kbd_velocity': 100},
+              'bg_track': 'None', 'bg_program': 'None', 'kbd_velocity': 100},
     'show_transport': True, 'show_editors': True, 'show_fast': True, 'show_time': True,
     'cap_transport': False, 'cap_editors': False, 'cap_fast': False,
     'mixer': {'users': [[93, 0, 0, 127], [91, 0, 0, 127]], 'under': 2, 'midi_in': False, 'song_data': True,
@@ -78,11 +78,11 @@ def load_settings():
     except (OSError, ValueError):
         pass
     pr = s['prefs']
-    if sys.platform == 'darwin' and not pr.get('bg_mac_plain'):
-        # macOS repaints textures very slowly (a whole CPU core while playing): start with plain
-        # colours, once; textures can be chosen again in Preferences
+    if not pr.get('bg_plain_default'):
+        # textured backgrounds are slow to repaint (a CPU core on macOS while playing): plain grey
+        # is the default, set once for settings saved before; textures can be chosen in Preferences
         pr['bg_track'] = pr['bg_program'] = 'None'
-        pr['bg_mac_plain'] = True
+        pr['bg_plain_default'] = True
     return s
 
 
@@ -242,23 +242,9 @@ class App(tk.Tk):
     BACKGROUNDS = {n: 'BD%02d' % (i + 1) for i, n in
                    enumerate(sorted(resources.string(864 + i) for i in range(25)))}
 
-    NO_BACKGROUND = 'None'      # plain colour: textures are slow to repaint on macOS
 
-    def plain_colour(self, texture):
-        """The average colour of a background texture, for the plain 'None' background."""
-        cache = self.__dict__.setdefault('_plain', {})
-        if texture not in cache:
-            img = self.images.get(self.BACKGROUNDS[texture])
-            w, h = img.width(), img.height()
-            tot, n = [0, 0, 0], 0
-            for y in range(0, h, max(1, h // 16)):
-                for x in range(0, w, max(1, w // 16)):
-                    px = img.get(x, y)
-                    for i in range(3):
-                        tot[i] += px[i]
-                    n += 1
-            cache[texture] = '#%02x%02x%02x' % tuple(v // max(1, n) for v in tot)
-        return cache[texture]
+    PLAIN_PROGRAM = '#808080'   # the 'None' backgrounds: Windows' dark and light greys
+    PLAIN_TRACK = '#c0c0c0'
 
     def set_backgrounds(self):
         bg = self.settings['prefs'].get('bg_program')
@@ -267,7 +253,7 @@ class App(tk.Tk):
             self.client.set_background(self.images.get(self.BACKGROUNDS[bg]))
         else:
             self.client.set_background(None)
-            self.client.configure(bg=self.plain_colour('Evolution Purple'))
+            self.client.configure(bg=self.PLAIN_PROGRAM)
         for w in self.client.children_:
             if hasattr(w, 'set_background'):
                 w.set_background()
@@ -927,8 +913,9 @@ class App(tk.Tk):
             self.after(20, self._poll)
 
     def update_ms(self):
-        """Preferences' Screen Updates: how often the play position is redrawn (milliseconds)."""
-        return {'high': 40, 'medium': 80, 'low': 160}.get(self.settings['prefs'].get('screen_updates'), 40)
+        """Preferences' Screen Updates: the interval the play position is redrawn at (milliseconds)."""
+        from .dialogs import screen_fps
+        return 1000.0 / screen_fps(self.settings['prefs'])
 
     def _follow(self, force=False):
         for w in self.client.children_:

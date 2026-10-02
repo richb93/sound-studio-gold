@@ -622,6 +622,14 @@ def rescale_song(song, tb):
     song.timebase = tb
 
 
+def screen_fps(prefs):
+    """Preferences' Screen Updates (frames per second), from the setting or its older form."""
+    fps = prefs.get('screen_fps')
+    if fps is None:
+        fps = {'high': 30, 'medium': 15, 'low': 8}.get(prefs.get('screen_updates'), 30)
+    return max(5, min(60, int(fps)))
+
+
 def preferences(app, **kw):
     pr = app.settings['prefs']
     d = Dialog(app, 'PREFERENCES_DLG')
@@ -630,46 +638,52 @@ def preferences(app, **kw):
     for iid, k in checks.items():
         d.set_check(iid, pr.get(k))
     # The original's Timer Resolution slider and Pentium/486/386 buttons (meaningless on modern
-    # computers) become Screen Updates: how often the play position, cursors and meters are redrawn
-    levels = {1405: ('&High', 'high'), 1406: ('&Medium', 'medium'), 1407: ('&Low', 'low')}
+    # computers) become Screen Updates: the frame rate the play position, cursors and meters are
+    # redrawn at while playing (the slider), with 60 / 30 / 15 fps buttons
+    presets = {1405: ('&60 fps', 60), 1406: ('&30 fps', 30), 1407: ('&15 fps', 15)}
     sb = d.ctrls[1404]
-    sb_y = sb.winfo_y() if sb.winfo_ismapped() else None
+    sb.lo, sb.hi = 5, 60
+    sb.step, sb.page = 1, 5
+    label = None
     for item in d.c.find_all():
-        if d.c.type(item) == 'window' and d.c.itemcget(item, 'window') == str(sb):
-            sb_y = d.c.coords(item)[1]
+        if d.c.type(item) != 'text':
+            continue
+        if d.c.itemcget(item, 'text') == 'ms':
             d.c.delete(item)
-    d.set_text(1403, '')
-    for item in d.c.find_all():
-        if d.c.type(item) == 'text' and d.c.itemcget(item, 'text') == 'ms':
-            d.c.delete(item)
-        elif d.c.type(item) == 'text' and d.c.itemcget(item, 'text') == 'Timer Resolution':
+        elif d.c.itemcget(item, 'text') == 'Timer Resolution':
             d.c.itemconfigure(item, text='Screen Updates')
-    timer = {'ms': pr.get('screen_updates', 'high')}
+            label = item
+    value = d.statics.get(1403)
+    if value is not None and label is not None:
+        x1, y0 = d.c.bbox(label)[2], d.c.coords(value)[1]
+        d.c.itemconfigure(value, anchor='nw', justify='left', width=0)
+        d.c.coords(value, x1 + ui.s(8), y0)
 
-    def show_timer():
-        for iid, (label, ms) in levels.items():
-            d.set_button_text(iid, label)
-            d._draw_plain(iid, down=ms == timer['ms'])
-
-    def pick(ms):
-        timer['ms'] = ms
-        show_timer()
-    for iid, (label, ms) in levels.items():
-        if sb_y is not None:
-            d.buttons[iid]['y'] = int(sb_y) + ui.s(4)
-        d.on_command[iid] = lambda ms=ms: pick(ms)
-    show_timer()
+    def show(fps):
+        d.set_text(1403, '%d fps (%d ms)' % (fps, round(1000.0 / fps)))
+    sb.cmd = show
+    for iid, (lab, fps) in presets.items():
+        d.set_button_text(iid, lab)
+        d.on_command[iid] = lambda fps=fps: sb.set(fps, notify=True)
+    sb.set(screen_fps(pr), notify=True)
     d.combo(1412, ['None', 'Piano Roll', 'Event', 'Score', 'Drum'], pr.get('dbl_midi', 'Piano Roll'))
     d.combo(1413, ['None', 'Audio Window'], pr.get('dbl_audio', 'Audio Window'))
     bgs = ['None'] + sorted(resources.string(864 + i) for i in range(25))     # None: plain, fastest
-    d.combo(1415, bgs, pr.get('bg_track', 'Vellum'))
-    d.combo(1414, bgs, pr.get('bg_program', 'Evolution Purple'))
+    warned = {}
+
+    def texture_warning(name):
+        if name != 'None' and not warned:
+            warned['done'] = True
+            msg(d, 'Textured backgrounds can slow the program down, especially while a song plays '
+                   '(most of all on macOS). Choose None for the fastest display.', 'info')
+    d.combo(1415, bgs, pr.get('bg_track', 'None'), cmd=texture_warning)
+    d.combo(1414, bgs, pr.get('bg_program', 'None'), cmd=texture_warning)
     d.set_text(1411, str(pr.get('kbd_velocity', 100)))
 
     def ok():
         for iid, k in checks.items():
             pr[k] = d.check(iid)
-        pr['screen_updates'] = timer['ms']
+        pr['screen_fps'] = sb.value
         pr['dbl_midi'] = d.combo(1412)
         pr['dbl_audio'] = d.combo(1413)
         pr['bg_track'] = d.combo(1415)
