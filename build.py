@@ -5,7 +5,9 @@
     python build.py --onefile    # single file: dist/SoundStudioGold(.exe)
     python build.py --test       # run the tests first
 
-Installs the requirements and PyInstaller into the current Python if they are missing.
+PyInstaller and the MIDI libraries are installed if they are missing.  When the Python
+running this is not a virtual environment (Homebrew's and many Linux distributions' Pythons
+refuse pip installs), a private one is made in .build-venv/ and the build runs from there.
 """
 import argparse
 import os
@@ -14,17 +16,72 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 NAME = 'SoundStudioGold'
+VENV = os.path.join(HERE, '.build-venv')
+NEEDED = [('PyInstaller', 'pyinstaller', True), ('mido', 'mido', True),
+          ('rtmidi', 'python-rtmidi', False), ('PIL', 'pillow', False)]   # (module, package, required)
 
 
-def pip(*pkgs):
-    subprocess.check_call([sys.executable, '-m', 'pip', 'install', '--upgrade', *pkgs])
-
-
-def ensure(module, package):
+def have(module):
     try:
         __import__(module)
+        return True
     except ImportError:
-        pip(package)
+        return False
+
+
+def in_venv():
+    return sys.prefix != getattr(sys, 'base_prefix', sys.prefix)
+
+
+def check_tk():
+    if have('tkinter'):
+        return
+    v = '%d.%d' % sys.version_info[:2]
+    hint = ('brew install python-tk@%s' % v if sys.platform == 'darwin'
+            else 'install your distribution\'s python3-tk package' if sys.platform.startswith('linux')
+            else 'reinstall Python with the "tcl/tk" option ticked')
+    sys.exit('This Python (%s) has no Tkinter, which the program needs.\nFix: %s' % (sys.executable, hint))
+
+
+def venv_python():
+    if sys.platform == 'win32':
+        return os.path.join(VENV, 'Scripts', 'python.exe')
+    return os.path.join(VENV, 'bin', 'python')
+
+
+def ensure_packages():
+    """Install whatever is missing; returns False if a required package could not be installed."""
+    ok = True
+    for module, package, required in NEEDED:
+        if have(module):
+            continue
+        print('Installing', package, '...')
+        r = subprocess.call([sys.executable, '-m', 'pip', 'install', '--upgrade', package])
+        if r != 0:
+            if required:
+                print('Could not install %s.' % package)
+                ok = False
+            else:
+                print('Warning: could not install %s; building without it%s.' % (
+                    package, ' (the program will have no MIDI ports)' if module == 'rtmidi' else ''))
+    return ok
+
+
+def bootstrap():
+    """Make sure the build has what it needs, re-running inside .build-venv/ if necessary."""
+    check_tk()
+    if all(have(m) for m, _p, req in NEEDED if req):
+        ensure_packages()        # optional extras, best effort
+        return
+    if not in_venv():
+        if not os.path.exists(venv_python()):
+            print('Creating a virtual environment for the build in', VENV)
+            import venv
+            venv.create(VENV, with_pip=True)
+        print('Re-running the build with', venv_python())
+        sys.exit(subprocess.call([venv_python(), os.path.abspath(__file__)] + sys.argv[1:]))
+    if not ensure_packages():
+        sys.exit(1)
 
 
 def make_icon(build_dir):
@@ -54,9 +111,7 @@ def main():
     args = ap.parse_args()
     os.chdir(HERE)
 
-    ensure('PyInstaller', 'pyinstaller')
-    ensure('mido', 'mido')
-    ensure('rtmidi', 'python-rtmidi')
+    bootstrap()
 
     if args.test:
         subprocess.check_call([sys.executable, '-m', 'unittest', 'discover', 'tests'])

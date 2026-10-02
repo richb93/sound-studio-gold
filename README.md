@@ -122,9 +122,11 @@ python build.py --onefile    # one executable in dist/
 python build.py --test       # run the tests first
 ```
 
-`build.py` installs PyInstaller, mido and python-rtmidi if they are missing (use a virtual
-environment if your system Python is managed by the OS). Builds are made for the platform you run
-it on.
+`build.py` installs PyInstaller, mido and python-rtmidi if they are missing. If your Python won't
+let pip install into it (Homebrew on macOS, most Linux distributions), it makes a private virtual
+environment in `.build-venv/` and builds from there, so `python3 build.py` is all you need. The
+Python must include Tkinter: on macOS with Homebrew, `brew install python-tk@3.x` for your
+version. Builds are made for the platform you run it on.
 
 Every push also builds Windows, macOS and Linux versions on GitHub Actions
 (`.github/workflows/build.yml`): open the run under the repository's **Actions** tab and download
