@@ -717,5 +717,5 @@ class MixerWindow(MDIChild):
                 c.meter = max(0.0, c.meter - 8)
                 changed = True
         if changed:
-            self.update_strips()
+            self.app._timed('MixerWindow: meters and faders', self.update_strips)
         self.after(max(50, self.app.update_ms()), self._tick)

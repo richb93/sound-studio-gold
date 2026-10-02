@@ -882,8 +882,9 @@ class App(tk.Tk):
             if pos != self._last_pos and now - getattr(self, '_last_draw', 0) >= self.update_ms() / 1000.0:
                 self._last_draw = now
                 self._last_pos = pos
-                self.transport.update_values()
-                self.bigtime.set(smpte(self.tmap.to_ms(pos), self.fps(), self.song.smpte_start))
+                self._timed('Transport boxes', self.transport.update_values)
+                self._timed('Big time display',
+                            lambda: self.bigtime.set(smpte(self.tmap.to_ms(pos), self.fps(), self.song.smpte_start)))
                 self._follow()
             if not self.seq.playing and self.transport.values.get('playing'):
                 self.transport.redraw_buttons()
@@ -898,7 +899,23 @@ class App(tk.Tk):
     def _follow(self, force=False):
         for w in self.client.children_:
             if hasattr(w, 'set_position'):
-                w.set_position(self.seq.position, follow=self.seq.opts.follow and (self.seq.playing or force))
+                self._timed('%s: play position' % type(w).__name__,
+                            lambda w=w: w.set_position(self.seq.position,
+                                                       follow=self.seq.opts.follow and (self.seq.playing or force)))
+
+    timings = None              # run.py --profile: {label: [calls, seconds]}
+
+    def _timed(self, label, fn):
+        """Run fn; when profiling, also draw at once and record how long that took."""
+        if self.timings is None:
+            return fn()
+        t0 = time.perf_counter()
+        r = fn()
+        self.update_idletasks()
+        rec = self.timings.setdefault(label, [0, 0.0])
+        rec[0] += 1
+        rec[1] += time.perf_counter() - t0
+        return r
 
     def run(self):
         self.mainloop()
