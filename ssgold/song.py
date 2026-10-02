@@ -531,7 +531,7 @@ class Song:
         tracks = self.tracks
         pats = [p for t in tracks for p in t.patterns]
         index = {id(p): i for i, p in enumerate(pats)}
-        conds = sorted(self.conductor.points, key=lambda c: (c.tick, -c.encode() & 0xC000))
+        conds = sorted(self.conductor.points, key=lambda c: c.tick)     # stable: keeps file order
         struct.pack_into('>HHHH', hdr, 4, self.version, len(tracks), len(pats), len(conds))
         names = bytearray(512)
         for i, nm in enumerate(self.ports[:16]):
@@ -539,8 +539,8 @@ class Song:
             names[32 * i:32 * i + len(b)] = b
         hdr[0x0C:0x20C] = names
         struct.pack_into('>H', hdr, 0x20C, self.timebase)
-        tempo0 = self.conductor.of(COND_TEMPO)[0].value
-        hdr[0x20E] = min(255, tempo0)
+        if not hdr[0x20E]:      # tempo byte of a new song; loaded songs keep theirs
+            hdr[0x20E] = min(255, self.conductor.of(COND_TEMPO)[0].value)
         smp = self.smpte_start.encode('latin1')[:11]
         hdr[0x214:0x220] = smp + b'\0' * (12 - len(smp))
         struct.pack_into('>ii', hdr, 0x225, self.left, self.right)

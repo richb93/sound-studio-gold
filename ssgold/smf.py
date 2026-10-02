@@ -29,7 +29,8 @@ def _write_varlen(v):
 
 
 def parse(path):
-    d = open(path, 'rb').read()
+    with open(path, 'rb') as f:
+        d = f.read()
     if d[:4] == b'RIFF':
         i = d.find(b'MThd')
         d = d[i:]

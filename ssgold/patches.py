@@ -94,7 +94,8 @@ class DrumKit:
             self.load(path)
 
     def load(self, path):
-        d = open(path, 'rb').read()
+        with open(path, 'rb') as f:
+            d = f.read()
         if d[:4] != b'drum':
             raise ValueError('%s is not an Evolution Drum File' % os.path.basename(path))
         self.header = bytearray(d[:self.HEADER])

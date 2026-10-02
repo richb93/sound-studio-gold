@@ -97,6 +97,11 @@ FONTCONF = '''<?xml version="1.0"?>
 '''
 
 
+def _read(p):
+    with open(p) as f:
+        return f.read()
+
+
 def crisp_fonts():
     """On X11, draw text without antialiasing (like Windows 95) through a private fontconfig file.
     Must run before Tk starts; set SSGOLD_ANTIALIAS=1 to keep the desktop's smoothing."""
@@ -107,7 +112,7 @@ def crisp_fonts():
         d = os.path.join(os.path.expanduser('~'), '.cache', 'ssgold')
         os.makedirs(d, exist_ok=True)
         p = os.path.join(d, 'fonts.conf')
-        if not os.path.exists(p) or open(p).read() != FONTCONF:
+        if not os.path.exists(p) or _read(p) != FONTCONF:
             with open(p, 'w') as f:
                 f.write(FONTCONF)
         os.environ['FONTCONFIG_FILE'] = p

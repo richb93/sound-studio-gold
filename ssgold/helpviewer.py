@@ -15,7 +15,10 @@ def topics():
     global _topics
     if _topics is None:
         p = resources.path('help.json')
-        raw = json.load(open(p)) if os.path.exists(p) else {}
+        raw = {}
+        if os.path.exists(p):
+            with open(p) as f:
+                raw = json.load(f)
         _topics = {}
         for name, paras in raw.items():
             out = []
