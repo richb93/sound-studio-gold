@@ -105,13 +105,13 @@ def make_icon(build_dir):
 
 
 def mac_plist(path):
-    """The program draws Windows 95 colours, so keep macOS from applying dark mode to it."""
+    """App name and Retina support.  (Not forced into light mode: the program sets its own text
+    and field colours, so it reads correctly in dark mode too.)"""
     import plistlib
     if not os.path.exists(path):
         return
     with open(path, 'rb') as f:
         pl = plistlib.load(f)
-    pl['NSRequiresAquaSystemAppearance'] = True
     pl['NSHighResolutionCapable'] = True
     pl['CFBundleName'] = pl['CFBundleDisplayName'] = 'Sound Studio Gold'
     with open(path, 'wb') as f:

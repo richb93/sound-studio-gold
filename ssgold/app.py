@@ -111,17 +111,16 @@ def _read(p):
 
 
 def light_appearance(root):
-    """Draw in the light Windows 95 colours whatever the desktop's theme.  On macOS in dark
-    mode Tk would otherwise give text and entry fields the system's dark-mode colours."""
-    for k, v in (('*foreground', ui.TEXT), ('*disabledForeground', '#808080'),
+    """Black text and white fields whatever the desktop's theme: on macOS in dark mode Tk would
+    otherwise give text and entry fields the system's dark-mode colours."""
+    for k, v in (('*background', ui.FACE), ('*foreground', ui.TEXT), ('*disabledForeground', '#808080'),
                  ('*Entry.background', ui.WINDOW), ('*Listbox.background', ui.WINDOW),
                  ('*Text.background', ui.WINDOW), ('*insertBackground', ui.TEXT),
                  ('*selectBackground', '#000080'), ('*selectForeground', '#ffffff'),
                  ('*highlightBackground', ui.FACE), ('*Menu.background', ui.FACE),
                  ('*Menu.activeBackground', '#000080'), ('*Menu.activeForeground', '#ffffff')):
         root.option_add(k, v)
-    # macOS: the built app is kept in light mode by NSRequiresAquaSystemAppearance (build.py).
-    # Tk's MacWindowStyle appearance command is not used: it crashed Tk at times.
+    # The system's light or dark mode is left alone; the colours above keep text black.
 
 
 def crisp_fonts():

@@ -176,22 +176,23 @@ class Combo(tk.Canvas):
             ui.line(self, cx - 3 + i, cy - 1 + i, cx + 4 - i, cy - 1 + i)
 
     def drop(self, _ev=None):
+        """Open the list inside the same window, just below (or above) the field.  Not a separate
+        borderless window with a grab: on macOS those could be drawn black when reopened and keep
+        the grab after the mouse moved away, freezing the program."""
         if not self.enabled or not self.values:
             return
         if self.popup:
             self.close()
             return
-        top = tk.Toplevel(self)
-        top.overrideredirect(True)
-        top.configure(bg=ui.DARK)
+        top = self.winfo_toplevel()
+        fr = tk.Frame(top, bg=ui.DARK, bd=0, highlightthickness=0)
         w = self.listw or self.winfo_width() // ui.S
         rows = min(len(self.values), self.rows)
-        lb = tk.Listbox(top, font=ui.f('system' if self.bold else 'small'), height=rows,
-                        activestyle='none', bd=0, highlightthickness=0, selectbackground=ui.SELECT,
+        lb = tk.Listbox(fr, font=ui.f('system' if self.bold else 'small'), height=rows, bg=ui.WINDOW,
+                        fg=ui.TEXT, activestyle='none', bd=0, highlightthickness=0, selectbackground=ui.SELECT,
                         selectforeground='white', exportselection=False)
-        sb = None
         if len(self.values) > rows:
-            sb = tk.Scrollbar(top, command=lb.yview)
+            sb = tk.Scrollbar(fr, command=lb.yview)
             lb.configure(yscrollcommand=sb.set)
             sb.pack(side='right', fill='y')
         lb.pack(side='left', fill='both', expand=True, padx=ui.S, pady=ui.S)
@@ -201,17 +202,21 @@ class Combo(tk.Canvas):
             i = self.values.index(self.value)
             lb.selection_set(i)
             lb.see(i)
-        x = self.winfo_rootx()
-        y = self.winfo_rooty() + self.winfo_height()
-        top.geometry('%dx%d+%d+%d' % (s(w), lb.winfo_reqheight() + 2 * ui.S, x, y))
-        self.popup = top
-        self._prev_grab = self.grab_current()      # a modal dialog's grab, given back on close
+        h = lb.winfo_reqheight() + 2 * ui.S
+        x = self.winfo_rootx() - top.winfo_rootx()
+        y = self.winfo_rooty() - top.winfo_rooty() + self.winfo_height()
+        if y + h > top.winfo_height() and y - self.winfo_height() - h >= 0:
+            y -= self.winfo_height() + h            # no room below: open upwards
+        fr.place(x=x, y=y, width=s(w), height=h)
+        fr.lift()
+        self.popup = fr
 
         def pick(_e=None):
             sel = lb.curselection()
             self.close()
             if sel:
                 self.set(self.values[sel[0]], notify=True)
+            return 'break'
 
         def motion(e):
             i = lb.nearest(e.y)
@@ -222,44 +227,40 @@ class Combo(tk.Canvas):
         lb.bind('<Return>', pick)
         lb.bind('<Motion>', motion)
         lb.bind('<Escape>', lambda e: self.close())
-        top.bind('<FocusOut>', lambda e: self.after(100, self._maybe_close))
+        lb.focus_set()
+
+        # A click anywhere else in the window closes the list (the window's own binding for the
+        # click is kept and put back afterwards).
+        self._top = top
+        self._old_click = top.bind('<ButtonPress>')
 
         def outside(e):
-            # while the list holds the grab, every click comes here: one outside it closes it
-            x0, y0 = top.winfo_rootx(), top.winfo_rooty()
-            if not (x0 <= e.x_root < x0 + top.winfo_width() and y0 <= e.y_root < y0 + top.winfo_height()):
-                self.close()
-                return 'break'
-        top.bind('<ButtonPress>', outside)
-
-        def grab():
-            try:
-                top.grab_set()
-                lb.focus_set()
-            except tk.TclError:
-                pass
-        top.after(10, grab)
-
-    def _maybe_close(self):
-        if self.popup and self.focus_get() is None:
+            wid = e.widget
+            while wid is not None:
+                if wid is fr or wid is self:
+                    return None
+                wid = getattr(wid, 'master', None)
             self.close()
+            return None
+        top.bind('<ButtonPress>', outside, add='+')
 
     def close(self):
         if self.popup:
             try:
-                self.popup.grab_release()
                 self.popup.destroy()
             except tk.TclError:
                 pass
             self.popup = None
-            prev = getattr(self, '_prev_grab', None)
-            self._prev_grab = None
-            if prev is not None:
+            top = getattr(self, '_top', None)
+            if top is not None:
                 try:
-                    if prev.winfo_exists():
-                        prev.grab_set()
+                    if self._old_click:
+                        top.bind('<ButtonPress>', self._old_click)
+                    else:
+                        top.unbind('<ButtonPress>')
                 except tk.TclError:
                     pass
+                self._top = None
 
 
 class InfoLine(tk.Canvas):
