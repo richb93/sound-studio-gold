@@ -319,7 +319,7 @@ class PianoRoll(EditorWindow):
         c.delete('cursor')
         if PRE <= x < W:
             c.create_line(s(x), 0, s(x), c.winfo_height(), fill='#000000', dash=(1, 1), width=ui.S, tags='cursor')
-        self.draw_timeline(self.timeline, lambda t: self.x_of(t), W, TL_H)
+        self.draw_position_marker(self.timeline, lambda t: self.x_of(t), TL_H)
 
     # ---- mouse in the note display
     def hit_note(self, ev):

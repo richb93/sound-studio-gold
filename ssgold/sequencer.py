@@ -246,6 +246,7 @@ class Sequencer:
         self.held.clear()
 
     def _send(self, port, data):
+        port = self.midi.real_port(port)       # as the Mixer shows it
         st = data[0]
         if st & 0xF0 == 0x90 and len(data) > 2 and data[2]:
             key = (port, st & 0x0F)
@@ -279,6 +280,7 @@ class Sequencer:
                 state[(port, data[0])] = data
         for k, data in state.items():
             self.midi.send(k[0], data)
+            self.out_log.append((self.midi.real_port(k[0]), data))
 
     def _metro_events(self, tmap, t0, t1):
         o = self.opts
@@ -379,7 +381,18 @@ class Sequencer:
             if not self.recording and not loop and idx >= len(sched) and cur > end_tick + tmap.tb \
                     and self.sfc is None:
                 break
-            time.sleep(max(1, self.timer_ms) / 1000.0)
+            # sleep until the next event is due (the live accompaniment needs every tick)
+            wait = max(1, self.timer_ms)
+            if acc is None or (not acc.entries and self.sfc is None and acc.engine is None):
+                nxt = min(sched[idx][0] if idx < len(sched) else 1 << 40,
+                          metro[midx][0] if midx < len(metro) else 1 << 40)
+                if loop:
+                    nxt = min(nxt, song.right)
+                if nxt < 1 << 40:
+                    wait = max(wait, min(10.0, tmap.to_ms(nxt) - now_ms))
+                else:
+                    wait = 10.0
+            self.stop_flag.wait(wait / 1000.0)
         self._release_all()
         self.playing = False
         if self.app:
@@ -402,6 +415,7 @@ class Sequencer:
         if pos > acc.start and acc.entries and not muted:
             for port, data in acc.setup():
                 self.midi.send(port, data)
+                self.out_log.append((self.midi.real_port(port), data))
         return acc
 
     # ---- recording input

@@ -494,6 +494,7 @@ class App(tk.Tk):
     def set_song(self, song):
         self.seq.stop()
         self.song = song
+        self.__dict__.pop('mixer_state', None)      # the Mixer starts from the new song's settings
         self.seq.set_song(song)
         self.undo_stack.clear()
         self.redo_stack.clear()
@@ -828,6 +829,7 @@ class App(tk.Tk):
                 msgs = []
         for m in msgs:
             self.midi.send(max(0, t.port), m)
+            self.seq.out_log.append((self.midi.real_port(max(0, t.port)), m))      # the Mixer follows
 
     # ------------------------------------------------------------------ MIDI input
     def _midi_in(self, data):
@@ -844,6 +846,8 @@ class App(tk.Tk):
                     if rec.channel and not o.multitrack:
                         out[0] = (st & 0xF0) | (rec.channel - 1)
                 self.midi.send(port, bytes(out))
+        if st >= 0xF8:          # clock / active sensing: nothing to show, and they arrive constantly
+            return
         # Tk may only be used from the main thread (macOS crashes otherwise): _poll runs this
         self._from_threads.append(lambda d=bytes(data): self._midi_in_gui(d))
 

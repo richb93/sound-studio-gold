@@ -261,15 +261,17 @@ class EventWindow(EditorWindow):
         self.vbar.set(self.top_row / n, min(1, (self.top_row + nvis) / n))
 
     def set_position(self, tick, follow=False):
+        rows = self.shown()
+        rel = tick - self.pattern.start
+        idx = next((i for i, e in enumerate(rows) if e.tick >= rel), None)
         if follow:
-            rows = self.shown()
-            rel = tick - self.pattern.start
-            idx = next((i for i, e in enumerate(rows) if e.tick >= rel), None)
             H = self.list.winfo_height() // ui.S // ROW
             if idx is not None and not self.top_row <= idx < self.top_row + H - 1:
                 self.top_row = max(0, idx - 1)
-        if self.app.seq.playing:
-            self._draw_list()
+        state = (idx, self.top_row, self.app.seq.playing)
+        if self.app.seq.playing and state != getattr(self, '_pos_state', None):
+            self._draw_list()                  # only when the marked row moves
+        self._pos_state = state
 
     # ---- mouse
     def _hit(self, ev):

@@ -63,6 +63,8 @@ class MixerWindow(MDIChild):
         super().__init__(client, 'Mixer', app.small_icon(self.icon_name), 0, 0, 100, 100)
         self._build()
         self.auto_size(place=True)
+        if not app.seq.playing:
+            self.seed_from_song()
         self._tick()
 
     # ------------------------------------------------------------------ model
@@ -341,7 +343,7 @@ class MixerWindow(MDIChild):
 
     def _track_for(self, port, ch):
         for t in self.app.song.tracks:
-            if t.kind == MIDI and max(0, t.port) == port and t.channel == ch + 1:
+            if t.kind == MIDI and self.app.midi.real_port(max(0, t.port)) == port and t.channel == ch + 1:
                 return t
         return None
 
@@ -617,11 +619,32 @@ class MixerWindow(MDIChild):
             return True
         return False
 
+    def seed_from_song(self):
+        """Show the song's settings at the play position: each track's volume / pan / effect
+        settings, then the controllers its patterns send up to there (as playback chases them)."""
+        from ..sequencer import schedule_song
+        app = self.app
+        for c in self.state_.values():
+            c.vol, c.pan = 100, 64
+            c.user = [u[1] for u in self.cfg['users']]
+        pos = app.seq.position
+        try:
+            sched = schedule_song(app.song, app.seq.opts)
+        except Exception:
+            sched = []
+        for tick, _pr, port, data in sched:
+            if tick > pos:
+                break
+            if data[0] & 0xF0 == 0xB0:
+                self._apply(app.midi.real_port(port), data, meter=False)
+        app.seq.out_log.clear()
+        self.redraw()
+
     def midi_in(self, data):
         if not self.cfg.get('midi_in') or not data:
             return
         rec = next((t for t in self.app.song.tracks if t.rec and t.kind == MIDI), None)
-        port = max(0, rec.port) if rec is not None else 0
+        port = self.app.midi.real_port(max(0, rec.port) if rec is not None else 0)
         if self._apply(port, data):
             self.redraw()
 

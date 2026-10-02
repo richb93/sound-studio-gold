@@ -1047,10 +1047,16 @@ class TrackWindow(MDIChild):
             x = self.tick_to_x(tick)
             if -10 < x < W:
                 ui.image(c, x, 0, self.app.images.get(img))
+        self.draw_position_marker()
+
+    def draw_position_marker(self):
+        c = self.timeline
+        c.delete('pos')
+        W = c.winfo_width() // ui.S
         x = self.tick_to_x(self.app.seq.position)
         if 0 <= x < W:
             c.create_polygon(s(x - 4), s(HEADER_H - 5), s(x + 4), s(HEADER_H - 5), s(x), s(HEADER_H),
-                             fill=ui.SHADOW, outline=ui.DARK)
+                             fill=ui.SHADOW, outline=ui.DARK, tags='pos')
 
     def draw_patterns(self):
         c = self.pat
@@ -1126,8 +1132,7 @@ class TrackWindow(MDIChild):
             self.redraw()
             return
         self.draw_cursor()
-        self.timeline.delete('pos')
-        self.draw_timeline()
+        self.draw_position_marker()         # only the marker moves: redrawing the ruler is slow
 
     # ------------------------------------------------------------------ scrolling
     def total_height(self):

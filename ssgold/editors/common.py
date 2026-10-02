@@ -334,8 +334,12 @@ class EditorWindow(MDIChild):
                     bx = x_of_tick(tick + b * tpbeat - p.start)
                     if bx - x > 14:
                         ui.text(c, bx, height // 2, str(b + 1), 'small', anchor='center')
-        pos = self.app.seq.position - p.start
-        x = x_of_tick(pos)
+        self.draw_position_marker(c, x_of_tick, height)
+
+    def draw_position_marker(self, c, x_of_tick, height=13):
+        """Only the play position marker (the ruler itself is redrawn only when it changes)."""
+        c.delete('pos')
+        x = x_of_tick(self.app.seq.position - self.pattern.start)
         c.create_polygon(s(x - 4), s(height - 6), s(x + 4), s(height - 6), s(x), s(height - 1), fill='#ffffff',
                          outline='#000000', tags='pos')
 

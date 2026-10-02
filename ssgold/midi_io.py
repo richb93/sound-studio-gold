@@ -63,11 +63,15 @@ class MidiIO:
         """'A: name' labels as shown by Gold's port selectors."""
         return ['%s: %s' % (chr(65 + i), nm) for i, (nm, _p) in enumerate(self.outs)] or ['A: (no MIDI output)']
 
+    def real_port(self, port):
+        """The output a port number plays on: songs may name ports this computer doesn't have,
+        and those play on the first one."""
+        return port if 0 <= port < len(self.outs) else 0
+
     def send(self, port, data):
         if not self.outs:
             return
-        if port < 0 or port >= len(self.outs):
-            port = 0
+        port = self.real_port(port)
         p = self.outs[port][1]
         if p is None:
             return

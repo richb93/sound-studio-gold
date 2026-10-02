@@ -75,9 +75,14 @@ class Transport(Floating):
 
     def _box(self, x0, x1, y0, txt, tag):
         c = self.c
+        tid = self._box_text.get(tag) if hasattr(self, '_box_text') else None
+        if tid is not None and c.type(tid) == 'text':
+            c.itemconfigure(tid, text=txt)       # the frame is already there
+            return
         c.delete(tag)
         ui.sunken(c, x0, y0, x1 + 1, y0 + 15, fill=ui.FACE, deep=False, tags=tag)
-        ui.text(c, (x0 + x1 + 1) // 2, y0 + 7, txt, 'smallbold', anchor='center', tags=tag)
+        self.__dict__.setdefault('_box_text', {})[tag] = ui.text(c, (x0 + x1 + 1) // 2, y0 + 7, txt, 'smallbold',
+                                                                 anchor='center', tags=tag)
 
     def update_values(self, force=False):
         a = self.app

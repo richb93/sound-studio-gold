@@ -181,7 +181,7 @@ class MDIChild(tk.Frame):
         self.bind('<B1-Motion>', self._border_drag)
         self.bind('<Motion>', self._border_cursor)
         self.bind('<Configure>', lambda e: self._draw_border())
-        self._press = None
+        self._mdi_drag = None
         self.move_to(x, y, w, h)
         client.add(self)
 
@@ -303,19 +303,19 @@ class MDIChild(tk.Frame):
         self.client.activate(self)
         kind = self._hit_button(ev)
         if kind:
-            self._press = ('button', kind)
+            self._mdi_drag = ('button', kind)
             return
-        self._press = ('move', ev.x_root, ev.y_root, self.winfo_x(), self.winfo_y())
+        self._mdi_drag = ('move', ev.x_root, ev.y_root, self.winfo_x(), self.winfo_y())
 
     def _cap_drag(self, ev):
-        if not self._press or self._press[0] != 'move' or self.state != 'normal':
+        if not self._mdi_drag or self._mdi_drag[0] != 'move' or self.state != 'normal':
             return
-        _k, x0, y0, wx, wy = self._press
+        _k, x0, y0, wx, wy = self._mdi_drag
         self.place(x=wx + ev.x_root - x0, y=wy + ev.y_root - y0)
 
     def _cap_release(self, ev):
-        p = self._press
-        self._press = None
+        p = self._mdi_drag
+        self._mdi_drag = None
         if not p:
             return
         if p[0] == 'button' and self._hit_button(ev) == p[1]:
@@ -357,11 +357,11 @@ class MDIChild(tk.Frame):
 
     def _border_press(self, ev):
         self.client.activate(self)
-        self._press = ('size', self._edge(ev), ev.x_root, ev.y_root, self.winfo_x(), self.winfo_y(),
+        self._mdi_drag = ('size', self._edge(ev), ev.x_root, ev.y_root, self.winfo_x(), self.winfo_y(),
                        self.winfo_width(), self.winfo_height())
 
     def _border_drag(self, ev):
-        p = self._press
+        p = self._mdi_drag
         if not p or p[0] != 'size' or self.state != 'normal':
             return
         _k, edge, x0, y0, wx, wy, ww, wh = p

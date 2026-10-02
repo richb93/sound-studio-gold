@@ -47,6 +47,13 @@ class Windows(unittest.TestCase):
             with self.subTest(command=cid):
                 self.app.command(cid)
                 self.app.update()
+        for w in self.app.client.children_:      # no instance attribute may hide a method
+            for klass in type(w).__mro__:
+                if not klass.__module__.startswith('ssgold'):
+                    continue
+                for name, val in vars(klass).items():
+                    if callable(val) and not name.startswith('__') and name in vars(w):
+                        self.fail('%s.%s is hidden by an attribute' % (type(w).__name__, name))
         self.app.command(49)        # cascade
         self.app.command(50)        # tile
         self.app.update()

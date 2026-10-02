@@ -271,7 +271,7 @@ class DrumWindow(EditorWindow):
         self.grid.delete('cursor')
         if 0 <= x < W:
             self.grid.create_line(s(x), 0, s(x), self.grid.winfo_height(), dash=(1, 1), fill=ui.TEXT, width=ui.S, tags='cursor')
-        self.draw_timeline(self.timeline, self.x_of, W, TL_H)
+        self.draw_position_marker(self.timeline, self.x_of, TL_H)
 
     # ---- columns mouse
     def _col_hit(self, ev):
