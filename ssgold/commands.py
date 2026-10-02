@@ -206,15 +206,8 @@ def quantize_now(app):
 
 
 def lyric_font(app):
-    from tkinter import font as tkfont, simpledialog
-    cur = app.settings.get('lyric_font', ['Arial', 24])
-    fam = simpledialog.askstring('Lyric Font', 'Font family:', initialvalue=cur[0], parent=app)
-    if not fam:
-        return
-    size = simpledialog.askinteger('Lyric Font', 'Size:', initialvalue=cur[1], minvalue=6, maxvalue=96, parent=app)
-    if size:
-        app.settings['lyric_font'] = [fam, size]
-        app.song_changed('lyrics')
+    from .editors.lyrics import choose_lyric_font
+    choose_lyric_font(app)
 
 
 def help_topic(app, title):
