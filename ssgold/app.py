@@ -278,23 +278,29 @@ class App(tk.Tk):
     # ------------------------------------------------------------------ panels
     def layout_panels(self):
         self.update_idletasks()
-        W = self.client.winfo_width() // ui.S
-        H = self.client.winfo_height() // ui.S
-        t = self.transport
-        t.rel = lambda: t.place_at(max(0, (W - 36 - t.w) // 2), H - t.size()[1])
-        e = self.editors
-        e.rel = lambda: e.place_at(W - e.w, 0)
-        fm = self.fastmenu
-        fm.rel = lambda: fm.place_at(W - fm.w - e.w - 2, H - fm.size()[1])
-        bt = self.bigtime
-        bt.rel = lambda: bt.place_at(W - bt.w - e.w - 26, 0)
-        for p, key in ((t, 'show_transport'), (e, 'show_editors'), (fm, 'show_fast'), (bt, 'show_time')):
-            p.set_caption(self.settings.get('cap_' + {'show_transport': 'transport', 'show_editors': 'editors',
-                                                       'show_fast': 'fast', 'show_time': 'time'}[key], False))
-            if self.settings.get(key, True):
+        cl = self.client
+
+        def size():
+            return cl.winfo_width() // ui.S, cl.winfo_height() // ui.S
+        t, e, fm, bt = self.transport, self.editors, self.fastmenu, self.bigtime
+        st = self.settings
+        ew = e.w if st.get('show_editors', True) else 0
+        cl.reserved_right = ew
+        t.rel = lambda: t.place_at(max(0, (size()[0] - ew - t.w) // 2), size()[1] - t.size()[1])
+        e.rel = lambda: e.place_at(size()[0] - e.w, 0)
+        fm.rel = lambda: fm.place_at(size()[0] - fm.w - ew - 2, size()[1] - fm.size()[1])
+        bt.rel = lambda: bt.place_at(size()[0] - bt.w - ew - 26, 0)
+        for p, key, cap in ((t, 'show_transport', 'cap_transport'), (e, 'show_editors', 'cap_editors'),
+                            (fm, 'show_fast', 'cap_fast'), (bt, 'show_time', 'cap_time')):
+            p.has_caption = st.get(cap, False)
+            if st.get(key, True):
+                p.set_caption(p.has_caption)
                 p.rel()
             else:
                 p.place_forget()
+        for c in cl.children_:
+            if c.state == 'max':
+                c.maximize(force=True)
         self._update_window_menu()
 
     def toggle_panel(self, key):

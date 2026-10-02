@@ -145,7 +145,19 @@ def dll_tables(path):
         'chord_roots': strs(0x136c, 12),
         'controller_names': strs(0x4f54, 0),
         'gold_version': strs(0x5c8d, 1)[0],
+        'xg_sysex': _xg_sysex(ds, strs),
     }
+
+
+def _xg_sysex(ds, strs):
+    """Event window 'Insert Type' sysex templates: names at 0x6128, 10-byte records at 0x5788."""
+    names = strs(0x6128, 45)
+    out = []
+    for i, nm in enumerate(names):
+        rec = ds[0x5788 + 10 * i:0x5788 + 10 * (i + 1)]
+        body = rec[:rec.index(0xF7) + 1]
+        out.append([nm, body.hex()])
+    return out
 
 
 def main(src):

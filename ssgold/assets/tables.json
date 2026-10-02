@@ -180,5 +180,187 @@
   "B"
  ],
  "controller_names": [],
- "gold_version": "v1.19"
+ "gold_version": "v1.19",
+ "xg_sysex": [
+  [
+   "XG Resonance",
+   "f043104c08001900f7"
+  ],
+  [
+   "XG Attack Time",
+   "f043104c08001a00f7"
+  ],
+  [
+   "XG Decay Time",
+   "f043104c08001b00f7"
+  ],
+  [
+   "XG Release Time",
+   "f043104c08001c00f7"
+  ],
+  [
+   "XG Pitch EG Init Level",
+   "f043104c08006900f7"
+  ],
+  [
+   "XG Pitch EG Attack Time",
+   "f043104c08006a00f7"
+  ],
+  [
+   "XG Pitch EG Release Level",
+   "f043104c08006b00f7"
+  ],
+  [
+   "XG Pitch EG Release Time",
+   "f043104c08006c00f7"
+  ],
+  [
+   "XG Vibrato Rate",
+   "f043104c08001500f7"
+  ],
+  [
+   "XG Vibrato Depth",
+   "f043104c08001600f7"
+  ],
+  [
+   "XG Vibrato Delay",
+   "f043104c08001700f7"
+  ],
+  [
+   "XG Detune",
+   "f043104c0800090800f7"
+  ],
+  [
+   "XG Part Mode",
+   "f043104c08000700f7"
+  ],
+  [
+   "XG Mono Poly",
+   "f043104c08000500f7"
+  ],
+  [
+   "XG Vel Sens Depth",
+   "f043104c08000c00f7"
+  ],
+  [
+   "XG Vel Sens Offset",
+   "f043104c08000d00f7"
+  ],
+  [
+   "XG TG300 Mode",
+   "f043717e0901f7"
+  ],
+  [
+   "XG Note Limit Low",
+   "f043104c08000f00f7"
+  ],
+  [
+   "XG Note Limit High",
+   "f043104c08001000f7"
+  ],
+  [
+   "XG Portamento Sw",
+   "f043104c08006700f7"
+  ],
+  [
+   "XG Portamento Time",
+   "f043104c08006800f7"
+  ],
+  [
+   "XG Vel Limit Low",
+   "f043104c08006d00f7"
+  ],
+  [
+   "XG Vel Limit High",
+   "f043104c08006e00f7"
+  ],
+  [
+   "XG Pitch Bend Control",
+   "f043104c08002300f7"
+  ],
+  [
+   "XG MW LFO Mod",
+   "f043104c08002000f7"
+  ],
+  [
+   "XG Variation Send",
+   "f043104c02015b00f7"
+  ],
+  [
+   "XG EQ Type",
+   "f043104c02400000f7"
+  ],
+  [
+   "XG 80 Hz",
+   "f043104c02400100f7"
+  ],
+  [
+   "XG 500 Hz",
+   "f043104c02400500f7"
+  ],
+  [
+   "XG 1.0 kHz",
+   "f043104c02400900f7"
+  ],
+  [
+   "XG 4.0 kHz",
+   "f043104c02400d00f7"
+  ],
+  [
+   "XG 8.0 kHz",
+   "f043104c02401100f7"
+  ],
+  [
+   "XG Reverb Type",
+   "f043104c0201000100f7"
+  ],
+  [
+   "XG Reverb Time",
+   "f043104c02010200f7"
+  ],
+  [
+   "XG Diffusion",
+   "f043104c02010300f7"
+  ],
+  [
+   "XG Initial Delay",
+   "f043104c02010400f7"
+  ],
+  [
+   "XG HPF Cutoff Frequency",
+   "f043104c02010500f7"
+  ],
+  [
+   "XG LPF Cutoff Frequency",
+   "f043104c02010600f7"
+  ],
+  [
+   "XG Reverb Pan",
+   "f043104c02010d00f7"
+  ],
+  [
+   "XG Chorus Type",
+   "f043104c0201204100f7"
+  ],
+  [
+   "XG LFO Frequency",
+   "f043104c02012200f7"
+  ],
+  [
+   "XG LFO PM Depth",
+   "f043104c02012300f7"
+  ],
+  [
+   "XG FB Level",
+   "f043104c02012400f7"
+  ],
+  [
+   "XG Delay Offset",
+   "f043104c02012500f7"
+  ],
+  [
+   "XG Chorus Pan",
+   "f043104c02012d00f7"
+  ]
+ ]
 }

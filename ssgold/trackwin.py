@@ -48,7 +48,7 @@ class TrackWindow(MDIChild):
 
     def __init__(self, client, app):
         client.update_idletasks()
-        cw = max(400, client.winfo_width() // ui.S - 38)
+        cw = max(400, client.winfo_width() // ui.S - client.reserved_right - 2)
         ch = max(300, client.winfo_height() // ui.S)
         super().__init__(client, 'Track - (Untitled)', app.small_icon('IC_TRACK'), 0, 0, cw, ch)
         self.app = app

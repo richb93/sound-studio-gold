@@ -17,6 +17,7 @@ class MDIClient(tk.Canvas):
         self.floating = []
         self.active = None
         self.bg_image = None
+        self.reserved_right = 0      # width kept free for the Editors strip
         self.bind('<Configure>', self._on_resize)
         self.bind('<Button-1>', lambda e: None)
 
@@ -181,7 +182,8 @@ class MDIChild(tk.Frame):
         if self.state == 'normal':
             self.normal_geom = self.geometry()
         self.state = 'max'
-        self.place(x=-s(BORDER), y=-s(BORDER), width=self.client.winfo_width() + 2 * s(BORDER),
+        self.place(x=-s(BORDER), y=-s(BORDER),
+                   width=self.client.winfo_width() - s(self.client.reserved_right) + 2 * s(BORDER),
                    height=self.client.winfo_height() + 2 * s(BORDER))
         self.lift()
         self.client.raise_floating()
@@ -409,7 +411,7 @@ class Floating(tk.Frame):
         self.lift()
 
     def keep_inside(self):
-        if self.rel:
+        if self.rel and self.winfo_ismapped():
             self.rel()
 
     def start_move(self, ev=None):

@@ -388,6 +388,29 @@ class Song:
     def sample_rate(self):
         return struct.unpack_from('>H', self.header, 0x2B9)[0] or 44100
 
+    # ---- lyrics: be24 absolute tick + NUL-terminated text, ended by FF FF FF
+    def lyric_list(self):
+        out = []
+        d = self.lyrics
+        p = 0
+        while p + 3 <= len(d):
+            if d[p:p + 3] == b'\xff\xff\xff':
+                break
+            tick = int.from_bytes(d[p:p + 3], 'big')
+            e = d.find(b'\0', p + 3)
+            if e < 0:
+                break
+            out.append([tick, d[p + 3:e].decode('latin1')])
+            p = e + 1
+        return out
+
+    def set_lyrics(self, items):
+        out = bytearray()
+        for tick, text in sorted(items, key=lambda x: x[0]):
+            out += int(tick).to_bytes(3, 'big') + text.encode('latin1', 'replace') + b'\0'
+        out += b'\xff\xff\xff'
+        self.lyrics = bytes(out)
+
     # ---- convenience
     def all_patterns(self):
         for t in self.tracks:
