@@ -4,7 +4,7 @@ import struct
 from .song import (Song, Track, Pattern, Event, CondPoint, COND_TEMPO, COND_TIMESIG, COND_KEY,
                    MIDI, OFF, PAN_OFF, SongError)
 from .timing import TimeMap, ts_index
-from .sequencer import schedule_pattern, initial_messages
+from .sequencer import schedule_pattern, initial_messages, track_channel
 
 TIMEBASES = (48, 72, 96, 120, 144, 168, 192, 224, 240, 384, 480, 720)
 
@@ -198,7 +198,13 @@ def _extract_initial(t, events):
     if t.channel == 0:
         return
     keep = []
+    # A bank select LSB (CC 32) can't be held in the track's Bank setting next to an MSB, and
+    # must still reach the synth before the program change: then bank and program stay as events.
+    lsb = any(e.tick == 0 and e.status & 0xF0 == 0xB0 and e.d1 == 32 for e in events)
     for e in events:
+        if lsb and e.tick == 0 and (e.status & 0xF0 == 0xC0 or (e.status & 0xF0 == 0xB0 and e.d1 in (0, 32))):
+            keep.append(e)
+            continue
         if e.tick == 0 and e.status & 0xF0 == 0xC0 and t.prog == OFF:
             t.prog = e.d1
             continue
@@ -247,7 +253,7 @@ def write_smf(song, path, app=None):
         if t.mute or (any_solo and not t.solo):
             continue
         ev = [(0, b'\xFF\x03' + _write_varlen(len(t.name)) + t.name.encode('latin1', 'replace'))]
-        for m in initial_messages(t):
+        for m in initial_messages(t, track_channel(t)):
             ev.append((0, m))
         for p in t.patterns:
             if p.mute:

@@ -460,12 +460,12 @@ class ScoreWindow(EditorWindow):
                 xa, xb = (members[0][0], members[-1][0]) if len(members) >= 2 else (x0, x1)
                 for t in range(3):
                     c.create_line(s(xa), s(by(xa) + off + (t if up else -t)), s(xb), s(by(xb) + off + (t if up else -t)),
-                                  width=ui.S)
+                                  fill=ui.TEXT, width=ui.S)
             elif members:
                 g = members[0]
                 xa = g[0]
                 for t in range(3):
-                    c.create_line(s(xa), s(by(xa) + off + t), s(xa + 6), s(by(xa) + off + t), width=ui.S)
+                    c.create_line(s(xa), s(by(xa) + off + t), s(xa + 6), s(by(xa) + off + t), fill=ui.TEXT, width=ui.S)
         return []
 
     def _draw_lyrics(self):

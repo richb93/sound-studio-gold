@@ -1,4 +1,5 @@
 """Reader for Windows 3.1 WinHelp (.hlp) files: topic text and embedded |bm images."""
+import bisect
 import struct
 
 
@@ -240,3 +241,239 @@ class HLP:
                     px[x, y] = pal[v] if v < len(pal) else (255, 0, 255)
             out.append(img)
         return out
+
+
+
+# ---- structured topics (paragraphs, fonts, hotspots) ---------------------
+def btree(d, entry):
+    """Leaf entries of a B-tree held in internal file data d; entry(d, pos) -> (key, value, next)."""
+    magic, _flags, pagesize = struct.unpack_from('<HHH', d, 0)
+    assert magic == 0x293B
+    root, _n1, _total, nlevels, _nentries = struct.unpack_from('<hhhhi', d, 26)
+    page = root
+    for _ in range(nlevels - 1):
+        page = struct.unpack_from('<h', d, 38 + page * pagesize + 4)[0]
+    out = []
+    while page != -1:
+        p = 38 + page * pagesize
+        _u, n, _prev, nxt = struct.unpack_from('<Hhhh', d, p)
+        q = p + 8
+        for _ in range(n):
+            k, v, q = entry(d, q)
+            out.append((k, v))
+        page = nxt
+    return out
+
+
+class Reader:
+    """Reads LinkData1: plain and WinHelp-compressed integers."""
+
+    def __init__(self, d):
+        self.d, self.p = d, 0
+
+    def _u(self, fmt, n):
+        v = struct.unpack_from(fmt, self.d, self.p)[0]
+        self.p += n
+        return v
+
+    def byte(self):
+        return self._u('<B', 1)
+
+    def word(self):
+        return self._u('<H', 2)
+
+    def short(self):
+        return self._u('<h', 2)
+
+    def long(self):
+        return self._u('<i', 4)
+
+    def cushort(self):
+        return self._u('<H', 2) >> 1 if self.d[self.p] & 1 else self._u('<B', 1) >> 1
+
+    def csshort(self):
+        return self._u('<H', 2) // 2 - 0x4000 if self.d[self.p] & 1 else self._u('<B', 1) // 2 - 0x40
+
+    def culong(self):
+        return self._u('<I', 4) >> 1 if self.d[self.p] & 1 else self._u('<H', 2) >> 1
+
+    def cslong(self):
+        return self._u('<I', 4) // 2 - 0x40000000 if self.d[self.p] & 1 else self._u('<H', 2) // 2 - 0x4000
+
+
+def fonts(h):
+    """|FONT descriptors: bold, italic, size (points) and colour of each font number."""
+    d = h.file('|FONT')
+    nf, nd, fo, do = struct.unpack_from('<HHHH', d, 0)
+    out = []
+    for i in range(nd):
+        p = do + i * 11
+        attr, half = d[p], d[p + 1]
+        out.append({'b': bool(attr & 1), 'i': bool(attr & 2), 'size': half / 2.0,
+                    'color': '#%02x%02x%02x' % tuple(d[p + 5:p + 8])})
+    return out
+
+
+def _paragraph_info(r):
+    r.byte()
+    r.byte()
+    r.word()                                   # id
+    bits = r.word()
+    for bit in (1,):
+        if bits & bit:
+            r.cslong()
+    for bit in (2, 4, 8, 0x10, 0x20, 0x40):    # spacing above/below/lines, indents
+        if bits & bit:
+            r.csshort()
+    if bits & 0x100:                           # border
+        r.byte()
+        r.word()
+    if bits & 0x200:                           # tab stops
+        for _ in range(r.csshort()):
+            if r.cushort() & 0x4000:
+                r.cushort()
+
+
+def rich_topics(h):
+    """[{title, paras}]: each paragraph a list of runs [text, style], or [None, {bm, align}] for a
+    picture; style holds b, i, size, color and link / popup (the target topic's title)."""
+    font = fonts(h)
+    ctx = dict(btree(h.file('|CONTEXT'),
+                     lambda d, q: (struct.unpack_from('<I', d, q)[0], struct.unpack_from('<i', d, q + 4)[0], q + 8)))
+
+    def title_entry(d, q):
+        e = d.index(b'\0', q + 4)
+        return struct.unpack_from('<i', d, q)[0], d[q + 4:e].decode('latin1'), e + 1
+    titles = sorted(btree(h.file('|TTLBTREE'), title_entry))
+    offsets = [o for o, _t in titles]
+
+    def target(hsh):
+        off = ctx.get(hsh)
+        if off is None:
+            return None
+        i = bisect.bisect_right(offsets, off) - 1
+        return titles[i][1] if i >= 0 else None
+
+    raw, blocks = h._blocks()
+    pos = struct.unpack_from('<i', raw, 4)[0]
+    seen = set()
+    cur = None
+    out = []
+    while pos not in seen and pos >= 0:
+        seen.add(pos)
+        hdr = h._read(blocks, pos, 21)
+        if len(hdr) < 21:
+            break
+        bsize, dlen2, _prev, nxt, dlen1, rtype = struct.unpack_from('<iiiiiB', hdr, 0)
+        if bsize <= 0:
+            break
+        rec = h._read(blocks, pos, bsize)
+        ld2 = rec[dlen1:bsize]
+        if dlen2 > len(ld2):
+            ld2 = h.unphrase(ld2)
+        if rtype == 2:
+            cur = {'title': ld2.split(b'\0')[0].decode('latin1'), 'paras': []}
+            out.append(cur)
+        elif rtype in (0x20, 0x23) and cur is not None:
+            _display(rec[21:dlen1], ld2, rtype, cur['paras'], font, target)
+        pos = nxt
+    return out
+
+
+def _display(ld1, ld2, rtype, paras, font, target):
+    """Decode one text record: the commands in ld1 interleaved with the strings in ld2."""
+    r = Reader(ld1)
+    r.culong()                                 # topic size
+    r.cushort()                                # topic length
+    texts = ld2.split(b'\0')
+    ti = 0
+    widths = []
+    if rtype == 0x23:                          # table: columns
+        ncol, ttype = r.byte(), r.byte()
+        if ttype in (0, 2):
+            r.short()
+        for _ in range(ncol):
+            widths.append(r.short())
+            widths[-1] += r.short()            # gap
+    style = {}
+    link = None
+    para = []
+
+    def emit(txt):
+        if txt:
+            st = dict(style)
+            if link:
+                st[link[0]] = link[1]
+            para.append([txt, st])
+    while True:
+        if rtype == 0x23:                      # table cell
+            col = r.short()
+            if col == -1:
+                break
+            r.word()
+            r.byte()
+            if col == 0 and para:
+                paras.append(para)
+                para = []
+            elif col > 0:
+                while para and para[-1][0] in ('\t', '\n'):
+                    para.pop()
+                para.append(['\t', {'cell': widths}])
+        _paragraph_info(r)
+        while True:
+            if ti < len(texts):
+                emit(texts[ti].decode('latin1'))
+                ti += 1
+            c = r.byte()
+            if c == 0xFF:
+                break
+            if c == 0x20:
+                r.long()
+            elif c == 0x21:
+                r.word()
+            elif c == 0x80:                    # font
+                fn = r.word()
+                style = dict(font[fn]) if fn < len(font) else {}
+            elif c == 0x81:
+                emit('\n')
+            elif c == 0x82:                    # end of paragraph
+                if rtype == 0x23:
+                    emit('\n')
+                else:
+                    paras.append(para)
+                    para = []
+            elif c == 0x83:
+                emit('\t')
+            elif c in (0x86, 0x87, 0x88):      # picture: inline, left, right
+                kind = r.byte()
+                size = r.cslong()
+                if kind == 0x22:
+                    r.cushort()
+                start = r.p
+                if kind in (0x03, 0x22):
+                    r.word()
+                    para.append([None, {'bm': r.word(), 'align': {0x86: 'inline', 0x87: 'left', 0x88: 'right'}[c]}])
+                r.p = start + size
+            elif c == 0x89:                    # end of hotspot
+                link = None
+            elif c == 0x8B:
+                emit('\xa0')
+            elif c == 0x8C:
+                emit('-')
+            elif c in (0xC8, 0xCC):            # macro
+                r.p += r.short()
+            elif c in (0xE0, 0xE1):            # WinHelp 3.0 topic number
+                r.long()
+                link = None
+            elif c in (0xE2, 0xE3, 0xE6, 0xE7):   # popup / jump by context hash
+                link = ('popup' if c in (0xE2, 0xE6) else 'link', target(struct.unpack_from('<I', ld1, r.p)[0]))
+                r.p += 4
+            elif c in (0xEA, 0xEB, 0xEE, 0xEF):   # into another file
+                r.p += r.word()
+                link = None
+            else:
+                raise ValueError('unknown WinHelp command %02x' % c)
+        if rtype != 0x23:
+            break
+    if para:
+        paras.append(para)

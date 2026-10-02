@@ -289,12 +289,34 @@ def main(src):
             shutil.copy(os.path.join(src, f), os.path.join(OUT, 'drums', f.upper()))
     hlp = next((os.path.join(src, f) for f in os.listdir(src) if f.lower() == 'goldhelp.hlp'), None)
     if hlp:
-        from winhelp import HLP
+        from winhelp import HLP, rich_topics
+        h = HLP(hlp)
         topics = {}
-        for title, paras in HLP(hlp).topics():
-            if title and title not in topics:
-                topics[title] = paras
-        json.dump(topics, open(os.path.join(OUT, 'help.json'), 'w'), indent=0)
+        used = set()
+        for t in rich_topics(h):
+            if not t['title'] or t['title'] in topics:
+                continue
+            paras = []
+            for para in t['paras']:
+                runs = []
+                for txt, st in para:
+                    st = {k: v for k, v in st.items() if v and not (k == 'color' and v in ('#000000', '#010100'))}
+                    if 'bm' in st:
+                        used.add(st['bm'])
+                    if txt is not None:
+                        txt = txt.encode('latin1').decode('cp1252', 'replace')
+                    if runs and txt is not None and runs[-1][0] is not None and runs[-1][1] == st:
+                        runs[-1][0] += txt
+                    else:
+                        runs.append([txt, st])
+                paras.append(runs)
+            topics[t['title']] = paras
+        json.dump(topics, open(os.path.join(OUT, 'help.json'), 'w'), separators=(',', ':'))
+        os.makedirs(os.path.join(OUT, 'help'), exist_ok=True)
+        for n in sorted(used):
+            imgs = h.images('|bm%d' % n) if '|bm%d' % n in h.files else []
+            if imgs:
+                imgs[0].save(os.path.join(OUT, 'help', 'bm%d.png' % n))
     print('assets written to', OUT)
 
 

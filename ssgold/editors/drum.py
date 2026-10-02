@@ -258,7 +258,7 @@ class DrumWindow(EditorWindow):
             c.create_oval(s(x - 5), s(y + 1), s(x + 5), s(y + ROW - 1), fill=col, outline='#000000', width=ui.S)
         px = self.x_of(self.app.seq.position - p.start)
         if 0 <= px < W:
-            c.create_line(s(px), 0, s(px), s(H), dash=(1, 1), width=ui.S, tags='cursor')
+            c.create_line(s(px), 0, s(px), s(H), dash=(1, 1), fill=ui.TEXT, width=ui.S, tags='cursor')
 
     def set_position(self, tick, follow=False):
         W = self.grid.winfo_width() // ui.S
@@ -270,7 +270,7 @@ class DrumWindow(EditorWindow):
             return
         self.grid.delete('cursor')
         if 0 <= x < W:
-            self.grid.create_line(s(x), 0, s(x), self.grid.winfo_height(), dash=(1, 1), width=ui.S, tags='cursor')
+            self.grid.create_line(s(x), 0, s(x), self.grid.winfo_height(), dash=(1, 1), fill=ui.TEXT, width=ui.S, tags='cursor')
         self.draw_timeline(self.timeline, self.x_of, W, TL_H)
 
     # ---- columns mouse

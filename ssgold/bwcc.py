@@ -116,6 +116,18 @@ class HScroll(tk.Canvas):
             self.job = None
 
 
+def _wrapped_lines(fo, txt, width):
+    """Lines txt takes when word-wrapped to width with font fo."""
+    n, line = 1, ''
+    for word in txt.split():
+        trial = (line + ' ' + word).strip()
+        if line and fo.measure(trial) > width:
+            n, line = n + 1, word
+        else:
+            line = trial
+    return n
+
+
 class Dialog(tk.Toplevel):
     """Build a dialog from its template. Controls are available by id via get/set helpers."""
 
@@ -234,19 +246,20 @@ class Dialog(tk.Toplevel):
         if it['text']:
             txt, u = _label(it['text'])
             ty = y + s(1)
-            c.create_text(x + s(3), ty, text=txt, anchor='nw', font=ui.f('dialog'), tags=tag)
+            fo = ui.fit('dialog', txt, w - s(6))
+            c.create_text(x + s(3), ty, text=txt, anchor='nw', font=fo, fill=ui.TEXT, tags=tag)
             if u >= 0:
-                self._underline(x + s(3), ty, txt, u)
+                self._underline(x + s(3), ty, txt, u, fo)
             lh = ui.f('dialog').metrics('linespace') + s(2)
             c.create_line(x + ui.S, y + lh, x + w - ui.S, y + lh, fill=ui.HILITE, width=ui.S, tags=tag)
             c.create_line(x + ui.S, y + lh - ui.S, x + w - ui.S, y + lh - ui.S, fill=ui.SHADOW, width=ui.S, tags=tag)
 
     def _underline(self, x, y, txt, u, font='dialog'):
-        fo = ui.f(font)
+        fo = ui.f(font) if isinstance(font, str) else font
         x0 = x + fo.measure(txt[:u])
         x1 = x0 + fo.measure(txt[u])
         yy = y + fo.metrics('ascent') + ui.S
-        self.c.create_line(x0, yy, x1, yy, width=ui.S)
+        self.c.create_line(x0, yy, x1, yy, fill=ui.TEXT, width=ui.S)
 
     def _borbtn(self, it):
         iid = it['id']
@@ -292,16 +305,16 @@ class Dialog(tk.Toplevel):
         self.c.delete(tag)
         if d.get('hidden'):
             return
-        fo = ui.f('dialog')
+        fo = ui.fit('dialog', txt, d['w'] - s(16))
         if not d['enabled']:
             self.c.create_text(tx + ui.S, ty + ui.S, text=txt, anchor='w', font=fo, fill=ui.HILITE, tags=tag)
             self.c.create_text(tx, ty, text=txt, anchor='w', font=fo, fill=ui.SHADOW, tags=tag)
         else:
-            self.c.create_text(tx, ty, text=txt, anchor='w', font=fo, tags=tag)
+            self.c.create_text(tx, ty, text=txt, anchor='w', font=fo, fill=ui.TEXT, tags=tag)
             if u >= 0:
                 x0 = tx + fo.measure(txt[:u])
                 yy = ty + fo.metrics('ascent') // 2 + ui.S
-                self.c.create_line(x0, yy, x0 + fo.measure(txt[u]), yy, width=ui.S, tags=tag)
+                self.c.create_line(x0, yy, x0 + fo.measure(txt[u]), yy, fill=ui.TEXT, width=ui.S, tags=tag)
 
     def _check(self, it):
         x, y, w, h = self._rect(it)
@@ -336,12 +349,24 @@ class Dialog(tk.Toplevel):
         tx = {0: x, 1: x + w // 2, 2: x + w}.get(typ, x)
         if st & WS_BORDER:
             tx += s(2)
-        tid = self.c.create_text(tx, y, text=txt, anchor=anchor, font=ui.f(self.font_name),
-                                 width=w if typ in (0, 1, 2) and h > s(10) and ' ' in txt.strip() else 0, justify={0: 'left', 1: 'center', 2: 'right'}.get(typ, 'left'))
+        avail = w - (s(4) if st & WS_BORDER else 0)
+        fo = ui.f(self.font_name)
+        wrap = 0
+        if typ in (0, 1, 2) and fo.measure(txt) > avail:
+            one = ui.fit(self.font_name, txt, avail)
+            lines = max(1, h // max(1, fo.metrics('linespace')))
+            if one.measure(txt) <= avail or lines < 2 or ' ' not in txt.strip():
+                fo = one                                    # shrink onto one line
+            else:
+                wrap = avail                                # room for more lines: wrap
+                while _wrapped_lines(fo, txt, avail) > lines and abs(int(fo.cget('size'))) > 8 * ui.S:
+                    fo = ui.fit(self.font_name, txt, fo.measure(txt) - s(1))
+        tid = self.c.create_text(tx, y, text=txt, anchor=anchor, font=fo, fill=ui.TEXT, width=wrap,
+                                 justify={0: 'left', 1: 'center', 2: 'right'}.get(typ, 'left'))
         if iid != 0xFFFF:
             self.statics[iid] = tid
-        if u >= 0 and typ == 0:
-            self._underline(tx, y, txt, u)
+        if u >= 0 and typ == 0 and not wrap:
+            self._underline(tx, y, txt, u, fo)
 
     def _edit(self, it):
         x, y, w, h = self._rect(it)
@@ -415,17 +440,17 @@ class Dialog(tk.Toplevel):
                               x + w - k * ui.S, y + k * ui.S, fill=ui.SHADOW, width=ui.S, tags=tag)
         o = ui.S if down else 0
         fill = ui.TEXT if b['enabled'] else ui.SHADOW
+        fo = ui.fit('dialog', b['text'], w - s(6))
         if not b['enabled']:
-            c.create_text(x + w // 2 + ui.S, y + h // 2 + ui.S, text=b['text'], font=ui.f('dialog'),
+            c.create_text(x + w // 2 + ui.S, y + h // 2 + ui.S, text=b['text'], font=fo,
                           fill=ui.HILITE, tags=tag)
-        tid = c.create_text(x + w // 2 + o, y + h // 2 + o, text=b['text'], font=ui.f('dialog'),
+        tid = c.create_text(x + w // 2 + o, y + h // 2 + o, text=b['text'], font=fo,
                             fill=fill, tags=tag)
         if b['u'] >= 0 and b['enabled']:
-            fo = ui.f('dialog')
             tw = fo.measure(b['text'])
             x0 = x + w // 2 + o - tw // 2 + fo.measure(b['text'][:b['u']])
             yy = y + h // 2 + o + fo.metrics('ascent') // 2 + ui.S
-            c.create_line(x0, yy, x0 + fo.measure(b['text'][b['u']]), yy, width=ui.S, tags=tag)
+            c.create_line(x0, yy, x0 + fo.measure(b['text'][b['u']]), yy, fill=ui.TEXT, width=ui.S, tags=tag)
 
     # ---- mouse
     def _hit(self, ev):
@@ -515,6 +540,12 @@ class Dialog(tk.Toplevel):
             if self.radios.get(i, {}).get('value'):
                 return i
         return None
+
+    def set_button_text(self, iid, label):
+        """Relabel a plain push button ('&' marks the underlined letter)."""
+        b = self.buttons[iid]
+        b['text'], b['u'] = _label(label)
+        self._draw_plain(iid)
 
     def hide_shade(self, iid):
         self.c.delete('shade%d' % iid)
@@ -658,7 +689,7 @@ def message_box(app, text, caption='Sound Studio Gold', kind='info', buttons=('o
     c = tk.Canvas(top, highlightthickness=0, bd=0, bg=ui.FACE)
     c.pack()
     img = app.images.bwcc(icon)
-    tid = c.create_text(0, 0, text=text, font=fo, width=tw, anchor='nw')
+    tid = c.create_text(0, 0, text=text, font=fo, width=tw, anchor='nw', fill=ui.TEXT)
     bb = c.bbox(tid)
     th = bb[3] - bb[1]
     pw = s(16) + img.width() + s(12) + tw + s(16)

@@ -67,6 +67,9 @@ def schedule_song(song, opts, solo_patterns=None, chord_player=None):
                 out += chord_player.schedule(song, t)
             continue
         port = max(0, t.port)
+        if solo_patterns is None:
+            for m in initial_messages(t, track_channel(t)):
+                out.append((0, 0, port, m))
         for p in t.patterns:
             if p.mute:
                 continue
@@ -75,6 +78,17 @@ def schedule_song(song, opts, solo_patterns=None, chord_player=None):
             out += schedule_pattern(t, p, port)
     out.sort(key=lambda e: (e[0], e[1]))
     return out
+
+
+def track_channel(t):
+    """The channel (1-16) a track's settings go to: its own, else that of its first event."""
+    if t.channel and t.channel > 0:
+        return t.channel
+    for p in t.patterns:
+        for e in p.get_events():
+            if 0x80 <= e.status < 0xF0:
+                return (e.status & 0x0F) + 1
+    return 1
 
 
 def initial_messages(t, ch_default=1):
@@ -131,8 +145,8 @@ def schedule_pattern(t, p, port):
         if tick < 0:
             continue
         st = e.status
-        if st == 0xF0:
-            out.append((tick, 0, port, e.data))
+        if st == 0xF0:                      # first, so a reset can't undo the settings sent with it
+            out.append((tick, -1, port, e.data))
             continue
         if st < 0x80:
             continue
@@ -144,12 +158,12 @@ def schedule_pattern(t, p, port):
             end = min(tick + max(1, e.length), base + plen) if e.length else tick + 1
             out.append((tick, 6, port, bytes([0x90 | ch, note, v])))
             out.append((end, 1, port, bytes([0x80 | ch, note, 0])))
-        elif hi in (0xC0, 0xD0):
-            out.append((tick, 2, port, bytes([hi | ch, e.d1 & 0x7F])))
+        elif hi in (0xC0, 0xD0):            # after controllers (bank select), as the original orders them
+            out.append((tick, 3 if hi == 0xC0 else 4, port, bytes([hi | ch, e.d1 & 0x7F])))
         elif hi == 0xA0:
             out.append((tick, 5, port, bytes([hi | ch, _clamp(e.d1 + trans, 0, 127), e.d2 & 0x7F])))
         else:
-            out.append((tick, 3, port, bytes([hi | ch, e.d1 & 0x7F, e.d2 & 0x7F])))
+            out.append((tick, 2 if hi == 0xB0 else 4, port, bytes([hi | ch, e.d1 & 0x7F, e.d2 & 0x7F])))
     return out
 
 
@@ -172,6 +186,7 @@ class Sequencer:
         self.solo_patterns = None
         self.chord_player = None
         self.sfc = None               # live Single Finger Chord: (root, type, sounding) or None
+        self.timer_ms = 1             # Preferences' Timer Resolution: how often the clock is read
         self.recorded = []            # (tick, bytes) captured while recording
         self.counting_in = False
         self.held = {}                # (port, ch, note) -> True, notes currently on
@@ -364,7 +379,7 @@ class Sequencer:
             if not self.recording and not loop and idx >= len(sched) and cur > end_tick + tmap.tb \
                     and self.sfc is None:
                 break
-            time.sleep(0.001)
+            time.sleep(max(1, self.timer_ms) / 1000.0)
         self._release_all()
         self.playing = False
         if self.app:

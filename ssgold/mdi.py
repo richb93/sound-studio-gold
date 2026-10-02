@@ -9,6 +9,24 @@ CAPTION_H = 18
 BORDER = 4
 
 
+# Windows 95 close glyph, drawn pixel by pixel (lines would be antialiased on some systems)
+CLOSE_GLYPH = ['XX....XX', '.XX..XX.', '..XXXX..', '...XX...', '..XXXX..', '.XX..XX.', 'XX....XX']
+
+
+def pixels(c, x, y, rows, fill='#000000'):
+    for j, row in enumerate(rows):
+        i = 0
+        while i < len(row):
+            if row[i] == 'X':
+                k = i
+                while k < len(row) and row[k] == 'X':
+                    k += 1
+                c.create_rectangle(s(x + i), s(y + j), s(x + k), s(y + j + 1), fill=fill, outline='', width=0)
+                i = k
+            else:
+                i += 1
+
+
 class MDIClient(tk.Canvas):
     def __init__(self, master, app):
         super().__init__(master, highlightthickness=0, bd=0, bg=ui.DESKTOP)
@@ -257,9 +275,7 @@ class MDIChild(tk.Frame):
             ui.raised(c, x0, 2, x1, 16)
             cx, cy = (x0 + x1) // 2, 9
             if kind == 'close':
-                for d in (0, 1):
-                    ui.line(c, cx - 4 + d, cy - 3, cx + 3 + d, cy + 4)
-                    ui.line(c, cx + 3 + d, cy - 3, cx - 4 + d, cy + 4)
+                pixels(c, cx - 4, cy - 3, CLOSE_GLYPH)
             elif kind == 'max':
                 if self.state == 'max':
                     ui.rect(c, cx - 2, cy - 5, cx + 5, cy + 1)

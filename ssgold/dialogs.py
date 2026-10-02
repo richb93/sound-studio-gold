@@ -1,14 +1,14 @@
 """Behaviour of each dialog (the *DLGPROC functions of Goldlib.dll)."""
 import os
+import sys
+import tkinter as tk
+from tkinter import filedialog
 import glob as _glob
 
 from . import resources, procedures, midi_io, ui
 from .bwcc import Dialog, message_box
 from .song import OFF, PAN_OFF, COND_TEMPO, MIDI
 from .timing import TimeMap
-
-FILE_TYPES = {411: '.SNG', 412: '.PAT', 413: '.DRM', 414: '.PLS', 415: '.MID', 416: '.DEF', 417: '.WND',
-              418: '.WAV'}
 
 
 def msg(app, text, kind='info', buttons=('ok',)):
@@ -68,12 +68,48 @@ def about(app, **kw):
 
 
 # ----------------------------------------------------------------------------- file dialogs
+# The system's own Open/Save dialogs; the file's format is worked out from the file itself.
+def _ft(label, *exts):
+    pats = []
+    for e in exts:
+        pats += ['*' + e, '*' + e.upper()] if sys.platform.startswith('linux') else ['*' + e]
+    return (label, ' '.join(pats))
+
+
+OPEN_TYPES = [_ft('All Sound Studio files', '.sng', '.mid', '.midi', '.kar', '.rmi', '.pat', '.drm', '.pls'),
+              _ft('Songs', '.sng'), _ft('MIDI files', '.mid', '.midi', '.kar', '.rmi'), _ft('Patterns', '.pat'),
+              _ft('Drum kits', '.drm'), _ft('Patch lists', '.pls'), ('All files', '*')]
+SAVE_TYPES = [_ft('Song', '.sng'), _ft('MIDI file', '.mid'), _ft('Pattern (selected)', '.pat'),
+              _ft('Drum kit', '.drm')]
+SAVE_EXT = {'Song': '.SNG', 'MIDI file': '.MID', 'Pattern (selected)': '.PAT', 'Drum kit': '.DRM'}
+
+
+def file_kind(path):
+    """'.SNG', '.MID', '.PAT', '.DRM' or '.PLS' for a file, from its contents where they say."""
+    try:
+        with open(path, 'rb') as f:
+            head = f.read(12)
+    except OSError:
+        head = b''
+    if head[:4] == b'MThd' or (head[:4] == b'RIFF' and head[8:12] == b'RMID'):
+        return '.MID'
+    if head[:4] in (b'song', b'sng2', b'sng3'):
+        return '.SNG'
+    ext = os.path.splitext(path)[1].upper()
+    return {'.MIDI': '.MID', '.KAR': '.MID', '.RMI': '.MID'}.get(ext, ext)
+
+
+def _initial_dir(app):
+    d = app.settings.get('recent_dir')
+    return d if d and os.path.isdir(d) else os.path.expanduser('~')
+
+
 def open_file_dialog(app, kind='open'):
     title = {'open': 'Open File', 'delete': 'Delete File', 'merge': 'Merge File'}[kind]
-    res = _file_dialog(app, title, save=False)
-    if not res:
+    path = filedialog.askopenfilename(parent=app, title=title, initialdir=_initial_dir(app), filetypes=OPEN_TYPES)
+    if not path:
         return
-    path, ext = res
+    app.settings['recent_dir'] = os.path.dirname(path)
     if kind == 'delete':
         if msg(app, resources.string(817) % os.path.basename(path), 'question', ('yes', 'no')) == 'yes':
             try:
@@ -81,119 +117,31 @@ def open_file_dialog(app, kind='open'):
             except OSError:
                 msg(app, resources.string(23) % path, 'stop')
         return
-    if ext == '.SNG' or ext == '.MID':
+    if file_kind(path) in ('.SNG', '.MID'):
         if not app.confirm_discard():
             return
     app.open_path(path)
 
 
 def save_file_dialog(app):
-    return _file_dialog(app, 'Save File', save=True)
-
-
-def _file_dialog(app, title, save):
-    d = Dialog(app, 'OPENFILE_DLG', title=title)
-    state = {'dir': app.settings.get('recent_dir') or os.getcwd(), 'ext': '.SNG'}
-    if save and app.song.path:
-        state['dir'] = os.path.dirname(app.song.path)
-    for rid, ext in FILE_TYPES.items():
-        if ext in ('.PLS', '.WAV', '.DEF', '.WND'):
-            d.enable(rid, False)
-    d.set_radio(411)
-    files, dirs = d.ctrls[403], d.ctrls[404]
-
-    def refresh():
-        files.delete(0, 'end')
-        dirs.delete(0, 'end')
-        p = state['dir']
-        shown = p
-        fo = ui.f('dialog')
-        while len(shown) > 4 and fo.measure(shown) > ui.s(90 * 6 // 4):
-            shown = '...' + shown[4:]
-        d.set_text(402, shown)
-        try:
-            entries = sorted(os.listdir(p), key=str.lower)
-        except OSError:
-            entries = []
-        for f in entries:
-            if os.path.isfile(os.path.join(p, f)) and os.path.splitext(f)[1].upper() == state['ext']:
-                files.insert('end', f)
-        dirs.insert('end', '[..]')
-        for f in entries:
-            if os.path.isdir(os.path.join(p, f)) and not f.startswith('.'):
-                dirs.insert('end', '[%s]' % f)
-        if os.name == 'nt':
-            import string
-            for letter in string.ascii_lowercase:
-                if os.path.exists('%s:\\' % letter):
-                    dirs.insert('end', '[-%s-]' % letter)
-        cur = d.text(401)
-        if not cur or cur.startswith('*'):
-            d.set_text(401, '*' + state['ext'])
-
-    def set_type(rid):
-        state['ext'] = FILE_TYPES[rid]
-        d.set_text(401, '*' + state['ext'])
-        refresh()
-
-    for rid in FILE_TYPES:
-        d.on_command[rid] = lambda r=rid: set_type(r)
-
-    def pick_file(_e=None):
-        sel = files.curselection()
-        if sel:
-            d.set_text(401, files.get(sel[0]))
-
-    def open_dir(_e=None):
-        sel = dirs.curselection()
-        if not sel:
-            return
-        name = dirs.get(sel[0])[1:-1]
-        if name.startswith('-') and name.endswith('-'):
-            state['dir'] = name[1] + ':\\'
-        else:
-            state['dir'] = os.path.normpath(os.path.join(state['dir'], name))
-        refresh()
-
-    files.bind('<<ListboxSelect>>', pick_file)
-    files.bind('<Double-Button-1>', lambda e: (pick_file(), d.ok()))
-    dirs.bind('<Double-Button-1>', open_dir)
-
-    def ok():
-        name = d.text(401).strip()
-        if not name:
-            return False
-        full = os.path.join(state['dir'], name)
-        if os.path.isdir(full):
-            state['dir'] = os.path.normpath(full)
-            d.set_text(401, '')
-            refresh()
-            return False
-        if '*' in name or '?' in name:
-            refresh()
-            return False
-        base = os.path.basename(name)
-        if len(os.path.splitext(base)[0]) > 8 and save:
-            msg(app, 'The File Name contains too many characters', 'info')
-        if not os.path.splitext(name)[1]:
-            name += state['ext']
-            full = os.path.join(state['dir'], name)
-        if not save and not os.path.exists(full):
-            msg(app, resources.string(24) % name, 'stop')
-            return False
-        if save and os.path.exists(full):
-            if msg(app, resources.string(819) % name, 'question', ('yes', 'no')) != 'yes':
-                return False
-        d.result = (full, os.path.splitext(full)[1].upper())
-        app.settings['recent_dir'] = state['dir']
-        return True
-
-    d.on_ok = ok
-    if save and app.song.path:
-        d.set_text(401, os.path.basename(app.song.path).lower())
-    refresh()
-    r = d.show()
-    return d.result if r else None
+    """(path, kind) chosen in the system's Save dialog, kind from the extension or file type."""
+    var = tk.StringVar(app, SAVE_TYPES[0][0])
+    name = os.path.splitext(os.path.basename(app.song.path))[0] if app.song.path else 'untitled'
+    folder = os.path.dirname(app.song.path) if app.song.path else _initial_dir(app)
+    opts = dict(parent=app, title='Save File', initialdir=folder, initialfile=name, filetypes=SAVE_TYPES)
+    try:
+        path = filedialog.asksaveasfilename(typevariable=var, **opts)
+    except tk.TclError:                    # Tk without -typevariable
+        path = filedialog.asksaveasfilename(**opts)
+    if not path:
+        return None
+    ext = os.path.splitext(path)[1].upper()
+    ext = {'.MIDI': '.MID', '.KAR': '.MID'}.get(ext, ext)
+    if ext not in SAVE_EXT.values():
+        ext = SAVE_EXT.get(var.get(), '.SNG')
+        path += ext.lower()
+    app.settings['recent_dir'] = os.path.dirname(path)
+    return path, ext
 
 
 # ----------------------------------------------------------------------------- track / pattern
@@ -681,13 +629,33 @@ def preferences(app, **kw):
               1416: 'leave_midi', 1417: 'number_from_1', 1410: 'single_edit'}
     for iid, k in checks.items():
         d.set_check(iid, pr.get(k))
+    # Timer Resolution: High / Medium / Low buttons (the original's slider and Pentium/486/386)
+    levels = {1405: ('&High', 1), 1406: ('&Medium', 5), 1407: ('&Low', 10)}
     sb = d.ctrls[1404]
-    sb.lo, sb.hi = 1, 20
-    sb.cmd = lambda v: d.set_text(1403, '%2d' % v)
-    sb.set(pr.get('timer_ms', 5), notify=True)
-    d.on_command[1405] = lambda: sb.set(1, notify=True)
-    d.on_command[1406] = lambda: sb.set(5, notify=True)
-    d.on_command[1407] = lambda: sb.set(10, notify=True)
+    sb_y = sb.winfo_y() if sb.winfo_ismapped() else None
+    for item in d.c.find_all():
+        if d.c.type(item) == 'window' and d.c.itemcget(item, 'window') == str(sb):
+            sb_y = d.c.coords(item)[1]
+            d.c.delete(item)
+    d.set_text(1403, '')
+    for item in d.c.find_all():
+        if d.c.type(item) == 'text' and d.c.itemcget(item, 'text') == 'ms':
+            d.c.delete(item)
+    timer = {'ms': min(levels.values(), key=lambda v: abs(v[1] - pr.get('timer_ms', 1)))[1]}
+
+    def show_timer():
+        for iid, (label, ms) in levels.items():
+            d.set_button_text(iid, label)
+            d._draw_plain(iid, down=ms == timer['ms'])
+
+    def pick(ms):
+        timer['ms'] = ms
+        show_timer()
+    for iid, (label, ms) in levels.items():
+        if sb_y is not None:
+            d.buttons[iid]['y'] = int(sb_y) + ui.s(4)
+        d.on_command[iid] = lambda ms=ms: pick(ms)
+    show_timer()
     d.combo(1412, ['None', 'Piano Roll', 'Event', 'Score', 'Drum'], pr.get('dbl_midi', 'Piano Roll'))
     d.combo(1413, ['None', 'Audio Window'], pr.get('dbl_audio', 'Audio Window'))
     bgs = sorted(resources.string(864 + i) for i in range(25))
@@ -698,7 +666,8 @@ def preferences(app, **kw):
     def ok():
         for iid, k in checks.items():
             pr[k] = d.check(iid)
-        pr['timer_ms'] = sb.value
+        pr['timer_ms'] = timer['ms']
+        app.seq.timer_ms = timer['ms']
         pr['dbl_midi'] = d.combo(1412)
         pr['dbl_audio'] = d.combo(1413)
         pr['bg_track'] = d.combo(1415)

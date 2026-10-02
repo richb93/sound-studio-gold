@@ -167,7 +167,8 @@ class Combo(tk.Canvas):
         h = self.winfo_height() // ui.S or self.h
         self.create_rectangle(0, 0, s(w), s(h), fill=ui.WINDOW, outline='')
         fg = ui.TEXT if self.enabled else ui.GREYTEXT
-        ui.text(self, 3, h // 2, str(self.value), 'system' if self.bold else 'small', fill=fg, anchor='w')
+        fo = ui.fit('system' if self.bold else 'small', str(self.value), s(w - 22))
+        self.create_text(s(3), s(h // 2), text=str(self.value), font=fo, fill=fg, anchor='w')
         bx = w - 17
         ui.raised(self, bx, 1, bx + 16, h - 1)
         cx, cy = bx + 8, h // 2

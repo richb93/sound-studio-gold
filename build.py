@@ -104,6 +104,20 @@ def make_icon(build_dir):
     return out
 
 
+def mac_plist(path):
+    """The program draws Windows 95 colours, so keep macOS from applying dark mode to it."""
+    import plistlib
+    if not os.path.exists(path):
+        return
+    with open(path, 'rb') as f:
+        pl = plistlib.load(f)
+    pl['NSRequiresAquaSystemAppearance'] = True
+    pl['NSHighResolutionCapable'] = True
+    pl['CFBundleName'] = pl['CFBundleDisplayName'] = 'Sound Studio Gold'
+    with open(path, 'wb') as f:
+        plistlib.dump(pl, f)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('--onefile', action='store_true', help='build a single executable')
@@ -128,6 +142,9 @@ def main():
     cmd.append('run.py')
     print(' '.join(cmd))
     subprocess.check_call(cmd)
+
+    if sys.platform == 'darwin' and not args.onefile:
+        mac_plist(os.path.join('dist', NAME + '.app', 'Contents', 'Info.plist'))
 
     if args.onefile:
         out = os.path.join('dist', NAME + ('.exe' if sys.platform == 'win32' else ''))

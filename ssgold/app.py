@@ -103,6 +103,29 @@ def _read(p):
         return f.read()
 
 
+def light_appearance(root):
+    """Draw in the light Windows 95 colours whatever the desktop's theme.  On macOS in dark
+    mode Tk would otherwise give text and entry fields the system's dark-mode colours."""
+    for k, v in (('*foreground', ui.TEXT), ('*disabledForeground', '#808080'),
+                 ('*Entry.background', ui.WINDOW), ('*Listbox.background', ui.WINDOW),
+                 ('*Text.background', ui.WINDOW), ('*insertBackground', ui.TEXT),
+                 ('*selectBackground', '#000080'), ('*selectForeground', '#ffffff'),
+                 ('*highlightBackground', ui.FACE), ('*Menu.background', ui.FACE),
+                 ('*Menu.activeBackground', '#000080'), ('*Menu.activeForeground', '#ffffff')):
+        root.option_add(k, v)
+    if sys.platform != 'darwin':
+        return
+
+    def aqua(w):
+        try:
+            root.tk.call('::tk::unsupported::MacWindowStyle', 'appearance', w, 'aqua')
+        except tk.TclError:
+            pass
+    aqua(root)
+    root.bind_class('Toplevel', '<Map>', lambda e: aqua(e.widget) if e.widget.winfo_toplevel() is e.widget
+                    else None, add='+')
+
+
 def crisp_fonts():
     """On X11, draw text without antialiasing (like Windows 95) through a private fontconfig file.
     Must run before Tk starts; set SSGOLD_ANTIALIAS=1 to keep the desktop's smoothing."""
@@ -132,6 +155,7 @@ class App(tk.Tk):
         self.images = Images(self, sc)
         self.title('Sound Studio Gold')
         self.configure(bg=ui.FACE)
+        light_appearance(self)
         try:
             self.iconphoto(True, self.images.icon('IC_ABOUT'))
         except tk.TclError:
@@ -141,6 +165,7 @@ class App(tk.Tk):
         self.midi.open_outputs(self.settings['outputs'])
         self.midi.open_inputs(self.settings['inputs'])
         self.seq = Sequencer(self.midi, self)
+        self.seq.timer_ms = self.settings['prefs'].get('timer_ms', 1)
         self.midi.on_input = self._midi_in
         self.patches = PatchManager()
         for port, mode in self.settings['port_modes'].items():
@@ -172,6 +197,7 @@ class App(tk.Tk):
         w, h = min(sw - 40, ui.s(1024)), min(sh - 80, ui.s(740))
         self.geometry('%dx%d+%d+%d' % (w, h, max(0, (sw - w) // 2), max(0, (sh - h) // 3)))
         self.protocol('WM_DELETE_WINDOW', self.quit_app)
+        self._mac_app_menu()
         self.set_backgrounds()
         self.deiconify()
         self.update_idletasks()
@@ -508,7 +534,8 @@ class App(tk.Tk):
         self.set_song(new_song(self.port_names()))
 
     def open_path(self, path):
-        ext = os.path.splitext(path)[1].lower()
+        from .dialogs import file_kind
+        ext = file_kind(path).lower()
         try:
             if ext == '.mid':
                 song = smf.read_smf(path, self)
@@ -596,13 +623,14 @@ class App(tk.Tk):
         return True
 
     def merge(self, midi=False):
+        from .dialogs import OPEN_TYPES, file_kind
+        types = [OPEN_TYPES[2] if midi else OPEN_TYPES[1], OPEN_TYPES[0], OPEN_TYPES[-1]]
         path = filedialog.askopenfilename(parent=self, title='Merge File', initialdir=self.settings.get('recent_dir') or None,
-                                          filetypes=[('MIDI Files', '*.mid *.MID')] if midi else
-                                          [('Song Files', '*.sng *.SNG')])
+                                          filetypes=types)
         if not path:
             return
         try:
-            other = smf.read_smf(path, self) if midi else Song.load(path)
+            other = smf.read_smf(path, self) if file_kind(path) == '.MID' else Song.load(path)
         except (OSError, SongError, ValueError) as e:
             messagebox.showerror('Sound Studio Gold', str(e), parent=self)
             return
@@ -615,6 +643,26 @@ class App(tk.Tk):
             if t.patterns:
                 self.song.tracks.append(t)
         self.song_changed()
+
+    def _mac_app_menu(self):
+        """macOS: the application menu's About and Settings items open the program's own
+        About and Preferences dialogs; Quit and files dropped on the Dock icon work too."""
+        if sys.platform != 'darwin':
+            return
+
+        def open_docs(*paths):
+            from .dialogs import file_kind
+            for p in paths[:1]:
+                if file_kind(p) not in ('.SNG', '.MID') or self.confirm_discard():
+                    self.open_path(p)
+        for name, fn in (('tkAboutDialog', lambda: self.command(65)),
+                         ('::tk::mac::ShowPreferences', lambda: self.command(36)),
+                         ('::tk::mac::Quit', self.quit_app),
+                         ('::tk::mac::OpenDocument', open_docs)):
+            try:
+                self.createcommand(name, fn)
+            except tk.TclError:
+                pass
 
     def quit_app(self):
         if not self.confirm_discard():
@@ -768,7 +816,8 @@ class App(tk.Tk):
         from .sequencer import initial_messages
         if t.kind != MIDI:
             return
-        msgs = initial_messages(t)
+        from .sequencer import track_channel
+        msgs = initial_messages(t, track_channel(t))
         if key is not None:
             cc = {'volume': 7, 'pan': 10, 'reverb': 91, 'chorus': 93}.get(key)
             if cc is not None:

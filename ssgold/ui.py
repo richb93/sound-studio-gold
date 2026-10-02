@@ -25,8 +25,8 @@ if sys.platform == 'win32':
     _SANS = ('MS Sans Serif', 'Microsoft Sans Serif', 'Arial')
     _BOLD = ('MS Sans Serif', 'Microsoft Sans Serif', 'Arial')
 elif sys.platform == 'darwin':
-    _SANS = ('Geneva', 'Helvetica', 'Arial')
-    _BOLD = ('Helvetica', 'Arial')
+    _SANS = ('Arial', 'Helvetica Neue', 'Helvetica')      # closest in width to MS Sans Serif
+    _BOLD = ('Arial', 'Helvetica Neue', 'Helvetica')
 else:
     _SANS = ('Liberation Sans', 'Arial', 'Helvetica', 'DejaVu Sans')
     _BOLD = ('Liberation Sans', 'Arial', 'Helvetica', 'DejaVu Sans')
@@ -74,6 +74,27 @@ def set_scale(root, scale):
 
 def f(name):
     return FONTS[name]
+
+
+_FIT = {}
+
+
+def fit(name, txt, width, min_px=8):
+    """Font `name`, made smaller if needed so txt fits in width pixels (fonts differ in width
+    from platform to platform; the layouts are the original's)."""
+    fo = FONTS[name]
+    if width <= 0 or fo.measure(txt) <= width:
+        return fo
+    size = abs(int(fo.cget('size')))
+    g = fo
+    for px in range(size - 1, min_px * S - 1, -1):
+        key = (fo.cget('family'), px, fo.cget('weight'))
+        g = _FIT.get(key)
+        if g is None:
+            g = _FIT[key] = tkfont.Font(family=key[0], size=-px, weight=key[2])
+        if g.measure(txt) <= width:
+            break
+    return g
 
 
 def s(v):
