@@ -120,18 +120,8 @@ def light_appearance(root):
                  ('*highlightBackground', ui.FACE), ('*Menu.background', ui.FACE),
                  ('*Menu.activeBackground', '#000080'), ('*Menu.activeForeground', '#ffffff')):
         root.option_add(k, v)
-    if sys.platform != 'darwin':
-        return
-
-    def aqua():
-        # Once the main window exists; never from a <Map> handler (macOS can crash there).
-        # The built app is kept in light mode by NSRequiresAquaSystemAppearance (build.py).
-        try:
-            root.update_idletasks()
-            root.tk.call('::tk::unsupported::MacWindowStyle', 'appearance', root, 'aqua')
-        except tk.TclError:
-            pass
-    root.after_idle(aqua)
+    # macOS: the built app is kept in light mode by NSRequiresAquaSystemAppearance (build.py).
+    # Tk's MacWindowStyle appearance command is not used: it crashed Tk at times.
 
 
 def crisp_fonts():
