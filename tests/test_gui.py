@@ -13,13 +13,13 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 class Windows(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        # No throwaway tk.Tk() to probe for a display: on macOS (Tk 9) a destroyed first Tk
+        # leaves a queued start-up task that later crashes Tk (showRootWindow).
+        from ssgold.app import App
         try:
-            r = tk.Tk()
-            r.destroy()
+            cls.app = App(scale=1)
         except tk.TclError:
             raise unittest.SkipTest('no display')
-        from ssgold.app import App
-        cls.app = App(scale=1)
         cls.app.update()
 
     @classmethod
