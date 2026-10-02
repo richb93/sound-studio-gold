@@ -170,7 +170,10 @@ class MixerWindow(MDIChild):
 
     # ------------------------------------------------------------------ drawing
     def refresh(self, what=None):
-        self.redraw()
+        if what in ('mixer', 'patterns', 'tracks', 'events'):
+            self.update_strips()              # names, record buttons: only the strips that changed
+        else:
+            self.redraw()
 
     def draw_toolbar(self):
         c = self.tb
@@ -206,6 +209,7 @@ class MixerWindow(MDIChild):
         W, H = c.winfo_width() // ui.S, c.winfo_height() // ui.S
         tops, total = self.page_tops()
         self.hits = []
+        self.strips = {}
         for (kind, port, _name), top in zip(self.pages(), tops):
             y0 = top - self.top
             ph = self.page_height(kind)
@@ -217,52 +221,103 @@ class MixerWindow(MDIChild):
             self.vbar.set(self.top / total, min(1.0, (self.top + H) / total))
 
     def _draw_page(self, kind, port, y0):
+        for i in range(16):
+            self._draw_strip(kind, port, i, y0)
+
+    def _strip_state(self, kind, port, i):
+        """What a channel strip shows (except its meter)."""
+        if kind == 'audio':
+            tracks = self.audio_tracks()
+            t = tracks[i] if i < len(tracks) else None
+            vals = self._audio_vals(t)
+            on = True
+        else:
+            vals = self._midi_vals(port, i)
+            on = self.port_enabled(port)
+        meter = vals.pop('meter', 0)
+        under = self._under_text(kind, port, i, self.audio_tracks() if kind == 'audio' else None)
+        sig = (tuple(sorted(vals.items())), on, self._flat_down == (port, i), under)
+        return vals, on, under, meter, sig
+
+    def _draw_strip(self, kind, port, i, y0):
+        """Draw one channel strip; its items share a tag so it can be redrawn on its own."""
         c = self.c
-        enabled = kind == 'audio' or self.port_enabled(port)
+        key = (kind, port, i)
+        tag = 'strip_%s_%s_%d' % (kind, port, i)
+        c.delete(tag)
+        self.hits = [h for h in self.hits if (h[4], h[5], h[6]) != key]
+        vals, on, under, meter, sig = self._strip_state(kind, port, i)
         lay = self.layout(kind)
         ph = self.page_height(kind)
-        tracks = self.audio_tracks() if kind == 'audio' else None
-        for i in range(16):
-            x0 = i * STRIP
-            ui.line(c, x0, y0, x0, y0 + ph - 1, fill='#ffffff')
-            ui.line(c, x0 + STRIP - 1, y0, x0 + STRIP - 1, y0 + ph - 1, fill=ui.SHADOW)
-            ui.line(c, x0, y0, x0 + STRIP - 1, y0, fill='#ffffff')
-            ui.line(c, x0, y0 + HEAD - 1, x0 + STRIP - 1, y0 + HEAD - 1, fill=ui.SHADOW)
-            ui.text(c, x0 + STRIP // 2, y0 + HEAD // 2, str(i + 1), 'small', anchor='center')
-            if kind == 'audio':
-                t = tracks[i] if i < len(tracks) else None
-                vals = self._audio_vals(t)
-                on = True
+        first = c.create_line(0, 0, 0, 0, fill='', tags=tag)        # marks where the strip starts
+        x0 = i * STRIP
+        ui.line(c, x0, y0, x0, y0 + ph - 1, fill='#ffffff')
+        ui.line(c, x0 + STRIP - 1, y0, x0 + STRIP - 1, y0 + ph - 1, fill=ui.SHADOW)
+        ui.line(c, x0, y0, x0 + STRIP - 1, y0, fill='#ffffff')
+        ui.line(c, x0, y0 + HEAD - 1, x0 + STRIP - 1, y0 + HEAD - 1, fill=ui.SHADOW)
+        ui.text(c, x0 + STRIP // 2, y0 + HEAD // 2, str(i + 1), 'small', anchor='center')
+        info = {'y0': y0, 'sig': sig, 'meter': None, 'meter_val': -1}
+        for ctl, ckey, y, label in lay:
+            yy = y0 + y
+            if ctl == 'button':
+                pressed = vals.get(ckey, False)
+                ui.image(c, x0 + 5, yy, self._button_img(ckey, pressed and on))
+                self.hits.append((x0 + 5, yy, x0 + 32, yy + 12, kind, port, i, ckey))
+            elif ctl == 'flat':
+                ui.image(c, x0 + 3, yy, self.app.images.get('FLAT_PRESSED' if self._flat_down == (port, i)
+                                                            else 'FLAT_BUT'))
+                self.hits.append((x0 + 3, yy, x0 + 33, yy + 12, kind, port, i, ckey))
+            elif ctl == 'knob':
+                lo, hi = self._range(ckey)
+                self._knob(x0 + 6, yy, vals.get(ckey, lo), lo, hi, KNOB_COLOURS[ckey] if on else 'KNOB_GREY')
+                self.hits.append((x0 + 6, yy, x0 + 31, yy + 25, kind, port, i, ckey))
+                if label is None:
+                    label = short_name(self.cfg['users'][int(ckey[-1])][0])
+            elif ctl == 'fader':
+                info['meter'] = self._fader(x0, yy, vals.get('vol', 0), vals.get('group', 0), on)
+                info['meter_y'] = yy
+                self.hits.append((x0 + 3, yy, x0 + 25, yy + FADER_H, kind, port, i, 'vol'))
+                ui.text(c, x0 + 1, yy + FADER_H + 6, ui.clip_text(under, STRIP - 1, 'mixer'), 'mixer',
+                        fill=LABEL if on else ui.SHADOW, anchor='w')
+            if label:
+                ly = yy + (17 if ctl in ('button', 'flat') else 30)
+                ui.text(c, x0 + STRIP // 2, ly, ui.clip_text(label, STRIP - 2, 'mixer'), 'mixer',
+                        fill=LABEL if on else ui.SHADOW, anchor='center')
+                label = None
+        for item in c.find_all():
+            if item > first:
+                c.addtag_withtag(tag, item)
+        info['on'] = on
+        self.strips[key] = info
+        self._set_meter(key, meter)
+
+    def _set_meter(self, key, meter):
+        info = self.strips.get(key)
+        if not info or info['meter'] is None:
+            return
+        h = int(meter / 127.0 * (FADER_H - 2)) if info['on'] else 0
+        if h == info['meter_val']:
+            return
+        info['meter_val'] = h
+        x0, y = key[2] * STRIP, info['meter_y']
+        self.c.coords(info['meter'], s(x0 + 27), s(y + FADER_H - 1 - h), s(x0 + 32), s(y + FADER_H - 1))
+
+    def update_strips(self):
+        """Bring the strips up to date, redrawing only those whose settings changed (meters move
+        on their own): far cheaper than redraw() while the song plays or a control is dragged."""
+        if not self.winfo_exists() or not hasattr(self, 'strips'):
+            return self.redraw()
+        for key, info in list(self.strips.items()):
+            kind, port, i = key
+            if kind != 'audio':
+                meter = self.chan(port, i).meter
             else:
-                vals = self._midi_vals(port, i)
-                on = enabled
-            for ctl, key, y, label in lay:
-                yy = y0 + y
-                if ctl == 'button':
-                    pressed = vals.get(key, False)
-                    ui.image(c, x0 + 5, yy, self._button_img(key, pressed and on))
-                    self.hits.append((x0 + 5, yy, x0 + 32, yy + 12, kind, port, i, key))
-                elif ctl == 'flat':
-                    ui.image(c, x0 + 3, yy, self.app.images.get('FLAT_PRESSED' if self._flat_down == (port, i)
-                                                                else 'FLAT_BUT'))
-                    self.hits.append((x0 + 3, yy, x0 + 33, yy + 12, kind, port, i, key))
-                elif ctl == 'knob':
-                    lo, hi = self._range(key)
-                    self._knob(x0 + 6, yy, vals.get(key, lo), lo, hi, KNOB_COLOURS[key] if on else 'KNOB_GREY')
-                    self.hits.append((x0 + 6, yy, x0 + 31, yy + 25, kind, port, i, key))
-                    if label is None:
-                        label = short_name(self.cfg['users'][int(key[-1])][0])
-                elif ctl == 'fader':
-                    self._fader(x0, yy, vals.get('vol', 0), vals.get('group', 0), vals.get('meter', 0), on)
-                    self.hits.append((x0 + 3, yy, x0 + 25, yy + FADER_H, kind, port, i, 'vol'))
-                    txt = self._under_text(kind, port, i, tracks)
-                    ui.text(c, x0 + 1, yy + FADER_H + 6, ui.clip_text(txt, STRIP - 1, 'mixer'), 'mixer',
-                            fill=LABEL if on else ui.SHADOW, anchor='w')
-                if label:
-                    ly = yy + (17 if ctl in ('button', 'flat') else 30)
-                    ui.text(c, x0 + STRIP // 2, ly, ui.clip_text(label, STRIP - 2, 'mixer'), 'mixer',
-                            fill=LABEL if on else ui.SHADOW, anchor='center')
-                    label = None
+                tracks = self.audio_tracks()
+                meter = self.chan('audio', id(tracks[i])).meter if i < len(tracks) else 0
+            if self._strip_state(kind, port, i)[4] != info['sig']:
+                self._draw_strip(kind, port, i, info['y0'])
+            else:
+                self._set_meter(key, meter)
 
     _flat_down = None
 
@@ -298,7 +353,8 @@ class MixerWindow(MDIChild):
         c.create_line(s(cx + 1), s(cy), s(ex + 1), s(ey), fill='#ffffff', width=ui.S)
         c.create_line(s(cx), s(cy), s(ex), s(ey), fill='#000000', width=ui.S)
 
-    def _fader(self, x0, y, vol, group, meter, on):
+    def _fader(self, x0, y, vol, group, on):
+        """Fader and velocity meter; returns the meter bar (sized by _set_meter)."""
         c = self.c
         img = self.app.images.get
         ui.image(c, x0 + 3, y, img('SLIDER_BM'))
@@ -312,10 +368,8 @@ class MixerWindow(MDIChild):
         ui.line(c, x0 + 26, y + FADER_H - 1, x0 + 34, y + FADER_H - 1, fill='#ffffff')
         ui.line(c, x0 + 33, y, x0 + 33, y + FADER_H - 1, fill='#ffffff')
         c.create_rectangle(s(x0 + 27), s(y), s(x0 + 32), s(y + FADER_H - 1), fill='#000000', outline='')
-        if meter > 0 and on:
-            h = int(meter / 127.0 * (FADER_H - 2))
-            c.create_rectangle(s(x0 + 27), s(y + FADER_H - 1 - h), s(x0 + 32), s(y + FADER_H - 1),
-                               fill='#00ff00', outline='', tags='meter')
+        return c.create_rectangle(s(x0 + 27), s(y + FADER_H - 1), s(x0 + 32), s(y + FADER_H - 1),
+                                  fill='#00ff00', outline='', tags='meter')
 
     def _cap_img(self):
         cache = self.app.images.cache
@@ -431,7 +485,7 @@ class MixerWindow(MDIChild):
                 self.flat_channel(port, ch, self.port_enabled(port))
         for t in self.audio_tracks():
             t.volume, t.pan, t.reverb, t.chorus = 127, 0, 0, 0
-        self.redraw()
+        self.update_strips()
 
     def snapshot(self):
         for port in range(len(self.ports())):
@@ -478,12 +532,12 @@ class MixerWindow(MDIChild):
             else:
                 setattr(c, key, not getattr(c, key))
                 self._sync_mutes()
-            self.redraw()
+            self.update_strips()
             return
         if key == 'flat':
             self._flat_down = (port, ch)
             self.flat_channel(port, ch)
-            self.redraw()
+            self.update_strips()
             self.after(150, self._flat_up)
             return
         if ev.state & 0x4:          # Ctrl-click flattens one control
@@ -495,13 +549,13 @@ class MixerWindow(MDIChild):
                 i = int(key[-1])
                 c.user[i] = self.cfg['users'][i][1]
             self.send_control(port, ch, key)
-            self.redraw()
+            self.update_strips()
             return
         self.drag = (port, ch, key, ev.y, self._get(port, ch, key))
 
     def _flat_up(self):
         self._flat_down = None
-        self.redraw()
+        self.update_strips()
 
     def _get(self, port, ch, key):
         c = self.chan(port, ch)
@@ -546,7 +600,7 @@ class MixerWindow(MDIChild):
                         self._set(port, och, 'vol', self._get(port, och, 'vol') + delta)
         else:
             self._set(port, ch, key, new)
-        self.redraw()
+        self.update_strips()
 
     def _release(self, _ev):
         self.drag = None
@@ -558,7 +612,7 @@ class MixerWindow(MDIChild):
         kind, port, ch, _k = h
         c = self.chan(port if kind == 'midi' else 'audio', ch if kind == 'midi' else id(self.audio_tracks()[ch]))
         c.group = (c.group + 1) % 9
-        self.redraw()
+        self.update_strips()
 
     # ---- audio channels edit the Audio tracks' settings
     def _audio_press(self, ev, i, key):
@@ -632,7 +686,7 @@ class MixerWindow(MDIChild):
             sched = schedule_song(app.song, app.seq.opts)
         except Exception:
             sched = []
-        for tick, _pr, port, data in sched:
+        for tick, _pr, port, data, _src in sched:
             if tick > pos:
                 break
             if data[0] & 0xF0 == 0xB0:
@@ -646,7 +700,7 @@ class MixerWindow(MDIChild):
         rec = next((t for t in self.app.song.tracks if t.rec and t.kind == MIDI), None)
         port = self.app.midi.real_port(max(0, rec.port) if rec is not None else 0)
         if self._apply(port, data):
-            self.redraw()
+            self.update_strips()
 
     def _tick(self):
         if not self.winfo_exists():
@@ -662,6 +716,6 @@ class MixerWindow(MDIChild):
             if c.meter > 0:
                 c.meter = max(0.0, c.meter - 8)
                 changed = True
-        if changed and not self.drag:
-            self.redraw()
-        self.after(50, self._tick)
+        if changed:
+            self.update_strips()
+        self.after(max(50, self.app.update_ms()), self._tick)

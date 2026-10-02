@@ -802,11 +802,7 @@ class TrackWindow(MDIChild):
                     self._draw_button_cell(c, t, key, x0, y, w, h)
                     continue
                 if key == 'monitor':
-                    lvl = self.monitor.get(i, 0)
-                    if lvl:
-                        c.create_rectangle(s(x0 + 2), s(y + 2), s(x0 + 2 + (w - 4) * lvl / 127), s(y + h - 2),
-                                           fill='#ff0000', outline='')
-                    continue
+                    continue                       # draw_monitor
                 if sel:
                     c.create_rectangle(s(x0), s(y), s(x0 + w), s(y + h), fill='#404040', outline='')
                 txt, anchor = self._cell_text(t, key)
@@ -815,7 +811,28 @@ class TrackWindow(MDIChild):
                 tx = x0 + 2 if anchor == 'w' else x0 + w - 1
                 ui.text(c, tx, y + h // 2, ui.clip_text(txt, w - 2), 'system', fill=fg, anchor=anchor)
             y += h
+        self.draw_monitor()
         self._update_vbar()
+
+    def draw_monitor(self):
+        """The 'Mon' column's input level bars (redrawn on every incoming note, so kept apart)."""
+        c = self.cols
+        c.delete('mon')
+        col = next(((x0, w) for cid, x0, w in getattr(self, 'col_x', ()) if COLUMNS[cid][2] == 'monitor'), None)
+        if col is None or not self.monitor:
+            return
+        x0, w = col
+        H = c.winfo_height() // ui.S
+        y = HEADER_H + 1 - self.top_row
+        for i, t in enumerate(self.app.song.tracks):
+            h = t.height
+            lvl = self.monitor.get(i, 0)
+            if lvl and y + h >= HEADER_H:
+                c.create_rectangle(s(x0 + 2), s(y + 2), s(x0 + 2 + (w - 4) * lvl / 127), s(y + h - 2),
+                                   fill='#ff0000', outline='', tags='mon')
+            y += h
+            if y > H:
+                break
 
     def _draw_button_cell(self, c, t, key, x0, y, w, h):
         if t.kind == CHORD and key == 'rec':
@@ -1436,13 +1453,15 @@ class TrackWindow(MDIChild):
         for i, t in enumerate(self.app.song.tracks):
             if t.rec or (self.app.seq.opts.multitrack and t.channel == ch):
                 self.monitor[i] = data[2]
-        self.draw_columns()
-        self.after(150, self._decay)
+        self.draw_monitor()
+        if getattr(self, '_decay_job', None) is None:
+            self._decay_job = self.after(150, self._decay)
 
     def _decay(self):
+        self._decay_job = None
         if self.monitor:
             self.monitor.clear()
-            self.draw_columns()
+            self.draw_monitor()
 
     def key(self, ev):
         if ev.keysym in ('Up', 'Down'):

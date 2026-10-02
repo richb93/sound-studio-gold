@@ -24,6 +24,12 @@ as the original's is for a disabled port. Choose MIDI ports in **Options › Dev
 Settings (devices, column choices, preferences, window and dialog defaults) are kept in
 `~/.ssgold_settings.json`.
 
+If the program feels slow, **Options › Preferences › Screen Updates** (the original's Timer
+Resolution) sets how often the play position, cursors and meters are redrawn while playing: High,
+Medium or Low. Playback timing is not affected. To find out where the time goes, run
+`python run.py --profile` (or the built app's executable with `--profile`); a report is written to
+`~/ssgold-profile.txt` when you quit.
+
 ## What is there
 
 Everything in the original's MIDI side, built from the original's own resources (bitmaps, icons,

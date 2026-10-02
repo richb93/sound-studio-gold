@@ -3,6 +3,7 @@ import collections
 import json
 import os
 import sys
+import time
 import tkinter as tk
 from tkinter import filedialog, messagebox
 
@@ -165,7 +166,6 @@ class App(tk.Tk):
         self.midi.open_outputs(self.settings['outputs'])
         self.midi.open_inputs(self.settings['inputs'])
         self.seq = Sequencer(self.midi, self)
-        self.seq.timer_ms = self.settings['prefs'].get('timer_ms', 1)
         self.midi.on_input = self._midi_in
         self.patches = PatchManager()
         for port, mode in self.settings['port_modes'].items():
@@ -481,6 +481,8 @@ class App(tk.Tk):
 
     def song_changed(self, what=None):
         self.tmap = TimeMap(self.song)
+        if what not in ('mixer',):                 # mute / solo are checked as the song plays
+            self.seq.song_edited()
         for w in list(self.client.children_):
             if hasattr(w, 'refresh'):
                 try:
@@ -876,7 +878,9 @@ class App(tk.Tk):
                     import traceback
                     traceback.print_exc()
             pos = self.seq.position
-            if pos != self._last_pos:
+            now = time.perf_counter()
+            if pos != self._last_pos and now - getattr(self, '_last_draw', 0) >= self.update_ms() / 1000.0:
+                self._last_draw = now
                 self._last_pos = pos
                 self.transport.update_values()
                 self.bigtime.set(smpte(self.tmap.to_ms(pos), self.fps(), self.song.smpte_start))
@@ -885,7 +889,11 @@ class App(tk.Tk):
                 self.transport.redraw_buttons()
             self.transport.values['playing'] = self.seq.playing
         finally:
-            self.after(40, self._poll)
+            self.after(20, self._poll)
+
+    def update_ms(self):
+        """Preferences' Screen Updates: how often the play position is redrawn (milliseconds)."""
+        return {'high': 40, 'medium': 80, 'low': 160}.get(self.settings['prefs'].get('screen_updates'), 40)
 
     def _follow(self, force=False):
         for w in self.client.children_:

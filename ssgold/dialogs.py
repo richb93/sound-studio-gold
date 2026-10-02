@@ -629,8 +629,9 @@ def preferences(app, **kw):
               1416: 'leave_midi', 1417: 'number_from_1', 1410: 'single_edit'}
     for iid, k in checks.items():
         d.set_check(iid, pr.get(k))
-    # Timer Resolution: High / Medium / Low buttons (the original's slider and Pentium/486/386)
-    levels = {1405: ('&High', 1), 1406: ('&Medium', 5), 1407: ('&Low', 10)}
+    # The original's Timer Resolution slider and Pentium/486/386 buttons (meaningless on modern
+    # computers) become Screen Updates: how often the play position, cursors and meters are redrawn
+    levels = {1405: ('&High', 'high'), 1406: ('&Medium', 'medium'), 1407: ('&Low', 'low')}
     sb = d.ctrls[1404]
     sb_y = sb.winfo_y() if sb.winfo_ismapped() else None
     for item in d.c.find_all():
@@ -641,7 +642,9 @@ def preferences(app, **kw):
     for item in d.c.find_all():
         if d.c.type(item) == 'text' and d.c.itemcget(item, 'text') == 'ms':
             d.c.delete(item)
-    timer = {'ms': min(levels.values(), key=lambda v: abs(v[1] - pr.get('timer_ms', 1)))[1]}
+        elif d.c.type(item) == 'text' and d.c.itemcget(item, 'text') == 'Timer Resolution':
+            d.c.itemconfigure(item, text='Screen Updates')
+    timer = {'ms': pr.get('screen_updates', 'high')}
 
     def show_timer():
         for iid, (label, ms) in levels.items():
@@ -666,8 +669,7 @@ def preferences(app, **kw):
     def ok():
         for iid, k in checks.items():
             pr[k] = d.check(iid)
-        pr['timer_ms'] = timer['ms']
-        app.seq.timer_ms = timer['ms']
+        pr['screen_updates'] = timer['ms']
         pr['dbl_midi'] = d.combo(1412)
         pr['dbl_audio'] = d.combo(1413)
         pr['bg_track'] = d.combo(1415)

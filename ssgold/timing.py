@@ -1,4 +1,5 @@
 """Conversions between ticks, bar:beat:tick, clock time and SMPTE using the conductor maps."""
+import bisect
 from .song import COND_TEMPO, COND_TIMESIG
 from . import resources
 
@@ -49,14 +50,18 @@ class TimeMap:
             self.tempos = [(0, 0.0, 60000000.0 / 120 / self.tb)]
 
     # ---- bars
+    def _find(self, table, col, v):
+        """The last entry of a sorted table whose column col is <= v (binary search: these run
+        many times a second while playing, and songs can hold hundreds of tempo changes)."""
+        cache = self.__dict__.setdefault('_keys', {})
+        hit = cache.get((id(table), col))
+        if hit is None or hit[0] is not table or len(hit[1]) != len(table):
+            hit = cache[(id(table), col)] = (table, [e[col] for e in table])
+        i = bisect.bisect_right(hit[1], v) - 1
+        return table[max(0, i)]
+
     def sig_at(self, tick):
-        cur = self.sigs[0]
-        for s in self.sigs:
-            if s[0] <= tick:
-                cur = s
-            else:
-                break
-        return cur
+        return self._find(self.sigs, 0, tick)
 
     def to_bbt(self, tick):
         tick = max(0, int(tick))
@@ -109,26 +114,14 @@ class TimeMap:
 
     # ---- time
     def tempo_at(self, tick):
-        cur = self.tempos[0]
-        for p in self.tempos:
-            if p[0] <= tick:
-                cur = p
-            else:
-                break
-        return cur
+        return self._find(self.tempos, 0, tick)
 
     def to_ms(self, tick):
         t0, ms0, upt = self.tempo_at(tick)
         return ms0 + (tick - t0) * upt / 1000.0
 
     def from_ms(self, ms):
-        cur = self.tempos[0]
-        for p in self.tempos:
-            if p[1] <= ms:
-                cur = p
-            else:
-                break
-        t0, ms0, upt = cur
+        t0, ms0, upt = self._find(self.tempos, 1, ms)
         return int(t0 + (ms - ms0) * 1000.0 / upt)
 
     def bpm_at(self, tick):

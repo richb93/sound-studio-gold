@@ -1,4 +1,5 @@
 """Playback and recording engine."""
+import bisect
 import collections
 import threading
 import time
@@ -53,31 +54,42 @@ def chord_track(song):
     return next((t for t in song.tracks if t.kind == CHORD), None)
 
 
-def schedule_song(song, opts, solo_patterns=None, chord_player=None):
-    """Return a sorted list of (tick, prio, port, bytes) for the whole song.
-    The chord track is included only if chord_player is given (playback runs it live)."""
+def schedule_song(song, opts, solo_patterns=None, chord_player=None, live=False):
+    """Return a sorted list of (tick, prio, port, bytes, source) for the whole song, source being
+    (track, pattern or None).  The chord track is included only if chord_player is given (playback
+    runs it live).  With live=True muted and un-soloed tracks and patterns are kept too: playback
+    checks mute and solo as it plays, so they can be changed while the song plays."""
     out = []
     tracks = [t for t in song.tracks if t.kind in (MIDI, CHORD)]
     any_solo = any(t.solo for t in tracks)
     for t in tracks:
-        if t.mute or (any_solo and not t.solo):
+        if not live and (t.mute or (any_solo and not t.solo)):
             continue
         if t.kind == CHORD:
             if chord_player:
-                out += chord_player.schedule(song, t)
+                out += [e + ((t, None),) for e in chord_player.schedule(song, t)]
             continue
         port = max(0, t.port)
         if solo_patterns is None:
             for m in initial_messages(t, track_channel(t)):
-                out.append((0, 0, port, m))
+                out.append((0, 0, port, m, (t, None)))
         for p in t.patterns:
-            if p.mute:
+            if p.mute and not live:
                 continue
             if solo_patterns is not None and p not in solo_patterns and p.source not in solo_patterns:
                 continue
-            out += schedule_pattern(t, p, port)
+            src = (t, p)
+            out += [e + (src,) for e in schedule_pattern(t, p, port)]
     out.sort(key=lambda e: (e[0], e[1]))
     return out
+
+
+def audible(src, any_solo):
+    """Whether notes from source (track, pattern) sound under the current mute / solo settings."""
+    if src is None:
+        return True
+    t, p = src
+    return not (t.mute or (p is not None and p.mute) or (any_solo and not t.solo))
 
 
 def track_channel(t):
@@ -186,7 +198,8 @@ class Sequencer:
         self.solo_patterns = None
         self.chord_player = None
         self.sfc = None               # live Single Finger Chord: (root, type, sounding) or None
-        self.timer_ms = 1             # Preferences' Timer Resolution: how often the clock is read
+        self.dirty = False            # the song changed while playing
+        self.timer_ms = 1             # shortest sleep between clock readings (ms)
         self.recorded = []            # (tick, bytes) captured while recording
         self.counting_in = False
         self.held = {}                # (port, ch, note) -> True, notes currently on
@@ -270,7 +283,7 @@ class Sequencer:
     def _chase(self, sched, start):
         """Send the last controller/program/bend values before the start position."""
         state = {}
-        for tick, _pr, port, data in sched:
+        for tick, _pr, port, data, _src in sched:
             if tick >= start:
                 break
             hi = data[0] & 0xF0
@@ -306,8 +319,12 @@ class Sequencer:
             class _Fixed(TimeMap):
                 pass
             tmap.tempos = [(0, 0.0, 60000000.0 / max(1, o.fixed_tempo) / tmap.tb)]
-        sched = schedule_song(song, o, self.solo_patterns)
+        sched = schedule_song(song, o, self.solo_patterns, live=True)
+        self.dirty = False
         end_tick = max(song.end_tick(), self.position)
+        tracks = [t for t in song.tracks if t.kind in (MIDI, CHORD)]
+        any_solo = any(t.solo for t in tracks)
+        solo_check = 0.0
         loop = o.cycle and song.right > song.left
         pos = self.position
         if loop and not (song.left <= pos < song.right):
@@ -346,7 +363,7 @@ class Sequencer:
             if loop and cur >= song.right:
                 # finish events before right locator, wrap around
                 while idx < len(sched) and sched[idx][0] < song.right:
-                    self._send(*sched[idx][2:])
+                    self._play(sched[idx], any_solo)
                     idx += 1
                 if o.kill_on_cycle:
                     self._release_all()
@@ -366,8 +383,16 @@ class Sequencer:
                 t_start = time.perf_counter()
                 self.position = pos
                 continue
+            if self.dirty:                     # the song was edited: play the new version from here
+                self.dirty = False
+                sched, idx = self._reschedule(song, cur)
+                end_tick = max(song.end_tick(), cur)
+            if time.perf_counter() - solo_check > 0.05:
+                solo_check = time.perf_counter()
+                tracks = [t for t in song.tracks if t.kind in (MIDI, CHORD)]
+                any_solo = any(t.solo for t in tracks)
             while idx < len(sched) and sched[idx][0] <= cur:
-                self._send(*sched[idx][2:])
+                self._play(sched[idx], any_solo)
                 idx += 1
             while midx < len(metro) and metro[midx][0] <= cur:
                 self._send(*metro[midx][2:])
@@ -400,6 +425,29 @@ class Sequencer:
                 self.app.thread_call(self.app.on_sequencer_stopped)
             except Exception:
                 pass
+
+    def _play(self, ev, any_solo):
+        """Send one scheduled message; note-ons of muted or un-soloed tracks are left out
+        (everything else goes, so notes already sounding still end)."""
+        data = ev[3]
+        if data[0] & 0xF0 == 0x90 and len(data) > 2 and data[2] and not audible(ev[4], any_solo):
+            return
+        self._send(ev[2], data)
+
+    def _reschedule(self, song, cur):
+        sched = schedule_song(song, self.opts, self.solo_patterns, live=True)
+        idx = bisect.bisect_right([e[0] for e in sched], cur)
+        offs = {(self.midi.real_port(e[2]), e[3][0] & 0x0F, e[3][1]) for e in sched[idx:]
+                if len(e[3]) > 2 and (e[3][0] & 0xF0 == 0x80 or (e[3][0] & 0xF0 == 0x90 and not e[3][2]))}
+        for key in list(self.held):             # a sounding note that was deleted: end it now
+            if key not in offs:
+                self._send(key[0], bytes([0x80 | key[1], key[2], 0]))
+        return sched, idx
+
+    def song_edited(self):
+        """Called by the program when the song changes; playback picks the change up."""
+        if self.playing:
+            self.dirty = True
 
     def _accompaniment(self, song, pos):
         """The live accompaniment for the chord track (None if there is no chord track)."""

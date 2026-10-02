@@ -186,7 +186,12 @@ class KeyboardWindow(MDIChild):
         ui.sunken(c, BM_X + x0, BM_Y + y0, BM_X + x1, BM_Y + y1, fill='#ffffff')
         ui.text(c, BM_X + (x0 + x1) // 2, BM_Y + (y0 + y1) // 2, str(st['oct']), 'smallbold', anchor='center')
         ui.text(c, BM_X + x1 + 4, BM_Y + (y0 + y1) // 2 + 1, 'Oct', 'small', anchor='w')
-        # held keys
+        self.draw_held()
+
+    def draw_held(self):
+        """The dots on held keys (all a note changes: cheaper than redrawing the keyboard)."""
+        c = self.c
+        c.delete('held')
         for n, src in self.held.items():
             if not LOW <= n < LOW + NKEYS:
                 continue
@@ -194,7 +199,7 @@ class KeyboardWindow(MDIChild):
             col = '#0000ff' if src == 'in' else '#ff0000'
             cx = (x0 + x1) / 2.0
             cy = y1 - 8
-            c.create_oval(s(cx - 3), s(cy - 3), s(cx + 3), s(cy + 3), fill=col, outline='')
+            c.create_oval(s(cx - 3), s(cy - 3), s(cx + 3), s(cy + 3), fill=col, outline='', tags='held')
 
     # ------------------------------------------------------------------ mouse
     def _hit_controls(self, x, y):
@@ -339,7 +344,7 @@ class KeyboardWindow(MDIChild):
         base = n + 12 * st['oct']
         if st['active'] and 0 <= n - LOW < SFC_KEYS and src != 'in':
             self._single_finger(n)
-            self.redraw()
+            self.draw_held()
             return
         notes = [base]
         if st['mode'] == 'chord':
@@ -354,7 +359,7 @@ class KeyboardWindow(MDIChild):
                 self._out(port, bytes([0x90 | ch, m, vel]))
                 sent.append((port, ch, m))
         self.sounding[n] = sent
-        self.redraw()
+        self.draw_held()
 
     def _playright(self, base):
         """The chord note a key plays in Playright mode (the key itself if there is no chord)."""
@@ -376,7 +381,7 @@ class KeyboardWindow(MDIChild):
             sfc = self.app.seq.sfc
             if sfc is not None:
                 self.set_sfc(sfc[0], sfc[1], False)
-        self.redraw()
+        self.draw_held()
 
     # ------------------------------------------------------------------ Single Finger Chord
     def _single_finger(self, n):
@@ -442,7 +447,7 @@ class KeyboardWindow(MDIChild):
                     self._external_sfc()
         else:
             return
-        self.redraw()
+        self.draw_held()
 
     def _external_sfc(self):
         """Chord from the keys held in the chord zone of a MIDI keyboard (sub 848E)."""
