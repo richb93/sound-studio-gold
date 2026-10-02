@@ -572,8 +572,14 @@ class App(tk.Tk):
     def stop(self):
         if self.seq.playing:
             rec = self.seq.recording
+            end = self.seq.position
             self.seq.stop()
             if rec:
+                from .editors.keyboard import finish_sfc_recording
+                if getattr(self, 'sfc_record', None):
+                    self.checkpoint()
+                    if finish_sfc_recording(self, end):
+                        self.song_changed('patterns')
                 self._finish_recording()
         else:
             self.seq.position = 0 if self.seq.position == self.seq.last_start else self.seq.last_start
