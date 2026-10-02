@@ -119,6 +119,11 @@ class ScoreWindow(EditorWindow):
     def cfg(self):
         return self.app.settings['score']
 
+    @property
+    def stave_gap(self):
+        """Inter-stave distance: the Score Settings value is in points."""
+        return max(40, int(round(self.cfg.get('interstave', 53) * 4 / 3.0)))
+
     # ---- clef choice
     def staves(self):
         """List of (clef, lo, hi) note ranges shown on each system."""
@@ -177,7 +182,7 @@ class ScoreWindow(EditorWindow):
         staves = self.staves()
         bars = self.bars()
         tb = self.song.timebase
-        internote = max(8, self.cfg.get('internote', 6) * 2 + 6)
+        internote = max(8, int(self.cfg.get('internote', 11) * 4 / 3) + 4)   # points -> pixels
         # lay out bars into systems
         systems = []
         cur = []
@@ -201,14 +206,14 @@ class ScoreWindow(EditorWindow):
             if sysbars is not systems[-1] or len(sysbars) > 1 or k < 3:
                 for item in sysbars:
                     item[1] = item[1] * k
-        sys_h = STAVE_GAP * len(staves)
+        sys_h = self.stave_gap * len(staves)
         nshow = max(len(systems), (c.winfo_height() // ui.S) // sys_h + 1)
         y0 = 36 - self.top
         self.layout_rows = []
         key_val = self.song.conductor.at(COND_KEY, self.pattern.start).value % 12
         bar_no = 1
         for si in range(nshow):
-            ys = [y0 + si * sys_h + k * STAVE_GAP for k in range(len(staves))]
+            ys = [y0 + si * sys_h + k * self.stave_gap for k in range(len(staves))]
             for k, (clef, lo, hi, oct_) in enumerate(staves):
                 y = ys[k]
                 if y > c.winfo_height() // ui.S + 40 or y + 30 < 0:
@@ -495,10 +500,10 @@ class ScoreWindow(EditorWindow):
     def _vscroll(self, *a):
         H = self.c.winfo_height() // ui.S
         if a[0] == 'moveto':
-            tot = max(1, len(self.layout_rows) * STAVE_GAP)
+            tot = max(1, len(self.layout_rows) * self.stave_gap)
             self.top = int(float(a[1]) * tot)
         else:
-            self.top += int(a[1]) * (STAVE_GAP if a[2] == 'units' else H)
+            self.top += int(a[1]) * (self.stave_gap if a[2] == 'units' else H)
         self.top = max(0, self.top)
         self.redraw()
 

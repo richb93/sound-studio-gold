@@ -58,7 +58,7 @@ class HScroll(tk.Canvas):
             cx, cy = x0 + a // 2, H // 2
             d = pts[0]
             for i in range(4):
-                self._line(cx - d * (i - 1) - 1, cy - i, cx - d * (i - 1) - 1, cy + i + 1)
+                self._line(cx + d * (i - 2), cy - i, cx + d * (i - 2), cy + i + 1)
         span = max(1, self.hi - self.lo)
         tw = a
         x = a + (W - 2 * a - tw) * (self.value - self.lo) / span
@@ -121,6 +121,9 @@ class Dialog(tk.Toplevel):
         self.app = app
         self.name = name
         self.tpl = resources.dialog(name)
+        # dialogs without a template font use the System font: 8x16 base units, bold text
+        self.sysfont = not self.tpl.get('font')
+        self.font_name = 'system' if self.sysfont else 'dialog'
         self.withdraw()
         self.title(title or self.tpl['caption'])
         self.resizable(False, False)
@@ -129,7 +132,7 @@ class Dialog(tk.Toplevel):
         self.ctrls = {}
         self.vars = {}
         self.focus_btn = None
-        w, h = dlu(self.tpl['cx'], self.tpl['cy'])
+        w, h = self._dlu(self.tpl['cx'], self.tpl['cy'])
         self.W, self.H = w, h
         self.c = tk.Canvas(self, width=w, height=h, highlightthickness=0, bd=0, bg=ui.FACE)
         self.c.pack()
@@ -160,8 +163,8 @@ class Dialog(tk.Toplevel):
                 self.c.create_image(x, y, image=img, anchor='nw', tags='bg')
 
     def _rect(self, it):
-        x, y = dlu(it['x'], it['y'])
-        w, h = dlu(it['cx'], it['cy'])
+        x, y = self._dlu(it['x'], it['y'])
+        w, h = self._dlu(it['cx'], it['cy'])
         return x, y, w, h
 
     def _build(self):
@@ -211,28 +214,29 @@ class Dialog(tk.Toplevel):
         x, y, w, h = self._rect(it)
         typ = it['style'] & BS_TYPE
         c = self.c
+        tag = 'shade%d' % it['id']
         if typ == BSS_HDIP:
-            c.create_line(x, y, x + w, y, fill=ui.SHADOW, width=ui.S)
-            c.create_line(x, y + ui.S, x + w, y + ui.S, fill=ui.HILITE, width=ui.S)
+            c.create_line(x, y, x + w, y, fill=ui.SHADOW, width=ui.S, tags=tag)
+            c.create_line(x, y + ui.S, x + w, y + ui.S, fill=ui.HILITE, width=ui.S, tags=tag)
             return
         if typ == BSS_VDIP:
-            c.create_line(x, y, x, y + h, fill=ui.SHADOW, width=ui.S)
-            c.create_line(x + ui.S, y, x + ui.S, y + h, fill=ui.HILITE, width=ui.S)
+            c.create_line(x, y, x, y + h, fill=ui.SHADOW, width=ui.S, tags=tag)
+            c.create_line(x + ui.S, y, x + ui.S, y + h, fill=ui.HILITE, width=ui.S, tags=tag)
             return
         raised = typ in (BSS_RGROUP, BSS_HBUMP, BSS_VBUMP)
-        c.create_rectangle(x, y, x + w - 1, y + h - 1, fill=ui.FACE, outline='')
+        c.create_rectangle(x, y, x + w - 1, y + h - 1, fill=ui.FACE, outline='', tags=tag)
         tl, br = (ui.HILITE, ui.SHADOW) if raised else (ui.SHADOW, ui.HILITE)
-        c.create_line(x, y + h - 1, x, y, x + w - 1, y, fill=tl, width=ui.S)
-        c.create_line(x + ui.S, y + h - ui.S, x + w - ui.S, y + h - ui.S, x + w - ui.S, y, fill=br, width=ui.S)
+        c.create_line(x, y + h - 1, x, y, x + w - 1, y, fill=tl, width=ui.S, tags=tag)
+        c.create_line(x + ui.S, y + h - ui.S, x + w - ui.S, y + h - ui.S, x + w - ui.S, y, fill=br, width=ui.S, tags=tag)
         if it['text']:
             txt, u = _label(it['text'])
             ty = y + s(1)
-            c.create_text(x + s(3), ty, text=txt, anchor='nw', font=ui.f('dialog'))
+            c.create_text(x + s(3), ty, text=txt, anchor='nw', font=ui.f('dialog'), tags=tag)
             if u >= 0:
                 self._underline(x + s(3), ty, txt, u)
             lh = ui.f('dialog').metrics('linespace') + s(2)
-            c.create_line(x + ui.S, y + lh, x + w - ui.S, y + lh, fill=ui.HILITE, width=ui.S)
-            c.create_line(x + ui.S, y + lh - ui.S, x + w - ui.S, y + lh - ui.S, fill=ui.SHADOW, width=ui.S)
+            c.create_line(x + ui.S, y + lh, x + w - ui.S, y + lh, fill=ui.HILITE, width=ui.S, tags=tag)
+            c.create_line(x + ui.S, y + lh - ui.S, x + w - ui.S, y + lh - ui.S, fill=ui.SHADOW, width=ui.S, tags=tag)
 
     def _underline(self, x, y, txt, u, font='dialog'):
         fo = ui.f(font)
@@ -266,6 +270,8 @@ class Dialog(tk.Toplevel):
         d = self.checks.get(iid) if kind == 'check' else self.radios.get(iid)
         tag = 'g%d' % iid
         self.c.delete(tag)
+        if d.get('hidden'):
+            return
         on = d['value']
         base = 110 if kind == 'check' else 130
         n = base + (1 if on else 0)
@@ -281,6 +287,8 @@ class Dialog(tk.Toplevel):
         ty = d['y'] + d['h'] // 2
         tag = 't%d' % it['id']
         self.c.delete(tag)
+        if d.get('hidden'):
+            return
         fo = ui.f('dialog')
         if not d['enabled']:
             self.c.create_text(tx + ui.S, ty + ui.S, text=txt, anchor='w', font=fo, fill=ui.HILITE, tags=tag)
@@ -325,8 +333,8 @@ class Dialog(tk.Toplevel):
         tx = {0: x, 1: x + w // 2, 2: x + w}.get(typ, x)
         if st & WS_BORDER:
             tx += s(2)
-        tid = self.c.create_text(tx, y, text=txt, anchor=anchor, font=ui.f('dialog'),
-                                 width=w if typ in (0, 1, 2) and h > s(10) else 0, justify={0: 'left', 1: 'center', 2: 'right'}.get(typ, 'left'))
+        tid = self.c.create_text(tx, y, text=txt, anchor=anchor, font=ui.f(self.font_name),
+                                 width=w if typ in (0, 1, 2) and h > s(10) and ' ' in txt.strip() else 0, justify={0: 'left', 1: 'center', 2: 'right'}.get(typ, 'left'))
         if iid != 0xFFFF:
             self.statics[iid] = tid
         if u >= 0 and typ == 0:
@@ -405,12 +413,12 @@ class Dialog(tk.Toplevel):
         o = ui.S if down else 0
         fill = ui.TEXT if b['enabled'] else ui.SHADOW
         if not b['enabled']:
-            c.create_text(x + w // 2 + ui.S, y + h // 2 + ui.S, text=b['text'], font=ui.f('dialogbold'),
+            c.create_text(x + w // 2 + ui.S, y + h // 2 + ui.S, text=b['text'], font=ui.f('dialog'),
                           fill=ui.HILITE, tags=tag)
-        tid = c.create_text(x + w // 2 + o, y + h // 2 + o, text=b['text'], font=ui.f('dialogbold'),
+        tid = c.create_text(x + w // 2 + o, y + h // 2 + o, text=b['text'], font=ui.f('dialog'),
                             fill=fill, tags=tag)
         if b['u'] >= 0 and b['enabled']:
-            fo = ui.f('dialogbold')
+            fo = ui.f('dialog')
             tw = fo.measure(b['text'])
             x0 = x + w // 2 + o - tw // 2 + fo.measure(b['text'][:b['u']])
             yy = y + h // 2 + o + fo.metrics('ascent') // 2 + ui.S
@@ -505,6 +513,18 @@ class Dialog(tk.Toplevel):
                 return i
         return None
 
+    def hide_shade(self, iid):
+        self.c.delete('shade%d' % iid)
+
+    def hide(self, iid):
+        """Remove a check box / radio button from view (the original never creates it)."""
+        for table in (self.checks, self.radios):
+            if iid in table:
+                table[iid]['enabled'] = False
+                table[iid]['hidden'] = True
+        self.c.delete('g%d' % iid)
+        self.c.delete('t%d' % iid)
+
     def enable(self, iid, on=True):
         if iid in self.checks:
             self.checks[iid]['enabled'] = on
@@ -581,10 +601,15 @@ class Dialog(tk.Toplevel):
         return cb.value
 
     # ---- run
+    def _dlu(self, x, y):
+        if self.sysfont:
+            return int(round(x * 2 * ui.S)), int(round(y * 2 * ui.S))
+        return dlu(x, y)
+
     def show(self):
         self.update_idletasks()
         ax, ay = self.app.winfo_rootx(), self.app.winfo_rooty()
-        x, y = dlu(self.tpl['x'], self.tpl['y'])
+        x, y = self._dlu(self.tpl['x'], self.tpl['y'])
         self.geometry('+%d+%d' % (ax + x, ay + y + s(40)))
         self.deiconify()
         self.lift()

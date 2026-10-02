@@ -90,7 +90,7 @@ def read_smf(path, app=None, split_type0=None):
     leave = bool(app and app.settings['prefs'].get('leave_midi'))
     if split_type0 is None:
         split_type0 = fmt == 0
-        if app is not None and fmt == 0 and app.settings['prefs'].get('ask_type0', True):
+        if app is not None and fmt == 0 and app.settings['prefs'].get('ask_type0', False):
             from tkinter import messagebox
             split_type0 = messagebox.askyesno('Sound Studio Gold', app_string(816), parent=app)
     groups = []

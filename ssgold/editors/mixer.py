@@ -44,7 +44,7 @@ class Channel:
     def __init__(self):
         self.vol = 100
         self.pan = 64
-        self.user = [40, 0]
+        self.user = [0, 0]
         self.solo = False
         self.mute = False
         self.group = 0
@@ -69,7 +69,7 @@ class MixerWindow(MDIChild):
     @property
     def cfg(self):
         m = self.app.settings['mixer']
-        m.setdefault('users', [[91, 40, 0, 127], [93, 0, 0, 127]])
+        m.setdefault('users', [[93, 0, 0, 127], [91, 0, 0, 127]])
         return m
 
     def ports(self):

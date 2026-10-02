@@ -2,9 +2,9 @@
 import os
 import glob as _glob
 
-from . import resources, procedures, midi_io
+from . import resources, procedures, midi_io, ui
 from .bwcc import Dialog, message_box
-from .song import OFF, PAN_OFF, COND_TEMPO
+from .song import OFF, PAN_OFF, COND_TEMPO, MIDI
 from .timing import TimeMap
 
 FILE_TYPES = {411: '.SNG', 412: '.PAT', 413: '.DRM', 414: '.PLS', 415: '.MID', 416: '.DEF', 417: '.WND',
@@ -109,7 +109,11 @@ def _file_dialog(app, title, save):
         files.delete(0, 'end')
         dirs.delete(0, 'end')
         p = state['dir']
-        d.set_text(402, p.lower() if len(p) < 40 else '...' + p[-37:].lower())
+        shown = p
+        fo = ui.f('dialog')
+        while len(shown) > 4 and fo.measure(shown) > ui.s(90 * 6 // 4):
+            shown = '...' + shown[4:]
+        d.set_text(402, shown)
         try:
             entries = sorted(os.listdir(p), key=str.lower)
         except OSError:
@@ -218,7 +222,7 @@ def track_info(app, track=None, **kw):
         ch = _int(d.text(454), 1, 0, 16)
         nm = app.patches.name(t.port, ch or 1, prog, bank)
         b = d.buttons[465]
-        b['text'] = nm.split(' ', 1)[1] if ' ' in nm else nm
+        b['text'] = nm
         d._draw_plain(465)
 
     def choose_patch():
@@ -297,7 +301,7 @@ def pattern_info(app, pattern=None, **kw):
     def patch_label():
         ch = _int(d.text(1704), 0, 0, 16, off=0) or t.channel or 1
         nm = app.patches.name(t.port, ch, _prog_value(app, d.text(1702)), _int(d.text(1703), OFF, 0, 16383, off=OFF))
-        d.buttons[1714]['text'] = nm.split(' ', 1)[1] if ' ' in nm else nm
+        d.buttons[1714]['text'] = nm
         d._draw_plain(1714)
 
     def choose():
@@ -434,7 +438,7 @@ def _proc_done(app, target):
 
 
 def transpose_dlg(app, target=None, **kw):
-    cfg = app.settings.setdefault('transpose', {'semis': 12, 'up': True})
+    cfg = app.settings.setdefault('transpose', {'semis': 0, 'up': True, 'all': False})
     d = Dialog(app, 'TRANSPOSE_DLG')
     d.set_text(206, str(cfg['semis']))
     d.set_radio(203 if cfg['up'] else 204)
@@ -452,7 +456,7 @@ def transpose_dlg(app, target=None, **kw):
 
 
 def velocity_dlg(app, target=None, **kw):
-    cfg = app.settings.setdefault('velocity', {'amount': 10, 'mode': 'up', 'min': 1, 'max': 127})
+    cfg = app.settings.setdefault('velocity', {'amount': 0, 'mode': 'up', 'min': 1, 'max': 127, 'all': False})
     d = Dialog(app, 'VELOCITY_DLG')
     d.set_text(751, str(cfg['amount']))
     d.set_radio({'up': 754, 'down': 755, 'fixed': 756}[cfg['mode']])
@@ -474,7 +478,7 @@ def velocity_dlg(app, target=None, **kw):
 
 
 def length_dlg(app, target=None, **kw):
-    cfg = app.settings.setdefault('lengths', {'mode': 1201, 'amount': 10, 'longer': True, 'fixed': '16'})
+    cfg = app.settings.setdefault('lengths', {'mode': 1201, 'amount': 0, 'longer': True, 'fixed': '16', 'all': False})
     d = Dialog(app, 'LENGTH_DLG')
     d.set_radio(cfg['mode'])
     d.set_text(1205, str(cfg['amount']))
@@ -498,7 +502,7 @@ def length_dlg(app, target=None, **kw):
 
 
 def quantize_dlg(app, target=None, **kw):
-    cfg = app.settings.setdefault('quantize', {'value': '16', 'percent': 100, 'all': True})
+    cfg = app.settings.setdefault('quantize', {'value': '16', 'percent': 100, 'all': False})
     d = Dialog(app, 'QUANTIZE_DLG')
     d.combo(354, procedures.QUANT_VALUES[1:], cfg['value'])
     d.set_text(351, str(cfg['percent']))
@@ -516,7 +520,7 @@ def quantize_dlg(app, target=None, **kw):
 
 
 def move_dlg(app, target=None, **kw):
-    cfg = app.settings.setdefault('move', {'amount': 192, 'later': True})
+    cfg = app.settings.setdefault('move', {'amount': 0, 'later': False})
     d = Dialog(app, 'MOVE_DLG')
     d.set_text(1251, str(cfg['amount']))
     d.set_radio(1253 if cfg['later'] else 1252)
@@ -557,12 +561,12 @@ def controller_names():
     global CONTROLLERS
     if CONTROLLERS is None:
         from .editors.common import controller_label
-        CONTROLLERS = ['%3d %s' % (i, controller_label(i)) for i in range(128)]
+        CONTROLLERS = [controller_label(i) for i in range(128)]
     return CONTROLLERS
 
 
 def delete_dlg(app, target=None, **kw):
-    cfg = app.settings.setdefault('delete', {'types': [1101], 'all_ctrl': True, 'ctrl': 0, 'all': True})
+    cfg = app.settings.setdefault('delete', {'types': [1102, 1104, 1105, 1107], 'all_ctrl': True, 'ctrl': 1, 'all': False})
     d = Dialog(app, 'DELETE_DLG')
     for iid in range(1101, 1108):
         d.set_check(iid, iid in cfg['types'])
@@ -584,7 +588,7 @@ def delete_dlg(app, target=None, **kw):
 
 
 def thinout_dlg(app, target=None, **kw):
-    cfg = app.settings.setdefault('thinout', {'types': [1152], 'all_ctrl': True, 'ctrl': 1, 'every': 2})
+    cfg = app.settings.setdefault('thinout', {'types': [1151, 1152, 1153, 1154], 'all_ctrl': True, 'ctrl': 1, 'every': 2})
     d = Dialog(app, 'THINOUT_DLG')
     for iid in range(1151, 1155):
         d.set_check(iid, iid in cfg['types'])
@@ -624,9 +628,9 @@ def midi_settings(app, **kw):
     d.set_check(1043, o.send_reset)
     types = [0x90, 0xA0, 0xB0, 0xC0, 0xD0, 0xE0, 0xF0]
     for i, k in enumerate(types):
-        d.set_check(1017 + i, k not in o.filter_types)
+        d.set_check(1017 + i, k in o.filter_types)
     for ch in range(16):
-        d.set_check(1024 + ch, (ch + 1) not in o.filter_channels)
+        d.set_check(1024 + ch, (ch + 1) in o.filter_channels)
 
     def ok():
         rid = d.radio(list(TIMEBASE_IDS))
@@ -646,8 +650,8 @@ def midi_settings(app, **kw):
         o.kill_on_cycle = d.check(1016)
         o.chase = d.check(1042)
         o.send_reset = d.check(1043)
-        o.filter_types = {k for i, k in enumerate(types) if not d.check(1017 + i)}
-        o.filter_channels = {ch + 1 for ch in range(16) if not d.check(1024 + ch)}
+        o.filter_types = {k for i, k in enumerate(types) if d.check(1017 + i)}
+        o.filter_channels = {ch + 1 for ch in range(16) if d.check(1024 + ch)}
         app.song_changed()
     d.on_ok = ok
     d.show()
@@ -742,7 +746,7 @@ def mixer_settings(app, **kw):
     m = app.settings['mixer']
     d = Dialog(app, 'MIXDEF_DLG')
     names = controller_names()
-    cfg = m.setdefault('users', [[91, 40, 0, 127], [93, 0, 0, 127]])
+    cfg = m.setdefault('users', [[93, 0, 0, 127], [91, 0, 0, 127]])
     for (cb, e1, e2, e3), u in zip(((1356, 1357, 1358, 1359), (1351, 1352, 1353, 1354)), cfg):
         d.combo(cb, names, names[u[0]])
         d.set_text(e1, str(u[1]))
@@ -790,7 +794,7 @@ def devices(app, **kw):
         base = 1654 + row * 3
         if row >= len(outs):
             for k in range(3):
-                d.enable(base + k, False)
+                d.hide(base + k)
         m = modes.get(str(row), 'GM')
         d.set_radio(base + {'GM': 0, 'GS': 1, 'XG': 2}.get(m, 0))
 
@@ -811,12 +815,17 @@ def devices(app, **kw):
         app.midi.open_outputs(new_out)
         app.midi.open_inputs(new_in)
         app.song.ports = app.port_names()
-        if changed_modes and msg(app, resources.string(822), 'question', ('yes', 'no')) == 'yes':
+        if msg(app, resources.string(822), 'question', ('yes', 'no')) == 'yes':
             for port, mode in modes.items():
                 app.patches.set_mode(int(port), mode)
         app.save_settings()
         app.song_changed()
+    def cancel():
+        if msg(app, resources.string(822), 'question', ('yes', 'no')) == 'yes':
+            for port, mode in modes.items():
+                app.patches.set_mode(int(port), mode)
     d.on_ok = ok
+    d.on_cancel = cancel
     d.show()
 
 
@@ -1039,6 +1048,13 @@ def sysex(app, event=None, **kw):
 def patch_lists(app, select=False, port=0, channel=1, prog=0, bank=0, **kw):
     """Patch Lists dialog.  With select=True it returns (prog, bank) for the Patch buttons."""
     from .patchdlg import PatchListDialog
+    if not select and 'channel' not in kw and not kw.get('explicit'):
+        tw = app.windows.get('track')
+        t = tw.current_track() if tw is not None else None
+        if t is None or t.kind != MIDI or not t.channel:
+            msg(app, resources.string(64), 'exclamation')
+            return None
+        port, channel, prog, bank = max(0, t.port), t.channel, max(0, t.prog), max(0, t.bank)
     return PatchListDialog(app, select, port, channel, prog, bank).show()
 
 

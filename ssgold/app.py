@@ -17,21 +17,28 @@ from . import smf
 
 SETTINGS = os.path.join(os.path.expanduser('~'), '.ssgold_settings.json')
 
-FAST_FUNCTIONS = [
-    'New', 'Open...', 'Save Song', 'Save As...', 'Merge Song...', 'Merge Midi File...', 'Undo', 'Redo',
-    'Copy', 'Cut', 'Paste', 'Clear', 'Select All', 'Transpose...', 'Change Velocity...',
-    'Change Lengths...', 'Quantize...', 'Move Events...', 'Change Timing...', 'Delete Events...',
-    'Thin Out...', 'Delete Identical', 'Reverse Notes', 'Preferences...', 'MIDI Settings...',
-    'Synchronization...', 'Metronome...', 'Mixer Settings...', 'Devices...', 'Patch Lists...',
-    'Score Settings...', 'Track Columns...', 'Drum Columns...', 'Cascade', 'Tile']
-FAST_IDS = {'New': 1, 'Open...': 2, 'Save Song': 3, 'Save As...': 5, 'Merge Song...': 6,
-            'Merge Midi File...': 7, 'Undo': 10, 'Redo': 11, 'Copy': 12, 'Cut': 13, 'Paste': 14,
-            'Clear': 15, 'Select All': 16, 'Transpose...': 20, 'Change Velocity...': 21,
-            'Change Lengths...': 22, 'Quantize...': 23, 'Move Events...': 24, 'Change Timing...': 25,
-            'Delete Events...': 26, 'Thin Out...': 27, 'Delete Identical': 30, 'Reverse Notes': 31,
-            'Preferences...': 36, 'MIDI Settings...': 37, 'Synchronization...': 38, 'Metronome...': 39,
-            'Mixer Settings...': 40, 'Devices...': 41, 'Patch Lists...': 42, 'Score Settings...': 45,
-            'Track Columns...': 47, 'Drum Columns...': 48, 'Cascade': 49, 'Tile': 50}
+# Configure Fast Menu 'Functions' list, in the original's order (name, menu command id)
+FAST_TABLE = [
+    ('New', 1), ('Open...', 2), ('Save Song', 3), ('Save As...', 5), ('Merge Song...', 6),
+    ('Merge Midi File...', 7), ('Delete...', 8), ('Quit', 9), ('Undo', 10), ('Redo', 11), ('Copy', 12),
+    ('Cut', 13), ('Paste', 14), ('Clear', 15), ('Select All', 16), ('Describe Clipboard...', 17),
+    ('Print...', 18), ('Printer Setup...', 19), ('Transpose...', 20), ('Change Velocity...', 21),
+    ('Change Lengths...', 22), ('Quantize...', 23), ('Move Events...', 24), ('Change Timing...', 25),
+    ('Delete Events...', 26), ('Thin Out Continuous Events...', 27), ('Delete Identical Events', 30),
+    ('Reverse Notes', 31), ('Preferences...', 36), ('MIDI Settings...', 37),
+    ('Synchronization Settings...', 38), ('Metronome Settings...', 39), ('Mixer Settings...', 40),
+    ('Devices...', 41), ('Patch Lists...', 42), ('Audio System Settings...', 43), ('Wave Files in use...', 44),
+    ('Score Settings...', 45), ('Lyric Font...', 46), ('Track Columns...', 47), ('Drum Columns...', 48),
+    ('Cascade Windows', 49), ('Tile Windows', 50), ('Arrange Icons', 51), ('Close All', 52),
+    ('Configure Fast Menu...', 53), ('Hide Transport', 54), ('Hide Editors', 55), ('Hide Fast Menu', 56),
+    ('Toggle Transport Caption', 57), ('Toggle Editors Caption', 58), ('Toggle Fast Menu Caption', 59),
+    ('Contents', 60), ('Menus', 61), ('Windows', 62), ('Keyboard Shortcuts', 63), ('How to Use Help', 64),
+    ('About Sound Studio Gold...', 65)]
+FAST_FUNCTIONS = [n for n, _i in FAST_TABLE]
+FAST_IDS = dict(FAST_TABLE)
+# names used by earlier versions of the settings file
+FAST_IDS.update({'Thin Out...': 27, 'Delete Identical': 30, 'Synchronization...': 38, 'Metronome...': 39,
+                 'Cascade': 49, 'Tile': 50})
 
 DEFAULT_SETTINGS = {
     'scale': 0,
@@ -41,18 +48,18 @@ DEFAULT_SETTINGS = {
     'track_columns': [551, 552, 553, 555, 560, 561, 567, 568],
     'drum_columns': [651, 652, 653, 654, 655, 656, 657],
     'prefs': {'copy_as_parents': False, 'chord_conflict': True, 'conductor_warning': True,
-              'ask_type0': True, 'leave_midi': False, 'number_from_1': False, 'single_edit': False,
-              'timer_ms': 5, 'dbl_midi': 'Piano Roll', 'dbl_audio': 'Audio Window',
+              'ask_type0': False, 'leave_midi': False, 'number_from_1': False, 'single_edit': False,
+              'timer_ms': 1, 'dbl_midi': 'Piano Roll', 'dbl_audio': 'Audio Window',
               'bg_track': 'Vellum', 'bg_program': 'Evolution Purple', 'kbd_velocity': 100},
     'show_transport': True, 'show_editors': True, 'show_fast': True, 'show_time': True,
     'cap_transport': False, 'cap_editors': False, 'cap_fast': False,
-    'mixer': {'users': [[91, 40, 0, 127], [93, 0, 0, 127]], 'under': 0, 'midi_in': False, 'song_data': True,
-              'record': False, 'volumes_only': False},
+    'mixer': {'users': [[93, 0, 0, 127], [91, 0, 0, 127]], 'under': 2, 'midi_in': False, 'song_data': True,
+              'record': True, 'volumes_only': False},
     'drum_kit': 'GM.DRM', 'recent_dir': '',
-    'score': {'left': 20, 'right': 20, 'top': 30, 'bottom': 30, 'internote': 6, 'interstave': 20,
-              'title': 24, 'names': 10, 'clef': 0, 'split': 60, 'auto': True, 'pagenums': True,
-              'maxstaves': 8, 'beam_screen': True, 'beam_printer': True, 'barnums': True,
-              'simplify': False, 'lyric_ch': 0},
+    'score': {'left': 4, 'right': 4, 'top': 4, 'bottom': 4, 'internote': 11, 'interstave': 53,
+              'title': 18, 'names': 11, 'clef': 0, 'split': 60, 'auto': True, 'pagenums': True,
+              'maxstaves': 12, 'beam_screen': True, 'beam_printer': True, 'barnums': True,
+              'simplify': True, 'lyric_ch': 4},
 }
 
 
@@ -76,8 +83,41 @@ def auto_scale(root):
     return 1 if h < 1400 else 2
 
 
+FONTCONF = '''<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+  <include ignore_missing="yes">/etc/fonts/fonts.conf</include>
+  <match target="font">
+    <edit name="antialias" mode="assign"><bool>false</bool></edit>
+    <edit name="hinting" mode="assign"><bool>true</bool></edit>
+    <edit name="hintstyle" mode="assign"><const>hintfull</const></edit>
+    <edit name="rgba" mode="assign"><const>none</const></edit>
+  </match>
+</fontconfig>
+'''
+
+
+def crisp_fonts():
+    """On X11, draw text without antialiasing (like Windows 95) through a private fontconfig file.
+    Must run before Tk starts; set SSGOLD_ANTIALIAS=1 to keep the desktop's smoothing."""
+    if not sys.platform.startswith('linux') or os.environ.get('FONTCONFIG_FILE') \
+            or os.environ.get('SSGOLD_ANTIALIAS') == '1' or not os.path.exists('/etc/fonts/fonts.conf'):
+        return
+    try:
+        d = os.path.join(os.path.expanduser('~'), '.cache', 'ssgold')
+        os.makedirs(d, exist_ok=True)
+        p = os.path.join(d, 'fonts.conf')
+        if not os.path.exists(p) or open(p).read() != FONTCONF:
+            with open(p, 'w') as f:
+                f.write(FONTCONF)
+        os.environ['FONTCONFIG_FILE'] = p
+    except OSError:
+        pass
+
+
 class App(tk.Tk):
     def __init__(self, scale=None, path=None):
+        crisp_fonts()
         super().__init__(className='SoundStudioGold')
         self.withdraw()
         self.settings = load_settings()
@@ -477,8 +517,6 @@ class App(tk.Tk):
                 return
             else:
                 song = Song.load(path)
-                if self.settings['prefs'].get('ask_type0', True) is None:
-                    pass
                 self.set_song(song)
         except (OSError, SongError, ValueError) as e:
             messagebox.showerror('Sound Studio Gold', str(e), parent=self)

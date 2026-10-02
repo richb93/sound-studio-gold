@@ -34,7 +34,7 @@ class Options:
         self.reset_on_stop = True
         self.kill_on_cycle = True
         self.chase = True
-        self.send_reset = False
+        self.send_reset = True
         self.filter_types = set()     # statuses (0x90, 0xA0 ...) blocked on input
         self.filter_channels = set()  # 1..16 blocked on input
         # metronome dialog
@@ -43,7 +43,7 @@ class Options:
         self.metro_port = 0
         self.metro_channel = 10
         self.metro_pitch = (37, 37)   # bar, beat
-        self.metro_vel = (127, 90)
+        self.metro_vel = (100, 70)
         self.metro_record_only = True
         self.count_in = 1
 
