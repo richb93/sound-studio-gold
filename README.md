@@ -64,8 +64,9 @@ display tables from `Goldlib.dll`; help from `Goldhelp.hlp`):
 * **Printing** (score printing, Printer Setup) is disabled.
 * **Accompaniment**: the 16 styles are the original's own data (decoded from `Gold.exe` and
   `Goldlib.dll`) played by a re-implementation of its accompaniment engine; *Convert to MIDI
-  Track* produces the same notes as the original for every style. Single Finger Chord sets and
-  records chords but does not yet drive a live accompaniment while the song is stopped.
+  Track* produces the same notes as the original for every style. The chord track is played live,
+  so Single Finger Chord on the Keyboard window (Active; Synchro starts the song, Hold keeps the
+  chord after you let go) drives the band as in the original. As there, it needs a chord track.
 * `.DEF` (definitions) and `.WND` (window layout) files are not opened; settings live in
   `~/.ssgold_settings.json` instead.
 * Fonts: MS Sans Serif / System are replaced by the closest installed font (Liberation Sans on

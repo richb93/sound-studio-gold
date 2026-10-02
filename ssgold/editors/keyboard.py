@@ -3,6 +3,13 @@
 Plays notes (or chords, drums, 'Playright' notes) to the recording track, shows notes
 arriving at MIDI In, turns the PC's QWERTY keys into a keyboard and provides Single
 Finger Chord input for the chord track.
+
+Single Finger Chord (Goldlib segment 22 at 848E/8540): with Active on, the lowest 17 keys
+choose the chord the accompaniment plays live.  On screen (mouse or PC keys) the key is the
+root and the chord buttons give the type; from a MIDI keyboard the highest key held there is
+the root and the next one down makes it minor (black key) or 7th (white key), with a third key
+of the other colour making it m7.  Synchro starts the song from the beginning on the first
+chord; with Hold off the accompaniment drops to drums alone while no chord key is held.
 """
 import tkinter as tk
 
@@ -33,6 +40,15 @@ PC_KEYS = {'a': 0, 'w': 1, 's': 2, 'e': 3, 'd': 4, 'f': 5, 't': 6, 'g': 7, 'y': 
            'k': 12, 'o': 13, 'l': 14, 'p': 15, 'semicolon': 16, 'apostrophe': 17, 'bracketright': 18,
            'numbersign': 19, 'quoteright': 17}
 DRUM_CHANNEL = 10
+SFC_KEYS = 17                # Single Finger Chord zone: the lowest 17 keys
+WHITE = [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1]      # DS:2B9E
+# Playright (DS:2BF2): for each chord type, the chord note each of the 12 keys plays (above the root)
+PLAYRIGHT = [[0, 0, 4, 4, 7, 0, 0, 4, 4, 7, 7, 0], [0, 0, 3, 3, 7, 0, 0, 3, 3, 7, 7, 0],
+             [0, 0, 4, 4, 7, 10, 10, 0, 0, 4, 4, 7], [0, 0, 3, 3, 7, 10, 10, 0, 0, 3, 3, 7],
+             [0, 0, 4, 4, 7, 11, 11, 0, 0, 4, 4, 7], [0, 0, 4, 4, 7, 9, 9, 0, 0, 4, 4, 7],
+             [0, 0, 3, 3, 7, 9, 9, 0, 0, 3, 3, 7], [0, 0, 4, 4, 8, 0, 0, 4, 4, 8, 8, 0],
+             [0, 0, 3, 3, 6, 10, 10, 0, 0, 3, 3, 6], [0, 0, 3, 3, 6, 0, 0, 3, 3, 6, 6, 0],
+             [0, 0, 5, 5, 7, 0, 0, 5, 5, 7, 7, 0], [0, 0, 4, 4, 7, 10, 10, 12, 12, 16, 16, 17]]
 
 
 def is_black(n):
@@ -49,6 +65,7 @@ class KeyboardWindow(MDIChild):
         self.mouse_note = None
         self.pc_on = False
         self.pc_down = 0
+        self.sfc_down = False      # a chord key is held
         st = app.__dict__.setdefault('keyboard_state', {'active': False, 'synchro': True, 'hold': True,
                                                          'mode': 'free', 'ctype': 0, 'oct': 0, 'sus': False})
         self.st = st
@@ -209,8 +226,13 @@ class KeyboardWindow(MDIChild):
                     self._send_all(lambda port, ch: bytes([0xB0 | ch, 64, 127 if st['sus'] else 0]))
                 else:
                     st[v] = not st[v]
+                    if v == 'hold':
+                        self._update_sfc()
             elif kind == 'ctype':
                 st['ctype'] = v
+                sfc = self.app.seq.sfc
+                if sfc is not None:            # changes the live chord at once
+                    self.set_sfc(sfc[0], v, self.sfc_down)
             elif kind == 'oct':
                 st['oct'] = max(-4, min(4, st['oct'] + (1 if button == 3 else -1)))
             self.redraw()
@@ -299,9 +321,9 @@ class KeyboardWindow(MDIChild):
 
     def current_chord(self):
         """(root, type) for Playright: the Single Finger Chord, else the chord track at the play position."""
-        sfc = getattr(self.app, 'sfc_chord', None)
+        sfc = self.app.seq.sfc
         if sfc:
-            return sfc
+            return sfc[0], sfc[1]
         pos = self.app.seq.position
         for t in self.app.song.tracks:
             if t.kind == CHORD:
@@ -315,7 +337,7 @@ class KeyboardWindow(MDIChild):
         self.held[n] = src
         port, ch = self.target()
         base = n + 12 * st['oct']
-        if st['active'] and n < LOW + 12 and src != 'in':
+        if st['active'] and 0 <= n - LOW < SFC_KEYS and src != 'in':
             self._single_finger(n)
             self.redraw()
             return
@@ -325,12 +347,7 @@ class KeyboardWindow(MDIChild):
         elif st['mode'] == 'drum':
             ch = DRUM_CHANNEL - 1
         elif st['mode'] == 'playright':
-            ch_ = self.current_chord()
-            if ch_:
-                root, ctype = ch_
-                pcs = [(root + i) % 12 for i in CHORD_TYPES[ctype % len(CHORD_TYPES)]]
-                best = min(range(-6, 7), key=lambda d: (((base + d) % 12) not in pcs, abs(d)))
-                notes = [base + best]
+            notes = [self._playright(base)]
         sent = []
         for m in notes:
             if 0 <= m <= 127:
@@ -339,29 +356,73 @@ class KeyboardWindow(MDIChild):
         self.sounding[n] = sent
         self.redraw()
 
+    def _playright(self, base):
+        """The chord note a key plays in Playright mode (the key itself if there is no chord)."""
+        chord = self.current_chord()
+        if not chord or chord[0] is None or chord[0] < 0:
+            return base
+        root, ctype = chord[0] % 12, chord[1] % 12
+        pc = base % 12
+        m = base - pc + PLAYRIGHT[ctype][pc] + root
+        if self.app.seq.sfc is not None and m - LOW - 12 * self.st['oct'] < SFC_KEYS:
+            m += 12                     # keep clear of the chord keys
+        return m
+
     def note_off(self, n):
-        self.held.pop(n, None)
+        src = self.held.pop(n, None)
         for port, ch, m in self.sounding.pop(n, []):
             self._out(port, bytes([0x80 | ch, m, 0]))
-        if self.st['active'] and n < LOW + 12 and not any(k < LOW + 12 for k in self.held):
-            if not self.st['hold']:
-                self.app.sfc_chord = None
+        if self.st['active'] and 0 <= n - LOW < SFC_KEYS and src in ('mouse', 'pc'):
+            sfc = self.app.seq.sfc
+            if sfc is not None:
+                self.set_sfc(sfc[0], sfc[1], False)
         self.redraw()
 
     # ------------------------------------------------------------------ Single Finger Chord
     def _single_finger(self, n):
         """Mouse/PC: the key is the root and the chord buttons give the type."""
-        self.set_sfc(n % 12, self.st['ctype'])
+        self.set_sfc((n - LOW) % 12, self.st['ctype'], True)
 
-    def set_sfc(self, root, ctype):
+    def _update_sfc(self):
+        sfc = self.app.seq.sfc
+        if sfc is not None:
+            self.set_sfc(sfc[0], sfc[1], self.sfc_down)
+
+    def set_sfc(self, root, ctype, held):
+        """A chord from the chord keys; held is False once the keys are released."""
         app = self.app
-        app.sfc_chord = (root, ctype)
-        app.chord_name = ROOTS[root] + ('' if ctype == 0 else ' ' + CHORD_LABELS[ctype])
-        app.transport.update_values()
-        if self.st['synchro'] and not app.seq.playing:
-            app.play()
-        if app.seq.playing and app.seq.recording:
-            app.__dict__.setdefault('sfc_record', []).append((app.seq.position, root, ctype))
+        seq = app.seq
+        prev = seq.sfc
+        self.sfc_down = held
+        sounding = held or self.st['hold']
+        seq.sfc = (root, ctype, sounding)
+        if held:
+            app.chord_name = ROOTS[root] + ('' if ctype == 0 else ' ' + CHORD_LABELS[ctype])
+            app.transport.update_values()
+            from ..sequencer import chord_track
+            if self.st['synchro'] and not seq.playing and chord_track(app.song) is not None:
+                seq.position = 0
+                app.play()
+                seq.sfc = (root, ctype, sounding)
+        if seq.playing and seq.recording:
+            was = prev[:2] if prev and prev[2] else None
+            now = (root, ctype) if sounding else None
+            if now != was:
+                app.__dict__.setdefault('sfc_record', []).append((seq.position,) + (now or (None, None)))
+        if held and self.st['mode'] == 'playright':
+            self._retrigger()
+
+    def _retrigger(self):
+        """Held Playright keys follow a new chord."""
+        for n, sent in list(self.sounding.items()):
+            if not sent or self.held.get(n) not in ('mouse', 'pc'):
+                continue
+            port, ch, m = sent[0]
+            new = self._playright(n + 12 * self.st['oct'])
+            if new != m and 0 <= new <= 127:
+                self._out(port, bytes([0x80 | ch, m, 0]))
+                self._out(port, bytes([0x90 | ch, new, self._velocity(0, n)]))
+                self.sounding[n] = [(port, ch, new)]
 
     def midi_in(self, data):
         if len(data) < 2:
@@ -372,20 +433,37 @@ class KeyboardWindow(MDIChild):
             if n in self.held or any(m == n for v in self.sounding.values() for _p, _c, m in v):
                 return      # our own note echoed back
             self.held[n] = 'in'
-            if self.st['active'] and n < LOW + 12:
-                low = sorted(k for k, src in self.held.items() if src == 'in' and k < LOW + 12)
-                root = low[-1]
-                below = low[:-1]
-                black = any(is_black(k) for k in below)
-                white = any(not is_black(k) for k in below)
-                ctype = 3 if black and white else 1 if black else 2 if white else 0
-                self.set_sfc(root % 12, ctype)
+            if self.st['active'] and 0 <= n - LOW < SFC_KEYS:
+                self._external_sfc()
         elif hi == 0x80 or (hi == 0x90 and len(data) > 2 and not data[2]):
             if self.held.get(n) == 'in':
                 del self.held[n]
+                if self.st['active'] and 0 <= n - LOW < SFC_KEYS:
+                    self._external_sfc()
         else:
             return
         self.redraw()
+
+    def _external_sfc(self):
+        """Chord from the keys held in the chord zone of a MIDI keyboard (sub 848E)."""
+        keys = sorted(k - LOW for k, src in self.held.items() if src == 'in' and 0 <= k - LOW < SFC_KEYS)
+        if not keys:
+            sfc = self.app.seq.sfc
+            if sfc is not None:
+                self.set_sfc(sfc[0], sfc[1], False)
+            return
+        top = keys[::-1][:3]
+        ctype = 0
+        if len(top) > 1:
+            if WHITE[top[1] % 12]:
+                ctype = 2
+                if len(top) > 2 and not WHITE[top[2] % 12]:
+                    ctype = 3
+            else:
+                ctype = 1
+                if len(top) > 2 and WHITE[top[2] % 12]:
+                    ctype = 3
+        self.set_sfc(top[0] % 12, ctype, True)
 
 
 def finish_sfc_recording(app, end_tick):
@@ -399,7 +477,7 @@ def finish_sfc_recording(app, end_tick):
     evs.sort()
     for i, (tick, root, ctype) in enumerate(evs):
         end = evs[i + 1][0] if i + 1 < len(evs) else max(end_tick, tick + app.song.timebase)
-        if end <= tick:
+        if end <= tick or root is None:         # keys released with Hold off: no chord here
             continue
         for q in list(track.patterns):
             if q.start < end and q.end > tick:

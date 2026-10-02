@@ -53,6 +53,38 @@ class Windows(unittest.TestCase):
         self.app.command(52)        # close all
         self.app.update()
 
+    def test_single_finger_chord(self):
+        """A chord key on the Keyboard window starts the song (Synchro) with the band playing."""
+        import time
+        from ssgold.editors import open_single
+        from ssgold.song import Track, CHORD
+        app = self.app
+        app.seq.stop()
+        ct = Track(name='CHORDS', kind=CHORD)
+        app.song.tracks.insert(0, ct)
+        try:
+            kb = open_single(app, 'keyboard')
+            kb.st.update(active=True, synchro=True, hold=False, ctype=1)
+            app.seq.out_log.clear()
+            kb.note_on(36 + 2, 100, 'mouse')               # D minor
+            self.assertTrue(app.seq.playing)
+            self.assertEqual(app.seq.sfc, (2, 1, True))
+            deadline = time.time() + 5
+            while time.time() < deadline and not any(d[0] & 0xF0 == 0x90 and 10 <= d[0] & 0x0F <= 14
+                                                     for _p, d in list(app.seq.out_log)):
+                time.sleep(0.05)
+            self.assertTrue(any(d[0] & 0xF0 == 0x90 and 10 <= d[0] & 0x0F <= 14
+                                for _p, d in list(app.seq.out_log)))
+            kb.note_off(36 + 2)
+            self.assertEqual(app.seq.sfc, (2, 1, False))  # Hold off: drums only
+            app.stop()
+            self.assertIsNone(app.seq.sfc)
+            kb.close()
+        finally:
+            app.seq.stop()
+            app.song.tracks.remove(ct)
+            app.update()
+
     def test_playback_position(self):
         self.app.locate(self.app.song.timebase * 4)
         self.app.update()

@@ -48,8 +48,14 @@ class Options:
         self.count_in = 1
 
 
+def chord_track(song):
+    """The song's chord track, or None."""
+    return next((t for t in song.tracks if t.kind == CHORD), None)
+
+
 def schedule_song(song, opts, solo_patterns=None, chord_player=None):
-    """Return a sorted list of (tick, prio, port, bytes) for the whole song."""
+    """Return a sorted list of (tick, prio, port, bytes) for the whole song.
+    The chord track is included only if chord_player is given (playback runs it live)."""
     out = []
     tracks = [t for t in song.tracks if t.kind in (MIDI, CHORD)]
     any_solo = any(t.solo for t in tracks)
@@ -165,6 +171,7 @@ class Sequencer:
         self.right = 0
         self.solo_patterns = None
         self.chord_player = None
+        self.sfc = None               # live Single Finger Chord: (root, type, sounding) or None
         self.recorded = []            # (tick, bytes) captured while recording
         self.counting_in = False
         self.held = {}                # (port, ch, note) -> True, notes currently on
@@ -198,6 +205,7 @@ class Sequencer:
         if self.thread and self.thread is not threading.current_thread():
             self.thread.join(1.0)
         self.playing = False
+        self.sfc = None               # stopping ends Single Finger Chord, as in the original
         self._release_all()
         if self.opts.reset_on_stop:
             for port in range(len(self.midi.outs)):
@@ -281,7 +289,7 @@ class Sequencer:
             class _Fixed(TimeMap):
                 pass
             tmap.tempos = [(0, 0.0, 60000000.0 / max(1, o.fixed_tempo) / tmap.tb)]
-        sched = schedule_song(song, o, self.solo_patterns, self.chord_player)
+        sched = schedule_song(song, o, self.solo_patterns)
         end_tick = max(song.end_tick(), self.position)
         loop = o.cycle and song.right > song.left
         pos = self.position
@@ -289,6 +297,8 @@ class Sequencer:
             pos = song.left
         if o.chase:
             self._chase(sched, pos)
+        acc = self._accompaniment(song, pos)
+        acc_t = pos
         # count in
         if self.recording and o.count_in > 0:
             self.counting_in = True
@@ -324,6 +334,11 @@ class Sequencer:
                 if o.kill_on_cycle:
                     self._release_all()
                 pos = song.left
+                if acc is not None:
+                    for port, data in acc.release():
+                        self._send(port, data)
+                acc = self._accompaniment(song, pos)
+                acc_t = pos
                 idx = 0
                 while idx < len(sched) and sched[idx][0] < pos:
                     idx += 1
@@ -340,8 +355,14 @@ class Sequencer:
             while midx < len(metro) and metro[midx][0] <= cur:
                 self._send(*metro[midx][2:])
                 midx += 1
+            if acc is not None:
+                while acc_t <= cur:
+                    for port, data in acc.tick(acc_t, self.sfc):
+                        self._send(port, data)
+                    acc_t += 1
             self.position = cur
-            if not self.recording and not loop and idx >= len(sched) and cur > end_tick + tmap.tb:
+            if not self.recording and not loop and idx >= len(sched) and cur > end_tick + tmap.tb \
+                    and self.sfc is None:
                 break
             time.sleep(0.001)
         self._release_all()
@@ -351,6 +372,22 @@ class Sequencer:
                 self.app.after_idle(self.app.on_sequencer_stopped)
             except Exception:
                 pass
+
+    def _accompaniment(self, song, pos):
+        """The live accompaniment for the chord track (None if there is no chord track)."""
+        t = chord_track(song)
+        if t is None or self.chord_player is None:
+            return None
+        tracks = [x for x in song.tracks if x.kind in (MIDI, CHORD)]
+        muted = t.mute or (any(x.solo for x in tracks) and not t.solo)
+        try:
+            acc = self.chord_player.live(song, t, pos, muted)
+        except Exception:
+            return None
+        if pos > acc.start and acc.entries and not muted:
+            for port, data in acc.setup():
+                self.midi.send(port, data)
+        return acc
 
     # ---- recording input
     def midi_in(self, data):

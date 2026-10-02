@@ -83,6 +83,39 @@ class Styles(unittest.TestCase):
         programs = sorted((e.channel, e.d1) for e in p.events if e.status & 0xF0 == 0xC0)
         self.assertEqual([c for c, _ in programs], [9, 10, 11, 12, 13, 14])
 
+    def test_live_matches_render(self):
+        """Played live, the chord track gives the same notes as Convert to MIDI."""
+        song = Song()
+        song.timebase = 192
+        st.set_style(song, 0)
+        ct = Track(name='CHORDS', kind=CHORD)
+        ct.patterns = st.build_chord_patterns(song, ct, 0, 32, 0)
+        live = st.Live(song, ct)
+        got = []
+        for t in range(32 * 4 * 192 + 400):
+            got += [(t, m) for _p, m in live.tick(t) if m[0] & 0xF0 == 0x90]
+        ref = sorted((t, m) for t, _pr, _p, m in st.render_chord_track(song, ct) if m[0] & 0xF0 == 0x90)
+        self.assertEqual(sorted(got), ref)
+
+    def test_single_finger_chord(self):
+        """A live chord plays every part (even with no chord list); released with Hold off, drums only."""
+        song = Song()
+        song.timebase = 192
+        ct = Track(name='CHORDS', kind=CHORD)
+        live = st.Live(song, ct)
+        self.assertEqual(live.tick(0), [])              # nothing without a chord list or a live chord
+        held, released = set(), set()
+        for t in range(4 * 4 * 192):
+            for _p, m in live.tick(t, (2, 1, True)):
+                if m[0] & 0xF0 == 0x90:
+                    held.add(m[0] & 0x0F)
+        for t in range(4 * 4 * 192, 8 * 4 * 192):
+            for _p, m in live.tick(t, (2, 1, False)):
+                if m[0] & 0xF0 == 0x90:
+                    released.add(m[0] & 0x0F)
+        self.assertTrue({9, 14} <= held)                  # drums and bass
+        self.assertEqual(released, {9})                  # drums only
+
     def test_original_songs(self):
         folder = os.environ.get('SSGOLD_STYLE_SONGS')
         if not folder:

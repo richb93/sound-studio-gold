@@ -69,3 +69,8 @@ class ChordPlayer:
             return render_chord_track(song, track)
         except Exception:
             return []
+
+    def live(self, song, track, pos=0, muted=False):
+        """The chord track played tick by tick (see styles.Live)."""
+        from .styles import Live
+        return Live(song, track, pos, muted)
