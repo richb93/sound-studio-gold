@@ -10,6 +10,7 @@ Writes:
   cursors/<NAME>.cur/.xbm every cursor (CUR_*): Windows .cur, X11 .xbm + mask
   resources.json          menu, accelerators, dialogs, string table
   tables.json             display tables read from Goldlib.dll's data segment
+  help.json               help topics decoded from Goldhelp.hlp
   patches/, drums/        the .PLS patch lists and .DRM drum kits
 """
 import io
@@ -222,6 +223,14 @@ def main(src):
             shutil.copy(os.path.join(src, f), os.path.join(OUT, 'patches', f.upper()))
         elif ext == 'drm':
             shutil.copy(os.path.join(src, f), os.path.join(OUT, 'drums', f.upper()))
+    hlp = next((os.path.join(src, f) for f in os.listdir(src) if f.lower() == 'goldhelp.hlp'), None)
+    if hlp:
+        from winhelp import HLP
+        topics = {}
+        for title, paras in HLP(hlp).topics():
+            if title and title not in topics:
+                topics[title] = paras
+        json.dump(topics, open(os.path.join(OUT, 'help.json'), 'w'), indent=0)
     print('assets written to', OUT)
 
 
