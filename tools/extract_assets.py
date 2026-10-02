@@ -160,6 +160,21 @@ def _xg_sysex(ds, strs):
     return out
 
 
+def small_icon(im):
+    """16x16 caption icon: from each 2x2 block keep the darkest opaque pixel so thin lines survive."""
+    im = im.convert('RGBA')
+    out = Image.new('RGBA', (im.width // 2, im.height // 2))
+    for y in range(out.height):
+        for x in range(out.width):
+            block = [im.getpixel((2 * x + dx, 2 * y + dy)) for dy in (0, 1) for dx in (0, 1)]
+            opaque = [p for p in block if p[3]]
+            if len(opaque) < 2:
+                out.putpixel((x, y), (0, 0, 0, 0))
+                continue
+            out.putpixel((x, y), min(opaque, key=lambda p: p[0] * 3 + p[1] * 6 + p[2]))
+    return out
+
+
 def main(src):
     exe = os.path.join(src, 'Gold.exe')
     n = NE(exe)
@@ -172,7 +187,9 @@ def main(src):
     for r in n.find('GROUP_ICON'):
         icon_id = struct.unpack_from('<H', r['data'], 6 + 12)[0]
         nm = names[14][r['id']]
-        icon_image(n.get('ICON', icon_id)).save(os.path.join(OUT, 'icons', nm + '.png'))
+        im = icon_image(n.get('ICON', icon_id))
+        im.save(os.path.join(OUT, 'icons', nm + '.png'))
+        small_icon(im).save(os.path.join(OUT, 'icons', nm + '_SM.png'))
         icons[nm] = r['id']
     cursors = {}
     for r in n.find('GROUP_CURSOR'):

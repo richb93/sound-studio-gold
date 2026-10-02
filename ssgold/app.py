@@ -236,7 +236,8 @@ class App(tk.Tk):
         plain = {'<Home>': self.return_to_zero, '<End>': self.go_to_end,
                  '<space>': self.space_key, '<Return>': self.play, '<KP_Enter>': self.play,
                  '<plus>': self.record, '<KP_Add>': self.record,
-                 '<Left>': lambda: self.wind(-1, False), '<Right>': lambda: self.wind(1, False)}
+                 '<Left>': lambda: self.wind(-1, False), '<Right>': lambda: self.wind(1, False),
+                 '<Up>': lambda: None, '<Down>': lambda: None}
         for k, fn in plain.items():
             self.bind_all(k, lambda e, f=fn: self._plain_key(e, f))
         for ch, opt in (('m', 'metronome'), ('c', 'cycle'), ('f', 'follow'), ('o', 'conductor'),
@@ -341,13 +342,8 @@ class App(tk.Tk):
         return w
 
     def small_icon(self, name):
-        """16x16 caption icon made from the 32x32 IC_* icon (Windows 95 small icon)."""
-        key = ('small', name)
-        img = self.images.cache.get(key)
-        if img is None:
-            img = self.images.icon(name).subsample(2, 2)
-            self.images.cache[key] = img
-        return img
+        """16x16 caption icon (pre-reduced from the 32x32 IC_* icon by tools/extract_assets.py)."""
+        return self.images.icon(name + '_SM')
 
     def on_child_activated(self, child):
         pass
@@ -436,6 +432,9 @@ class App(tk.Tk):
         tw.new_song()
         self.song_changed()
         self.update_title()
+        if song.notepad.strip():
+            from .editors import open_single
+            open_single(self, 'notepad')
 
     def update_title(self):
         tw = self.windows.get('track')

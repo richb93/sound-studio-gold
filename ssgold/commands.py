@@ -23,8 +23,8 @@ def run(app, cid):
         8: lambda: app.open_dialog('delete'),
         9: app.quit_app,
         # Edit
-        10: app.undo,
-        11: app.redo,
+        10: lambda: edit_or(app, 'undo', app.undo),
+        11: lambda: edit_or(app, 'redo', app.redo),
         12: lambda: edit(app, 'copy'),
         13: lambda: edit(app, 'cut'),
         14: lambda: edit(app, 'paste'),
@@ -104,6 +104,14 @@ def not_ported(app, what):
 def dialog(app, name, **kw):
     from . import dialogs
     return dialogs.run(app, name, **kw)
+
+
+def edit_or(app, op, fallback):
+    w = app.client.active
+    if w is not None and hasattr(w, 'edit_' + op):
+        getattr(w, 'edit_' + op)()
+    else:
+        fallback()
 
 
 def edit(app, op):
