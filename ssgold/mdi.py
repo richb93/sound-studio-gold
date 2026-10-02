@@ -226,7 +226,17 @@ class MDIChild(tk.Frame):
             return
         self.on_close()
         self.client.remove(self)
-        self.destroy()
+        # Hide now, destroy once Tk is idle: destroying a window with a repaint still queued
+        # (several at once with Close All) crashed Tk on macOS.
+        self.place_forget()
+        self.client.after_idle(self._destroy_quietly)
+
+    def _destroy_quietly(self):
+        try:
+            if self.winfo_exists():
+                self.destroy()
+        except tk.TclError:
+            pass
 
     def can_close(self):
         return True
