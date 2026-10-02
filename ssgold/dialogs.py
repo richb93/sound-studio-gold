@@ -742,7 +742,7 @@ def mixer_settings(app, **kw):
     m = app.settings['mixer']
     d = Dialog(app, 'MIXDEF_DLG')
     names = controller_names()
-    cfg = m.setdefault('users', [[74, 0, 0, 127], [91, 0, 0, 127]])
+    cfg = m.setdefault('users', [[91, 40, 0, 127], [93, 0, 0, 127]])
     for (cb, e1, e2, e3), u in zip(((1356, 1357, 1358, 1359), (1351, 1352, 1353, 1354)), cfg):
         d.combo(cb, names, names[u[0]])
         d.set_text(e1, str(u[1]))

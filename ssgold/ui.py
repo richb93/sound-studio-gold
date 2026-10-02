@@ -54,6 +54,8 @@ def set_scale(root, scale):
         'small': (sans, -(11 + adj) * scale, 'normal'),
         'smallbold': (sans, -(11 + adj) * scale, 'bold'),
         # dialogs ('Helv', 8)
+        # mixer labels (MS Sans Serif 8 is narrower than its substitutes)
+        'mixer': (sans, -(10 + adj) * scale, 'normal'),
         'dialog': (sans, -(11 + adj) * scale, 'normal'),
         'dialogbold': (sans, -(11 + adj) * scale, 'bold'),
         'caption': (sans, -(11 + adj) * scale, 'bold'),

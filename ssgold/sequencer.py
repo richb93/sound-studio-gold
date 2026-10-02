@@ -1,4 +1,5 @@
 """Playback and recording engine."""
+import collections
 import threading
 import time
 
@@ -169,6 +170,9 @@ class Sequencer:
         self.held = {}                # (port, ch, note) -> True, notes currently on
         self.on_tick = None           # optional callback(tick) from the thread
         self.input_monitor = None     # callback(bytes) for MIDI-in activity
+        self.out_log = collections.deque(maxlen=4096)   # (port, bytes) sent, read by the Mixer
+        self.mixer_mute = set()       # (port, channel) muted in the Mixer
+        self.mixer_solo = set()       # (port, channel) soloed in the Mixer
 
     # ---- control
     def set_song(self, song):
@@ -221,10 +225,23 @@ class Sequencer:
     def _send(self, port, data):
         st = data[0]
         if st & 0xF0 == 0x90 and len(data) > 2 and data[2]:
+            key = (port, st & 0x0F)
+            if key in self.mixer_mute or (self.mixer_solo and key not in self.mixer_solo):
+                return
+        if st & 0xF0 == 0x90 and len(data) > 2 and data[2]:
             self.held[(port, st & 0x0F, data[1])] = True
         elif st & 0xF0 == 0x80 or (st & 0xF0 == 0x90 and len(data) > 2 and not data[2]):
             self.held.pop((port, st & 0x0F, data[1]), None)
         self.midi.send(port, data)
+        self.out_log.append((port, data))
+
+    def record_event(self, data):
+        """Record a message generated inside the program (Mixer moves) while recording."""
+        if self.playing and self.recording and not self.counting_in and self.song:
+            now_ms = self.rec_origin[1] + (time.perf_counter() - self.rec_origin[0]) * 1000.0
+            tick = TimeMap(self.song).from_ms(now_ms)
+            if not self.opts.punch or (self.song.left <= tick < self.song.right):
+                self.recorded.append((tick, bytes(data)))
 
     def _chase(self, sched, start):
         """Send the last controller/program/bend values before the start position."""

@@ -46,7 +46,7 @@ DEFAULT_SETTINGS = {
               'bg_track': 'Vellum', 'bg_program': 'Evolution Purple', 'kbd_velocity': 100},
     'show_transport': True, 'show_editors': True, 'show_fast': True, 'show_time': True,
     'cap_transport': False, 'cap_editors': False, 'cap_fast': False,
-    'mixer': {'user1': 74, 'user2': 91, 'under': 0, 'midi_in': False, 'song_data': True,
+    'mixer': {'users': [[91, 40, 0, 127], [93, 0, 0, 127]], 'under': 0, 'midi_in': False, 'song_data': True,
               'record': False, 'volumes_only': False},
     'drum_kit': 'GM.DRM', 'recent_dir': '',
     'score': {'left': 20, 'right': 20, 'top': 30, 'bottom': 30, 'internote': 6, 'interstave': 20,
