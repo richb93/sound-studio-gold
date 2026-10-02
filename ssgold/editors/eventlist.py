@@ -43,7 +43,7 @@ class EventWindow(EditorWindow):
 
     def __init__(self, client, app, pattern):
         self.top_row = 0
-        self.filters = {k: True for _n, k in FILTERS}
+        self.filters = {k: k in (0x90, 0xC0, 0xE0) for _n, k in FILTERS}
         self.anchor = None
         self.drag_sel = None
         super().__init__(client, app, pattern)
@@ -64,7 +64,7 @@ class EventWindow(EditorWindow):
         tb2.add_label('Note Length', 64)
         self.notelen = tb2.add_combo(QUANT_VALUES[1:], 46, '16', listw=50)
         tb2.add_label('Insert Type', 58)
-        self.instype = tb2.add_combo(insert_types(), 158, 'Note', rows=16)
+        self.instype = tb2.add_combo(insert_types(), 158, 'Note', rows=16, cmd=lambda *_a: self.redraw())
         self.fbar = tk.Canvas(b, height=s(14), bg=ui.FACE, highlightthickness=0, bd=0)
         self.fbar.pack(side='top', fill='x')
         self.fbar.bind('<Button-1>', self._filter_click)
@@ -73,7 +73,6 @@ class EventWindow(EditorWindow):
         fr = tk.Frame(b, bg=ui.FACE)
         fr.pack(side='top', fill='both', expand=True)
         self.vbar = tk.Scrollbar(fr, orient='vertical', command=self._vscroll)
-        self.vbar.pack(side='right', fill='y')
         self.list = tk.Canvas(fr, bg=ui.FACE, highlightthickness=0, bd=0)
         self.list.pack(side='left', fill='both', expand=True)
         self.list.bind('<Configure>', lambda e: self.redraw())
@@ -101,6 +100,32 @@ class EventWindow(EditorWindow):
             if self.filters.get(k, True):
                 out.append(e)
         return out
+
+    def insert_kind(self):
+        v = self.instype.value
+        if v == 'Note':
+            return 0x90
+        if v == 'Aftertouch':
+            return 0xA0
+        if v == 'Program':
+            return 0xC0
+        if v == 'Pressure':
+            return 0xD0
+        if v == 'Bend':
+            return 0xE0
+        types = insert_types()
+        if v in types and 2 <= types.index(v) < 130:
+            return 0xB0
+        return 0xF0
+
+    def _update_vbar(self, n, H):
+        need = n > H
+        if need != getattr(self, '_vbar_shown', False):
+            self._vbar_shown = need
+            if need:
+                self.vbar.pack(side='right', fill='y', before=self.list)
+            else:
+                self.vbar.pack_forget()
 
     def _vscroll(self, *a):
         n = len(self.shown())
@@ -152,10 +177,7 @@ class EventWindow(EditorWindow):
         c = self.head
         c.delete('all')
         W = c.winfo_width() // ui.S
-        sel = self.first_selected()
-        shown = self.shown()
-        ref = sel or (shown[0] if shown else None)
-        kind = 0x90 if ref is None else (ref.status if ref.status >= 0xF0 else ref.status & 0xF0)
+        kind = self.insert_kind()
         heads = HEADS.get(kind, ('', '', ''))
         for i, (name, x, w) in enumerate(COLS):
             if i >= 4:
@@ -234,6 +256,7 @@ class EventWindow(EditorWindow):
             y += ROW
         if not self.app.seq.playing and rows and self.top_row == 0:
             c.create_polygon(s(2), s(2), s(8), s(ROW // 2), s(2), s(ROW - 2), fill='#000000')
+        self._update_vbar(len(rows), nvis)
         n = max(1, len(rows))
         self.vbar.set(self.top_row / n, min(1, (self.top_row + nvis) / n))
 

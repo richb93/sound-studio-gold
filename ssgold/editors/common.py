@@ -313,6 +313,11 @@ class EditorWindow(MDIChild):
         p = self.pattern
         t0 = p.start
         t1 = p.end
+        x, t = x_of_tick(t1 - t0), t1
+        while x < width:
+            t += tm.sig_at(t)[2]
+            x = x_of_tick(t - t0)
+        t1 = t
         ui.line(c, 0, height - 1, width, height - 1)
         first = True
         for tick, bar, tpbeat, beats in tm.bar_lines(t0, t1 + tm.sig_at(t1)[2]):
@@ -328,8 +333,7 @@ class EditorWindow(MDIChild):
                 for b in range(1, beats):
                     bx = x_of_tick(tick + b * tpbeat - p.start)
                     if bx - x > 14:
-                        ui.line(c, bx, height - 4, bx, height)
-                        ui.text(c, bx - 2, height // 2, str(b + 1), 'small', anchor='e')
+                        ui.text(c, bx, height // 2, str(b + 1), 'small', anchor='center')
         pos = self.app.seq.position - p.start
         x = x_of_tick(pos)
         c.create_polygon(s(x - 4), s(height - 6), s(x + 4), s(height - 6), s(x), s(height - 1), fill='#ffffff',

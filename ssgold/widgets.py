@@ -294,7 +294,11 @@ class InfoLine(tk.Canvas):
         ui.sunken(self, x0 + 2, 2, x1 - 1, h - 1, fill=ui.FACE, deep=False)
         ui.text(self, x0 + 4, h // 2, f['label'], 'small', anchor='w')
         if f['value'] != '':
-            ui.text(self, x1 - 4, h // 2, str(f['value']), 'system', anchor='e')
+            if f.get('align') == 'w':
+                lw = ui.text_width(f['label'], 'small') if f['label'] else 0
+                ui.text(self, x0 + 10 + lw, h // 2, str(f['value']), 'system', anchor='w')
+            else:
+                ui.text(self, x1 - 4, h // 2, str(f['value']), 'system', anchor='e')
 
     def _which(self, ev):
         x = ev.x / ui.S

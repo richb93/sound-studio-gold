@@ -29,7 +29,7 @@ class DrumWindow(EditorWindow):
     kind = 'drum'
 
     def __init__(self, client, app, pattern):
-        self.tpp = max(1, app.song.timebase // 16)
+        self.tpp = max(1, app.song.timebase // 32)
         self.x0 = 0
         self.top_row = 0
         self.cur_drum = 0
@@ -57,7 +57,9 @@ class DrumWindow(EditorWindow):
         tb.add_label('Grid', 22)
         self.grid_combo = tb.add_combo(GRID_VALUES, 46, '16', cmd=lambda v: self.redraw(), listw=50)
         self.tb = tb
-        self.info = InfoLine(b, self.app, self.info_fields() + [('Kit', 220)])
+        self.info = InfoLine(b, self.app, [('Position', 120), ('Chan', 60), ('Pitch', 70), ('Vel', 55),
+                                           ('Length', 85), ('Kit', 220)])
+        self.info.fields[5]['align'] = 'w'
         self.info.pack(side='top', fill='x')
         body = tk.Frame(b, bg=ui.FACE)
         body.pack(side='top', fill='both', expand=True)
@@ -221,28 +223,21 @@ class DrumWindow(EditorWindow):
         W, H = c.winfo_width() // ui.S, c.winfo_height() // ui.S
         p = self.pattern
         tm = self.app.tmap
-        xe = self.x_of(p.length)
-        if xe < W:
-            c.create_rectangle(s(xe), 0, s(W), s(H), fill=ui.FACE, outline='')
-        nrows = len(self.kit.drums) - self.top_row
-        for r in range(nrows + 1):
+        for r in range(H // ROW + 1):
             y = r * ROW
-            if y > H:
-                break
-            c.create_line(0, s(y), s(min(W, xe)), s(y), fill='#c2c2c2', width=ui.S)
+            c.create_line(0, s(y), s(W), s(y), fill='#c2c2c2', width=ui.S)
         g = self.grid_ticks()
         t = (self.x0 // g) * g
-        while t <= p.length:
+        tend = self.tick_of(W)
+        while t <= tend:
             x = self.x_of(t)
-            if x > W:
-                break
             if x >= 0:
-                c.create_line(s(x), 0, s(x), s(min(H, nrows * ROW)), fill='#c2c2c2', width=ui.S)
+                c.create_line(s(x), 0, s(x), s(H), fill='#c2c2c2', width=ui.S)
             t += g
-        for tick, bar, tpbeat, beats in tm.bar_lines(p.start + self.x0, p.start + p.length):
+        for tick, bar, tpbeat, beats in tm.bar_lines(p.start + self.x0, p.start + tend):
             x = self.x_of(tick - p.start)
             if 0 <= x <= W:
-                c.create_line(s(x), 0, s(x), s(min(H, nrows * ROW)), fill='#000000', width=ui.S)
+                c.create_line(s(x), 0, s(x), s(H), fill='#000000', width=ui.S)
         # hits
         for e in self.events:
             i = self.drum_of(e)
