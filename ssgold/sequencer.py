@@ -369,7 +369,7 @@ class Sequencer:
         self.playing = False
         if self.app:
             try:
-                self.app.after_idle(self.app.on_sequencer_stopped)
+                self.app.thread_call(self.app.on_sequencer_stopped)
             except Exception:
                 pass
 

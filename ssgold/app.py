@@ -1,4 +1,5 @@
 """Main window (MAINWNDPROC): menus, MDI client, floating panels, transport control, files."""
+import collections
 import json
 import os
 import sys
@@ -186,6 +187,7 @@ class App(tk.Tk):
         if path:
             self.after(50, lambda: self.open_path(path))
         self._last_pos = None
+        self._from_threads = collections.deque()   # work queued by the MIDI and playback threads
         self.after(30, self._poll)
 
     # ------------------------------------------------------------------ settings
@@ -793,10 +795,8 @@ class App(tk.Tk):
                     if rec.channel and not o.multitrack:
                         out[0] = (st & 0xF0) | (rec.channel - 1)
                 self.midi.send(port, bytes(out))
-        try:
-            self.after_idle(lambda d=bytes(data): self._midi_in_gui(d))
-        except RuntimeError:
-            pass
+        # Tk may only be used from the main thread (macOS crashes otherwise): _poll runs this
+        self._from_threads.append(lambda d=bytes(data): self._midi_in_gui(d))
 
     def _midi_in_gui(self, data):
         from .chords import detect_input
@@ -809,8 +809,19 @@ class App(tk.Tk):
                 w.midi_in(data)
 
     # ------------------------------------------------------------------ poll
+    def thread_call(self, fn):
+        """Run fn on the GUI thread at the next poll (safe to call from any thread)."""
+        self._from_threads.append(fn)
+
     def _poll(self):
         try:
+            q = self._from_threads
+            while q:
+                try:
+                    q.popleft()()
+                except Exception:
+                    import traceback
+                    traceback.print_exc()
             pos = self.seq.position
             if pos != self._last_pos:
                 self._last_pos = pos
