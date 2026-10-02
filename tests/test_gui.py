@@ -45,6 +45,7 @@ class Windows(unittest.TestCase):
         # 87 Mixer, 88 Keyboard, 89 Lyrics, 90 Instant Chord Track
         for cid in range(80, 91):
             with self.subTest(command=cid):
+                print('command', cid, file=sys.stderr, flush=True)
                 self.app.command(cid)
                 self.app.update()
         for w in self.app.client.children_:      # no instance attribute may hide a method

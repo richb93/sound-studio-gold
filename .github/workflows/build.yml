@@ -28,6 +28,28 @@ jobs:
       - name: GUI test repeated (macOS Tk crashes were intermittent)
         if: runner.os == 'macOS'
         run: for i in 1 2 3 4 5; do python -X faulthandler -m unittest tests.test_gui || exit 1; done
+      - name: macOS crash reports
+        if: failure() && runner.os == 'macOS'
+        run: |
+          for f in ~/Library/Logs/DiagnosticReports/*Python*; do
+            echo "=== $f"
+            python - "$f" <<'PY'
+          import json, sys
+          text = open(sys.argv[1]).read()
+          try:
+              head, body = text.split('\n', 1)
+              d = json.loads(body)
+              for t in d.get('threads', []):
+                  if t.get('triggered'):
+                      imgs = d.get('usedImages', [])
+                      for fr in t['frames'][:40]:
+                          img = imgs[fr['imageIndex']].get('name', '?') if fr['imageIndex'] < len(imgs) else '?'
+                          print(img, fr.get('symbol', hex(fr.get('imageOffset', 0))))
+              print('exception:', d.get('exception'))
+          except Exception as e:
+              print(text[:6000])
+          PY
+          done
       - name: Tests (Xvfb)
         if: runner.os == 'Linux'
         run: xvfb-run -a python -X faulthandler -m unittest discover tests -v
