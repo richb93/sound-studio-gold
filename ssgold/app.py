@@ -117,14 +117,15 @@ def light_appearance(root):
     if sys.platform != 'darwin':
         return
 
-    def aqua(w):
+    def aqua():
+        # Once the main window exists; never from a <Map> handler (macOS can crash there).
+        # The built app is kept in light mode by NSRequiresAquaSystemAppearance (build.py).
         try:
-            root.tk.call('::tk::unsupported::MacWindowStyle', 'appearance', w, 'aqua')
+            root.update_idletasks()
+            root.tk.call('::tk::unsupported::MacWindowStyle', 'appearance', root, 'aqua')
         except tk.TclError:
             pass
-    aqua(root)
-    root.bind_class('Toplevel', '<Map>', lambda e: aqua(e.widget) if e.widget.winfo_toplevel() is e.widget
-                    else None, add='+')
+    root.after_idle(aqua)
 
 
 def crisp_fonts():
