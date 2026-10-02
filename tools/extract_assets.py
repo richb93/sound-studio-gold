@@ -161,6 +161,69 @@ def _xg_sysex(ds, strs):
     return out
 
 
+def style_tables(exe_path, dll_path):
+    """The 16 accompaniment styles.
+
+    Gold.exe passes Goldlib 20 far pointers into its own data segment (GOLDLIB.RECEIVE_SP, called
+    from Gold.exe segment 2); the first argument is a table of 16 far pointers, one per style.
+    A style record (offsets from its pointer P):
+      P+0x00 far ptr  rhythm table: one byte per note, low 6 bits = duration index, 0x40 = tied
+      P+0x04 far ptr  pitch table: 12 blocks (one per chord type, C root) of 'block size' notes
+      P+0x08 8 far ptrs drum patterns: [steps, step duration index, one bitmask byte per step]
+      P+0x28 time signature index, P+0x29 tempo
+      P+0x2A 6 bytes: first note of Acc1..Acc4, Bass in the tables, then the block size
+      P+0x31/38/3F/46/4D/54: 7 bytes each (unused, Acc1..Acc4, Bass, Drums) for program,
+                             velocity code (velocity = code * 8 + 7), volume, pan, reverb, chorus
+    Goldlib's data segment holds the Instant Chord Track progressions (17-byte rows of
+    (root << 4 | chord type) bytes ended by 0xFF at 0x1A80), beats per chord (0x1A70) and the
+    engine's constant tables.  All offsets are for Gold v4.00 / Goldlib v1.19.
+    """
+    exe = NE(exe_path)
+    seg2, _ = exe.segment_data(2)
+    assert seg2[0x0F:0x11] == b'\x1e\x68'      # push ds; push <table>  (first RECEIVE_SP argument)
+    table = struct.unpack_from('<H', seg2, 0x11)[0]
+    dseg = struct.unpack_from('<H', exe.data, exe.ne + 0xE)[0]
+    d, rel = exe.segment_data(dseg)
+    ptr = {off: t2 for st, fl, off, t1, t2 in rel if t1 == dseg and st == 3}
+    lib = NE(dll_path)
+    ds, _ = lib.segment_data(struct.unpack_from('<H', lib.data, lib.ne + 0xE)[0])
+    names = dll_tables(dll_path)['styles']
+    styles = []
+    for i in range(16):
+        P = ptr[table + 4 * i]
+        parts = list(d[P + 0x2A:P + 0x30])
+        bs = parts[5]
+        rp, pp = ptr[P], ptr[P + 4]
+        drums = []
+        for k in range(8):
+            q = ptr[P + 8 + 4 * k]
+            drums.append({'steps': d[q], 'step': d[q + 1], 'hits': list(d[q + 2:q + 2 + d[q]])})
+        prog = []
+        for b in ds[0x1A80 + 17 * i:0x1A80 + 17 * (i + 1)]:
+            if b == 0xFF:
+                break
+            prog.append([b >> 4, b & 15])
+        styles.append({
+            'name': names[i], 'timesig': d[P + 0x28], 'tempo': d[P + 0x29], 'parts': parts,
+            'rhythm': list(d[rp:rp + bs]), 'pitches': [list(d[pp + bs * c:pp + bs * (c + 1)]) for c in range(12)],
+            'drums': drums,
+            'program': list(d[P + 0x32:P + 0x38]), 'velocity': list(d[P + 0x39:P + 0x3F]),
+            'volume': list(d[P + 0x40:P + 0x46]), 'pan': list(d[P + 0x47:P + 0x4D]),
+            'reverb': list(d[P + 0x4E:P + 0x54]), 'chorus': list(d[P + 0x55:P + 0x5B]),
+            'progression': prog, 'beats': ds[0x1A70 + i],
+        })
+    engine = {
+        'durations': list(struct.unpack_from('<18h', ds, 0x45CC)),
+        'drum_notes': list(ds[0x45F0:0x4600]),
+        'drum_velocity': list(ds[0x4600:0x4608]),
+        'root_offset': list(struct.unpack('12b', ds[0x4610:0x461C])),
+        'acc_channel': struct.unpack_from('<h', ds, 0x298C)[0],
+        'drum_channel': struct.unpack_from('<h', ds, 0x2966)[0],
+        'ict_bars': struct.unpack_from('<h', ds, 0x1A6E)[0], 'ict_max_bars': 200,
+    }
+    return {'engine': engine, 'styles': styles}
+
+
 def small_icon(im):
     """16x16 caption icon: from each 2x2 block keep the darkest opaque pixel so thin lines survive."""
     im = im.convert('RGBA')
@@ -212,6 +275,7 @@ def main(src):
     }
     json.dump(res, open(os.path.join(OUT, 'resources.json'), 'w'), indent=1)
     json.dump(dll_tables(os.path.join(src, 'Goldlib.dll')), open(os.path.join(OUT, 'tables.json'), 'w'), indent=1)
+    json.dump(style_tables(exe, os.path.join(src, 'Goldlib.dll')), open(os.path.join(OUT, 'styles.json'), 'w'))
     bwcc = os.path.join(src, 'BWCC.DLL')
     if os.path.exists(bwcc):
         os.makedirs(os.path.join(OUT, 'bwcc'), exist_ok=True)

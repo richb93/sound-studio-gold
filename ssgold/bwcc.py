@@ -36,6 +36,8 @@ class HScroll(tk.Canvas):
         self.bind('<ButtonRelease-1>', lambda e: self._stop())
         self.job = None
         self.dragging = False
+        self.step = 1           # arrow step; page step defaults to a tenth of the range
+        self.page = None
 
     def set(self, v, notify=False):
         self.value = max(self.lo, min(self.hi, int(v)))
@@ -85,14 +87,15 @@ class HScroll(tk.Canvas):
         a = min(H, s(16))
         span = max(1, self.hi - self.lo)
         tx = a + (W - 3 * a) * (self.value - self.lo) / span
+        page = self.page or max(1, span // 10)
         if x < a:
-            self._repeat(-1)
+            self._repeat(-self.step)
         elif x >= W - a:
-            self._repeat(1)
+            self._repeat(self.step)
         elif tx <= x < tx + a:
             self.dragging = True
         else:
-            self._repeat(-max(1, span // 10) if x < tx else max(1, span // 10))
+            self._repeat(-page if x < tx else page)
 
     def _repeat(self, d, first=True):
         self.set(self.value + d, notify=True)

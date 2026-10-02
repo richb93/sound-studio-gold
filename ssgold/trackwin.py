@@ -283,8 +283,9 @@ class TrackWindow(MDIChild):
             p = self._sel_chord()
             if key == 'style':
                 def set_style(i):
+                    from .styles import set_style as store
                     app.checkpoint()
-                    app.song.header[0x2D3] = i
+                    store(app.song, i)
                     app.song_changed()
                 PopupMenu.show(self, [(n, lambda i=i: set_style(i)) for i, n in enumerate(STYLE_NAMES)],
                                ev.x_root, ev.y_root)
@@ -583,35 +584,53 @@ class TrackWindow(MDIChild):
         self._remove_patterns([q])
 
     def chords_to_midi(self):
-        from .styles import render_chord_track
+        """Convert to MIDI Track: the accompaniment goes into the first empty MIDI track from the
+        current one (the track takes the style's name and channel 0); the original then offers to
+        extract it to one track per channel."""
+        from .styles import convert_pattern
+        from .smf import _extract_initial
+        from .bwcc import message_box
         song = self.app.song
         ct = next((t for t in song.tracks if t.kind == CHORD), None)
-        if ct is None:
+        if ct is None or not ct.patterns:
             return
         self.app.checkpoint()
-        data = render_chord_track(song, ct)
-        t = Track(name='Chords')
-        t.channel = 0
-        t.height = ct.height
-        start = min((p.start for p in ct.patterns), default=0)
-        end = max((p.end for p in ct.patterns), default=0)
-        p = Pattern(name='Chords', start=start, end=end)
-        on = {}
-        for tick, _pr, _port, d in sorted(data, key=lambda x: (x[0], x[1])):
-            hi = d[0] & 0xF0
-            if hi == 0x90:
-                e = Event(tick - start, d[0], d[1], d[2], 1)
-                on[(d[0] & 0x0F, d[1])] = e
-                p.events.append(e)
-            elif hi == 0x80:
-                e = on.pop((d[0] & 0x0F, d[1]), None)
-                if e:
-                    e.length = max(1, tick - start - e.tick)
-            elif hi == 0xC0:
-                p.events.append(Event(tick - start, d[0], d[1]))
-        p.track = t
-        t.patterns.append(p)
-        song.tracks.insert(song.tracks.index(ct) + 1, t)
+        p = convert_pattern(song, ct)
+
+        def empty_track(after):
+            tracks = song.tracks
+            start = tracks.index(after) if after in tracks else 0
+            for t in tracks[start:]:
+                if t.kind == MIDI and not t.patterns:
+                    return t
+            t = Track(name='Track %d' % (len(tracks) + 1))
+            t.height = ct.height
+            tracks.append(t)
+            return t
+
+        target = empty_track(self.cur_track)
+        target.name = p.name
+        target.channel = 0
+        target.prog = OFF
+        p.track = target
+        target.patterns.append(p)
+        self.cur_track = target
+        self.app.song_changed('tracks')
+        if message_box(self.app, resources.string(816), kind='question', buttons=('yes', 'no')) != 'yes':
+            return
+        after = target
+        for ch in sorted({e.channel for e in p.events if e.status < 0xF0}):
+            t = empty_track(after)
+            t.name = p.name
+            t.channel = ch + 1
+            t.prog = t.bank = t.volume = t.reverb = t.chorus = OFF
+            t.pan = PAN_OFF
+            q = Pattern(name=p.name, start=p.start, end=p.end)
+            q.events = [e.copy() for e in p.events if e.status < 0xF0 and e.channel == ch]
+            _extract_initial(t, q.events)
+            q.track = t
+            t.patterns.append(q)
+            after = t
         self.app.song_changed('tracks')
 
     def merge_patterns(self):

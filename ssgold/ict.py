@@ -1,12 +1,16 @@
-"""Instant Chord Track (STYLE_DLG, modeless): builds a chord track in a chosen style."""
-from . import resources
+"""Instant Chord Track (STYLE_DLG, modeless; STYLEDLGPROC): builds a chord track in a chosen style.
+
+The chords come from the style's own progression, one chord per bar; Bars is always a whole
+number of progression cycles (the scroll bar's arrows step one cycle, its page area four).
+"""
 from .bwcc import Dialog
-from .song import Track, Pattern, CHORD
-from .styles import STYLE_NAMES
+from .song import Track, CHORD
+from . import styles as st
 
 
 class InstantChordTrack:
     dlg = None
+    bars = None         # remembered between openings, like the original's global
 
     @classmethod
     def open(cls, app):
@@ -16,30 +20,53 @@ class InstantChordTrack:
         d = Dialog(app, 'STYLE_DLG', modal=False)
         cls.dlg = d
         song = app.song
-        d.combo(2201, STYLE_NAMES, STYLE_NAMES[song.header[0x2D3] % len(STYLE_NAMES)])
+        state = {'style': st.style_index(song)}
+        if cls.bars is None:
+            cls.bars = st.engine()['ict_bars']
+        cls.bars = st.fit_bars(state['style'], cls.bars)
+        d.combo(2201, st.STYLE_NAMES, st.STYLE_NAMES[state['style']], cmd=lambda name: pick(name))
         sb = d.ctrls[2206]
-        sb.lo, sb.hi = 1, 256
 
-        def upd(v):
-            d.set_text(2205, '%3d' % v)
-            from .timing import TimeMap
-            tm = TimeMap(song)
-            ms = tm.to_ms(tm.from_bbt(v + 1))
-            secs = int(ms / 1000)
+        def show_time():
+            ticks = st.chord_ticks(state['style'], song.timebase) * cls.bars
+            secs = int((app.tmap.to_ms(ticks) + 500) // 1000)
             d.set_text(2202, '%d' % (secs // 60))
             d.set_text(2203, '%02d' % (secs % 60))
-        sb.cmd = upd
-        sb.set(32, notify=True)
-        d.set_check(2207, True)
-        d.set_check(2208, False)
-        has = any(t.kind == CHORD for t in song.tracks)
-        d.enable(2211, has)
+            d.set_text(2205, '%d' % cls.bars)
+
+        def setup_scroll():
+            n = st.cycle_length(state['style'])
+            sb.lo, sb.hi = 0, st.max_bars(state['style'])
+            sb.step, sb.page = n, 4 * n
+            sb.set(cls.bars)
+
+        def scrolled(v):
+            i = state['style']
+            n = st.cycle_length(i)
+            cls.bars = max(n, min(st.max_bars(i), v - v % n))
+            sb.set(cls.bars)
+            show_time()
+
+        def pick(name):
+            state['style'] = st.STYLE_NAMES.index(name) if name in st.STYLE_NAMES else 0
+            cls.bars = st.fit_bars(state['style'], cls.bars)
+            setup_scroll()
+            show_time()
+
+        sb.cmd = scrolled
+        setup_scroll()
+        show_time()
+        d.set_check(2207, app.settings.get('ict_replace', True))
+        d.set_check(2208, app.settings.get('ict_loop', False))
+        ct = next((t for t in song.tracks if t.kind == CHORD), None)
+        d.enable(2211, bool(ct and ct.patterns))
 
         def create():
-            style = STYLE_NAMES.index(d.combo(2201)) if d.combo(2201) in STYLE_NAMES else 0
-            bars = sb.value
+            app.settings['ict_replace'] = d.check(2207)
+            app.settings['ict_loop'] = d.check(2208)
+            i = state['style']
             app.checkpoint()
-            song.header[0x2D3] = style
+            st.set_style(song, i)
             ct = next((t for t in song.tracks if t.kind == CHORD), None)
             if ct is None:
                 ct = Track(name='CHORDS', kind=CHORD)
@@ -48,23 +75,11 @@ class InstantChordTrack:
                 song.tracks.insert(0, ct)
             if d.check(2207):
                 ct.patterns = []
-            from .timing import TimeMap
-            tm = TimeMap(song)
             start = max((p.end for p in ct.patterns), default=0)
-            first = start
-            for b in range(0, bars, 4):
-                st = tm.from_bbt(tm.to_bbt(start)[0] + b) if b else start
-                en = tm.from_bbt(tm.to_bbt(st)[0] + min(4, bars - b))
-                p = Pattern(name='', start=st, end=en)
-                p.set_chord(0, 0)
-                for i in range(6):
-                    p.set_chord_mute(i, 1)
-                if b and ct.patterns:
-                    p.parent = ct.patterns[-1].source if False else None
-                p.track = ct
-                ct.patterns.append(p)
-            if d.check(2208):
-                song.left, song.right = first, max(p.end for p in ct.patterns)
+            new = st.build_chord_patterns(song, ct, i, cls.bars, start)
+            ct.patterns.extend(new)
+            if d.check(2208) and new:
+                song.left, song.right = new[0].start, new[-1].end
                 app.seq.opts.cycle = True
                 app.transport.redraw_buttons()
             d.enable(2211, True)

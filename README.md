@@ -62,10 +62,10 @@ display tables from `Goldlib.dll`; help from `Goldhelp.hlp`):
 * **Audio and Video** menus and windows (wave recording/playback, bounce, effects, video) are
   disabled; Audio tracks and patterns are still loaded, shown, edited and saved.
 * **Printing** (score printing, Printer Setup) is disabled.
-* **Accompaniment styles**: the chord track and Instant Chord Track play generated accompaniments in
-  the 16 style names of the original; the original's own style data has not been decoded, so they
-  are approximations. Single Finger Chord sets and records chords but does not drive a live
-  accompaniment while stopped.
+* **Accompaniment**: the 16 styles are the original's own data (decoded from `Gold.exe` and
+  `Goldlib.dll`) played by a re-implementation of its accompaniment engine; *Convert to MIDI
+  Track* produces the same notes as the original for every style. Single Finger Chord sets and
+  records chords but does not yet drive a live accompaniment while the song is stopped.
 * `.DEF` (definitions) and `.WND` (window layout) files are not opened; settings live in
   `~/.ssgold_settings.json` instead.
 * Fonts: MS Sans Serif / System are replaced by the closest installed font (Liberation Sans on
@@ -87,7 +87,8 @@ ssgold/                the program
   timing.py            bars/beats/ticks, tempo map, SMPTE
   procedures.py        the Procedures menu
   patches.py           patch lists, drum kits, routings
-  chords.py styles.py  chord detection and chord-track accompaniment
+  chords.py            chord detection
+  styles.py            the accompaniment engine (styles data in assets/styles.json)
   bwcc.py dialogs.py   BWCC dialog engine and every dialog
   trackwin.py          Track window
   editors/             Piano Roll, Event, Score, Drum, Conductor, Notepad, Mixer, Keyboard, Lyrics
